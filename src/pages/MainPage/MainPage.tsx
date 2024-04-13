@@ -8,21 +8,17 @@ import { Container, Box } from '@mui/material'
 
 
 function MainPage() {
+    const { bouquets, isLoading } = useGetBouquets();
 
-    const { bouquets } = useGetBouquets();
-    console.log(bouquets)
-
-      
     return (
       <>
-       <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <BouquetList bouquets={bouquets}/>
-        </Box>
-        
+        <Container maxWidth="sm">
+          <Box sx={{ my: 4 }}>
+            <BouquetList bouquets={bouquets} isLoading={isLoading} />
+          </Box>
         </Container>
       </>
-    )
+    );
   }
   
   export default MainPage;

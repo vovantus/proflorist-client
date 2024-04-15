@@ -7,7 +7,7 @@ interface BouquetListProps {
 }
 
 //ASK: почему тут TS не ругается, когда создаю массив пустых?
-//AKS: индех так ок передавать в список?
+//ASK: индех так ок передавать в список?
 
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
   return (

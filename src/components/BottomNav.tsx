@@ -12,25 +12,24 @@ import URLS from "../routes/routes";
 */
 export default function BottomNav() {
   const params = useParams();
-  const routes = [
-    URLS.FLORIST.ROOT + URLS.FLORIST.NEWS,
-    URLS.FLORIST.ROOT,
-    URLS.FLORIST.ROOT + URLS.FLORIST.CART,
-  ].map((url) => params.floristName + url);
+  const relevantRoutes = [URLS.FLORIST.NEWS, "", URLS.FLORIST.CART];
+  const absoluteRoutes = relevantRoutes.map(
+    (url) => "/" + params.floristName + URLS.FLORIST.ROOT + url
+  );
 
-  const routeMatch = useRouteMatch(routes);
+  const routeMatch = useRouteMatch(absoluteRoutes);
   const currentTab = routeMatch?.pattern?.path;
 
   function useRouteMatch(patterns: readonly string[]) {
     const { pathname } = useLocation();
 
-    for (let i = 0; i < patterns.length; i += 1) {
-      const pattern = patterns[i];
+    for (const pattern of patterns) {
       const possibleMatch = matchPath(pattern, pathname);
       if (possibleMatch !== null) {
         return possibleMatch;
       }
     }
+
     return null;
   }
 
@@ -43,22 +42,22 @@ export default function BottomNav() {
         <BottomNavigationAction
           icon={<ArticleOutlinedIcon />}
           label="News"
-          value={routes[0]}
-          to={URLS.FLORIST.NEWS}
+          value={absoluteRoutes[0]}
+          to={absoluteRoutes[0]}
           component={Link}
         />
         <BottomNavigationAction
           icon={<GridViewOutlinedIcon />}
           label="Catalog"
-          value={routes[1]}
-          to=""
+          value={absoluteRoutes[1]}
+          to={absoluteRoutes[1]}
           component={Link}
         />
         <BottomNavigationAction
           icon={<ShoppingCartOutlinedIcon />}
           label="Cart"
-          value={routes[2]}
-          to={URLS.FLORIST.CART}
+          value={absoluteRoutes[2]}
+          to={absoluteRoutes[2]}
           component={Link}
         />
       </BottomNavigation>

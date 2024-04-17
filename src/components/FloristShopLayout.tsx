@@ -7,7 +7,6 @@ export default function FloristShopLayout() {
     <>
       <FloristAppBar />
       <Outlet />
-
       <BottomNav />
     </>
   );

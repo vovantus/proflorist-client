@@ -9,7 +9,7 @@ import URLS from "./routes/routes.ts";
 import CartPage from "./pages/CartPage/CartPage.tsx";
 import NewsPage from "./pages/NewsPage/NewsPage.tsx";
 
-//ASK 17 04 24 мегавопрос- у меня всё что идет после /:floristName - это приложение магазина флориста, как отдельный функционал, может его вынести в какой-то микрофронтеннд и подключать?
+//ASK 17 04 24 МЕГАвопрос- у меня всё что идет после /:floristName - это приложение магазина флориста, как отдельный функционал, может его вынести в какой-то микрофронтеннд и подключать?
 
 function App() {
   return (

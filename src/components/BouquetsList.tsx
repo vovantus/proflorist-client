@@ -1,13 +1,12 @@
-import { DocumentData } from "firebase/firestore"
 import BouquetCard from "./BouquetCard";
+import { Bouquet } from "../types/bouquet";
 
 interface BouquetListProps {
-  bouquets: DocumentData[];
+  bouquets: Bouquet[];
   isLoading: boolean;
 }
 
 //ASK: почему тут TS не ругается, когда создаю массив пустых?
-//ASK: индех так ок передавать в список?
 
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
   return (

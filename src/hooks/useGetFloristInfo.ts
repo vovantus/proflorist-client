@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import floristApi from "../api/floristApi";
-import { Bouquet } from "../types/bouquet";
 
-export function useGetBouquets(florist?: string) {
+export function useGetFloristInfo(florist?: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const [bouquets, setBouquets] = useState<Bouquet[]>([]);
+  const [floristInfo, setFloristInfos] = useState({});
 
   useEffect(() => {
     floristApi
-      .fetchBouquets(florist)
-      .then((bouqs) => {
-        setBouquets(bouqs);
+      .fetchFloristInfo(florist)
+      .then((data) => {
+        if (data) {
+          setFloristInfos(data);
+        }
+
         setIsLoading(false);
       })
       .catch((e) => {
@@ -22,10 +24,8 @@ export function useGetBouquets(florist?: string) {
   }, []);
 
   return {
-    bouquets,
+    floristInfo,
     isLoading,
     error,
   };
 }
-
-

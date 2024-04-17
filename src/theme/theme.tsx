@@ -20,17 +20,23 @@ const theme = createTheme({
       xxs: 0,
       xs: 350,
       sm: 600,
-      md: 900,
+      md: 830,
       lg: 1200,
       xl: 1536,
     },
   },
   palette: {
     primary: {
-      main: "#556cd6",
+      light: "#fed7c1",
+      main: "#ffa56c",
+      dark: "#f77c18",
+      contrastText: "#000",
     },
     secondary: {
-      main: "#19857b",
+      light: "#98d9ff",
+      main: "#76cafe",
+      dark: "#63bffd",
+      contrastText: "#fff",
     },
     error: {
       main: red.A400,

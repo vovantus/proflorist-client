@@ -4,4 +4,5 @@ export interface Bouquet {
   price?: string;
   images: string[];
   availability: boolean;
+  id: string;
 }

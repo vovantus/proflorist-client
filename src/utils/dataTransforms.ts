@@ -4,6 +4,7 @@
 import { Bouquet } from "../types/bouquet";
 import { DocumentData } from "firebase/firestore/lite";
 
+
 function createBouquetFromDocument(doc: DocumentData): Bouquet {
   return {
     name: doc.name,
@@ -11,6 +12,7 @@ function createBouquetFromDocument(doc: DocumentData): Bouquet {
     price: doc.price,
     images: doc.images,
     availability: doc.availability ? doc.availability : false,
+    id: doc.id,
   };
 }
 

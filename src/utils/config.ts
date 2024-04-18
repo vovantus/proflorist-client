@@ -8,7 +8,5 @@ const firebaseConfig = {
     measurementId: "G-CJYNB5JXVY"
   } as const;
 
-const defaultFlorist = 'rozaexpress' as const;
 
-
-export { firebaseConfig, defaultFlorist };
+export { firebaseConfig };

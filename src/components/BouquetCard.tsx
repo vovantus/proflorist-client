@@ -3,6 +3,7 @@ import { Typography, Button, Card, Skeleton, CardMedia } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Bouquet } from "../types/bouquet";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import useCartStore from "../store/cartStore";
 
 interface BouquetProps {
   bouquet: Bouquet;
@@ -10,6 +11,7 @@ interface BouquetProps {
 
 export default function BouquetCard({ bouquet }: BouquetProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { addBouquet } = useCartStore();
 
   //ASK: 15 04 2024 обсудить, как использовать стилизацию css modules или css in js?
   //ASK: 15 04 2024 как сделать сетку чтобы на планшетах смотрелось без пустой области справа(пример ipad mini)
@@ -17,19 +19,20 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
 
   //TODO: настроить кэширование картинок, когда сделаю админку и загрузку картинок
 
-  console.log(bouquet);
   const [imageUrl, setImageUrl] = useState("");
 
+  // ASK куда лучше поставить проверку на непустой букет? может всё внутри useEffect обернуть?
   useEffect(() => {
     const fetchImage = async () => {
-      const storage = getStorage();
-      const imageRef = ref(storage, bouquet.images[0]);
-
-      try {
-        const url = await getDownloadURL(imageRef);
-        setImageUrl(url);
-      } catch (error) {
-        console.error("Failed to load image from Firebase Storage", error);
+      if (bouquet) {
+        const storage = getStorage();
+        const imageRef = ref(storage, bouquet.images[0]);
+        try {
+          const url = await getDownloadURL(imageRef);
+          setImageUrl(url);
+        } catch (error) {
+          console.error("Failed to load image from Firebase Storage", error);
+        }
       }
     };
 
@@ -51,6 +54,7 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
             width="100%"
             height={378}
             animation="wave"
+            sx={{ borderRadius: "24px" }}
           />
         )}
         <CardMedia
@@ -79,7 +83,9 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
           <Typography gutterBottom variant="subtitle1" component="div">
             {bouquet.name}
           </Typography>
-          <Button size="small">From {bouquet.price}€</Button>
+          <Button size="small" onClick={() => addBouquet(bouquet)}>
+            From {bouquet.price}€
+          </Button>
         </CardContent>
       </Card>
     );

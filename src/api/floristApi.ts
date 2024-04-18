@@ -44,7 +44,7 @@ const floristApi: Api = {
     const bouquetsCol = collection(floristDoc, "bouquets");
     const bouquetsSnapshot = await getDocs(bouquetsCol);
     const bouquetList = bouquetsSnapshot.docs.map((doc) =>
-      createBouquetFromDocument(doc.data())
+      createBouquetFromDocument({ ...doc.data(), id: doc.id })
     );
     return bouquetList;
   },

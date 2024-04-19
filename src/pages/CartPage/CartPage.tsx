@@ -24,8 +24,7 @@ export default function CartPage() {
         gap: 1,
         pb: 8,
         pt: 10,
-        pl: 2,
-        pr: 2,
+        px: 2,
       }}
     >
       <div>Cart</div>

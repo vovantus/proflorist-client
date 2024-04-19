@@ -11,9 +11,16 @@ interface BouquetListProps {
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
   return (
     <>
-      {(isLoading ? Array.from(new Array(3)) : bouquets).map((bouq, index) => (
-        <BouquetCard key={index} bouquet={bouq} />
-      ))}
+      {(isLoading ? Array.from(new Array(3)) : bouquets).map((bouq, index) => {
+        return bouq ? (
+          <BouquetCard key={bouq.id} bouquet={bouq} />
+        ) : (
+          <BouquetCard key={index} bouquet={bouq} />
+        );
+      })}
     </>
   );
 }
+
+
+

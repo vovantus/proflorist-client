@@ -16,6 +16,7 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
   //ASK: 15 04 2024 обсудить, как использовать стилизацию css modules или css in js?
   //ASK: 15 04 2024 как сделать сетку чтобы на планшетах смотрелось без пустой области справа(пример ipad mini)
   //ASK: 15 04 2024 как грузить фоточки в порядке показа на странице, сейчас показывает плейсхолдеры и они заменяются на картинки рандомно
+  //ASK: наверное, надо картинку в отдельный компонент выносить?
 
   //TODO: настроить кэширование картинок, когда сделаю админку и загрузку картинок
 
@@ -24,19 +25,19 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
   // ASK куда лучше поставить проверку на непустой букет? может всё внутри useEffect обернуть?
   useEffect(() => {
     const fetchImage = async () => {
-      if (bouquet) {
-        const storage = getStorage();
-        const imageRef = ref(storage, bouquet.images[0]);
-        try {
-          const url = await getDownloadURL(imageRef);
-          setImageUrl(url);
-        } catch (error) {
-          console.error("Failed to load image from Firebase Storage", error);
-        }
+      const storage = getStorage();
+      const imageRef = ref(storage, bouquet.images[0]);
+      try {
+        const url = await getDownloadURL(imageRef);
+        setImageUrl(url);
+      } catch (error) {
+        console.error("Failed to load image from Firebase Storage", error);
       }
     };
 
-    fetchImage();
+    if (bouquet) {
+      fetchImage();
+    }
   }, [bouquet]);
 
   const card = () => {

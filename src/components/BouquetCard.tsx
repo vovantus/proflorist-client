@@ -4,19 +4,24 @@ import { useState, useEffect } from "react";
 import { Bouquet } from "../types/bouquet";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import useCartStore from "../store/cartStore";
+// import { useParams } from "react-router-dom";
 
 interface BouquetProps {
   bouquet: Bouquet;
 }
 
 export default function BouquetCard({ bouquet }: BouquetProps) {
+  // const params = useParams();
   const [imageLoaded, setImageLoaded] = useState(false);
   const { addBouquet } = useCartStore();
 
   //ASK: 15 04 2024 обсудить, как использовать стилизацию css modules или css in js?
   //ASK: 15 04 2024 как сделать сетку чтобы на планшетах смотрелось без пустой области справа(пример ipad mini)
   //ASK: 15 04 2024 как грузить фоточки в порядке показа на странице, сейчас показывает плейсхолдеры и они заменяются на картинки рандомно
-  //ASK: наверное, надо картинку в отдельный компонент выносить?
+  //   атрибуты loading - lazy
+  //   decoding
+  //   //ASK: наверное, надо картинку в отдельный компонент выносить?
+  //   пеперисать url картинки в хук
 
   //TODO: настроить кэширование картинок, когда сделаю админку и загрузку картинок
 

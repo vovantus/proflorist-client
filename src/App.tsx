@@ -23,6 +23,7 @@ function App() {
             <Route index element={<ShopMainPage />} />
             <Route path={URLS.FLORIST.NEWS} element={<NewsPage />} />
             <Route path={URLS.FLORIST.CART} element={<CartPage />} />
+            {/* добавить route * в который все */}
           </Route>
         </Route>
       </Route>

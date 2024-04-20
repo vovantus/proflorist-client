@@ -8,6 +8,9 @@ interface BouquetListProps {
 
 //ASK: почему тут TS не ругается, когда создаю массив пустых?
 
+
+// букет кард положить в отдельную папку, скелетон вынести в компонент
+
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
   return (
     <>

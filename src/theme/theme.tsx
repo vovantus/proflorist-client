@@ -23,6 +23,13 @@ const theme = createTheme({
       md: 830,
       lg: 1200,
       xl: 1536,
+
+      //   xs 0
+      //   sm 480
+      //   md 768
+      //   lg 1024
+      //   xl 1440
+      //   xxl 1920
     },
   },
   palette: {

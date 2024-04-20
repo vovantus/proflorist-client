@@ -10,6 +10,9 @@ import URLS from "../routes/routes";
 и еще вопрос routes же не надо в стейт запихивать? они не менются в пределах одного флориста.
 
 */
+
+// использовать useeffect в зависимости от uselocation попробоавть разные values и класит в current tab
+
 export default function BottomNav() {
   const params = useParams();
   const relevantRoutes = [URLS.FLORIST.NEWS, "", URLS.FLORIST.CART];

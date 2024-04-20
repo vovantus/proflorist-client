@@ -13,13 +13,13 @@ export function useGetFloristInfo(florist?: string) {
         if (data) {
           setFloristInfos(data);
         }
-
-        setIsLoading(false);
       })
       .catch((e) => {
         console.log(e);
-        setIsLoading(false);
         setError(e.name);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 

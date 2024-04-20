@@ -12,8 +12,9 @@ function ShopMainPage() {
     <>
       <Box
         sx={{
+          // align items - center
           width: "100%",
-          //  bgcolor: "tomato",
+          bgcolor: "tomato",
           display: "flex",
           flexWrap: "wrap",
           flexDirection: { xxs: "column", sm: "row" },

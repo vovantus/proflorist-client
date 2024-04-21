@@ -13,13 +13,14 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import LocalFloristOutlinedIcon from "@mui/icons-material/LocalFloristOutlined";
 
-import { useParams } from "react-router-dom";
+
+import useSubdomain from "../hooks/useSubdomain";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function FloristAppBar() {
-  const params = useParams();
+  const { subdomain } = useSubdomain();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -61,7 +62,7 @@ function FloristAppBar() {
               textDecoration: "none",
             }}
           >
-            {params.floristName}
+            {subdomain}
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -116,7 +117,7 @@ function FloristAppBar() {
               textDecoration: "none",
             }}
           >
-            {params.floristName}
+            {subdomain}
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (

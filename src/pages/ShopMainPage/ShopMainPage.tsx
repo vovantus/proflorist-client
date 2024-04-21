@@ -1,12 +1,17 @@
 import { useGetBouquets } from "../../hooks/useGetBouquets.ts";
 import BouquetList from "../../components/BouquetsList.tsx";
 import { Box } from "@mui/material";
-import { useParams } from "react-router-dom";
+//import { useParams } from "react-router-dom";
 
-function ShopMainPage() {
+interface ShopMainPageProps {
+  florist: string;
+}
+
+function ShopMainPage({ florist }: ShopMainPageProps) {
   //ASK: 16 04 - нормально ли брать то что вернул первый хук и сразу засовывать в параметры второго?
-  const params = useParams();
-  const { bouquets, isLoading } = useGetBouquets(params.floristName);
+  // const params = useParams();
+  console.log(florist);
+  const { bouquets, isLoading } = useGetBouquets(florist);
 
   return (
     <>

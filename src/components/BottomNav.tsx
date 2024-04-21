@@ -2,7 +2,7 @@ import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
-import { Link, useLocation, matchPath, useParams } from "react-router-dom";
+import { Link, useLocation, matchPath } from "react-router-dom";
 import URLS from "../routes/routes";
 
 /** ASK 17 04 24 чтобы определить актиную вкладку и поменять ее цвет используется сравнение текущего адреса со списком адресов в routes.
@@ -14,11 +14,8 @@ import URLS from "../routes/routes";
 // использовать useeffect в зависимости от uselocation попробоавть разные values и класит в current tab
 
 export default function BottomNav() {
-  const params = useParams();
   const relevantRoutes = [URLS.FLORIST.NEWS, "", URLS.FLORIST.CART];
-  const absoluteRoutes = relevantRoutes.map(
-    (url) => "/" + params.floristName + URLS.FLORIST.ROOT + url
-  );
+  const absoluteRoutes = relevantRoutes.map((url) => "/" + url);
 
   const routeMatch = useRouteMatch(absoluteRoutes);
   const currentTab = routeMatch?.pattern?.path;

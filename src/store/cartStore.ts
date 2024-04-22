@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Bouquet } from "../types/bouquet";
+import Bouquet from "../types/bouquet";
 
 //ASK: мне нужен метод подсчета суммы в корзине, куда его поместить лучше?
 //ASK: в букете хранится много лишних полей, нужно ли их вырезать при добавлении в корзину?

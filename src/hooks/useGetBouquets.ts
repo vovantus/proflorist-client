@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import floristApi from "../api/floristApi";
-import { Bouquet } from "../types/bouquet";
+import Bouquet from "../types/bouquet";
 
 export function useGetBouquets(florist?: string) {
   const [isLoading, setIsLoading] = useState(true);

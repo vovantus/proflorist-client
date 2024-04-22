@@ -7,7 +7,7 @@ import {
   DocumentData,
 } from "firebase/firestore/lite";
 import api from "./instance";
-import { Bouquet } from "../types/bouquet";
+import Bouquet from "../types/bouquet";
 import { createBouquetFromDocument } from "../utils/dataTransforms";
 
 // ASK 16 04 2024 тут про дженерики спросить(по просьбе Сани)

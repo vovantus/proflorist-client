@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import floristApi from "../api/floristApi";
 import FloristInfo from "../types/floristInfo";
 import { createFloristFromDocument } from "../utils/dataTransforms";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export function useGetFloristInfo() {
   const [subdomain, setSubdomain] = useState("");
@@ -10,9 +10,6 @@ export function useGetFloristInfo() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const location = useLocation();
-  const navigate = useNavigate();
-
-  console.log(location);
 
   useEffect(() => {
     const host = window.location.host;
@@ -32,8 +29,8 @@ export function useGetFloristInfo() {
         .catch((e) => {
           setError(e.name);
           const newHost = window.location.host.replace(`${subdomain}.`, "");
-          console.log(newHost);
-          navigate(`//${newHost}${location.pathname}`, { replace: true });
+          console.log("new host:", newHost);
+          window.location.href = `//${newHost}${location.pathname}`;
         })
         .finally(() => {
           setIsLoading(false);

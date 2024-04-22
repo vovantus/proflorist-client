@@ -1,5 +1,5 @@
 import BouquetCard from "./BouquetCard";
-import { Bouquet } from "../types/bouquet";
+import Bouquet from "../types/bouquet";
 
 interface BouquetListProps {
   bouquets: Bouquet[];

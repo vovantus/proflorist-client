@@ -1,4 +1,4 @@
-export interface Bouquet {
+export default interface Bouquet {
   name: string;
   description?: string;
   price?: string;

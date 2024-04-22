@@ -9,19 +9,19 @@ import URLS from "./routes/routes.ts";
 import CartPage from "./pages/CartPage/CartPage.tsx";
 import NewsPage from "./pages/NewsPage/NewsPage.tsx";
 
-import useSubdomain from "./hooks/useSubdomain.ts";
+import { useGetFloristInfo } from "./hooks/useGetFloristInfo.ts";
 
 //ASK 17 04 24 МЕГАвопрос- у меня всё что идет после /:floristName - это приложение магазина флориста, как отдельный функционал, может его вынести в какой-то микрофронтеннд и подключать?
 
 function App() {
-  const { subdomain } = useSubdomain();
+  const { floristInfo } = useGetFloristInfo();
 
-  return subdomain ? (
+  return floristInfo ? (
     <Routes>
       <Route element={<FloristShopLayout />}>
         <Route
           path={URLS.ROOT}
-          element={<ShopMainPage florist={subdomain} />}
+          element={<ShopMainPage florist={floristInfo.name} />}
         />
         <Route path={URLS.FLORIST.NEWS} element={<NewsPage />} />
         <Route path={URLS.FLORIST.CART} element={<CartPage />} />

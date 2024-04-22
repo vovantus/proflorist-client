@@ -1,7 +1,7 @@
 import CardContent from "@mui/material/CardContent";
 import { Typography, Button, Card, Skeleton, CardMedia } from "@mui/material";
 import { useState, useEffect } from "react";
-import { Bouquet } from "../types/bouquet";
+import Bouquet from "../types/bouquet";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import useCartStore from "../store/cartStore";
 // import { useParams } from "react-router-dom";

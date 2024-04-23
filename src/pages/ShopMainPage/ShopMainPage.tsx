@@ -14,12 +14,13 @@ function ShopMainPage({ florist }: ShopMainPageProps) {
     <>
       <Box
         sx={{
-          alignItems: "center",
           width: "100%",
           bgcolor: "tomato",
           display: "flex",
           flexWrap: "wrap",
-          flexDirection: { xxs: "column", sm: "row" },
+          flexDirection: "row",
+          justifyContent: "center",
+
           gap: 1,
           pb: 8,
           pt: 10,

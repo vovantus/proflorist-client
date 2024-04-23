@@ -19,7 +19,7 @@ export function useGetBouquets(florist?: string) {
         setIsLoading(false);
         setError(e.name);
       });
-  }, []);
+  }, [florist]);
 
   return {
     bouquets,

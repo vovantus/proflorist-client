@@ -17,19 +17,19 @@ declare module "@mui/material/styles" {
 const theme = createTheme({
   breakpoints: {
     values: {
-      xxs: 0,
-      xs: 350,
-      sm: 600,
-      md: 830,
-      lg: 1200,
-      xl: 1536,
+      //   xxs: 0,
+      //   xs: 350,
+      //   sm: 600,
+      //   md: 830,
+      //   lg: 1200,
+      //   xl: 1536,
 
-      //   xs 0
-      //   sm 480
-      //   md 768
-      //   lg 1024
-      //   xl 1440
-      //   xxl 1920
+      xxs: 0,
+      xs: 480,
+      sm: 768,
+      md: 1024,
+      lg: 1440,
+      xl: 1920,
     },
   },
   palette: {

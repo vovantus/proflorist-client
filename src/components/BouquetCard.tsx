@@ -1,55 +1,32 @@
 import CardContent from "@mui/material/CardContent";
 import { Typography, Button, Card, Skeleton, CardMedia } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Bouquet from "../types/bouquet";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import useCartStore from "../store/cartStore";
-// import { useParams } from "react-router-dom";
+import useFetchBouquetImage from "../hooks/useFetchBouquetUrl";
 
 interface BouquetProps {
   bouquet: Bouquet;
 }
 
 export default function BouquetCard({ bouquet }: BouquetProps) {
-  // const params = useParams();
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { imageUrl } = useFetchBouquetImage(bouquet);
   const { addBouquet } = useCartStore();
 
-  //ASK: 15 04 2024 обсудить, как использовать стилизацию css modules или css in js?
   //ASK: 15 04 2024 как сделать сетку чтобы на планшетах смотрелось без пустой области справа(пример ipad mini)
-  //ASK: 15 04 2024 как грузить фоточки в порядке показа на странице, сейчас показывает плейсхолдеры и они заменяются на картинки рандомно
+
+  //TODO:
   //   атрибуты loading - lazy
   //   decoding
-  //   //ASK: наверное, надо картинку в отдельный компонент выносить?
-  //   пеперисать url картинки в хук
-
-  //TODO: настроить кэширование картинок, когда сделаю админку и загрузку картинок
-
-  const [imageUrl, setImageUrl] = useState("");
-
-  // ASK куда лучше поставить проверку на непустой букет? может всё внутри useEffect обернуть?
-  useEffect(() => {
-    const fetchImage = async () => {
-      const storage = getStorage();
-      const imageRef = ref(storage, bouquet.images[0]);
-      try {
-        const url = await getDownloadURL(imageRef);
-        setImageUrl(url);
-      } catch (error) {
-        console.error("Failed to load image from Firebase Storage", error);
-      }
-    };
-
-    if (bouquet) {
-      fetchImage();
-    }
-  }, [bouquet]);
+  // настроить кэширование картинок, когда сделаю админку и загрузку картинок
+  // настроить lazyload чтоб нормально грузились картинки
 
   const card = () => {
     return (
       <Card
         sx={{
-          width: 378,
+          width: 350,
           position: "relative",
           borderRadius: "24px",
         }}
@@ -58,21 +35,24 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
           <Skeleton
             variant="rectangular"
             width="100%"
-            height={378}
+            height={350}
             animation="wave"
-            sx={{ borderRadius: "24px" }}
+            sx={{ borderRadius: "24px", position: "absolute" }}
           />
         )}
-        <CardMedia
-          component="img"
-          sx={{
-            height: 378,
-            display: imageLoaded ? "block" : "none",
-          }}
-          image={imageUrl}
-          title={bouquet.name}
-          onLoad={() => setImageLoaded(true)}
-        />
+        {imageUrl && (
+          <CardMedia
+            component="img"
+            sx={{
+              height: 350,
+              display: "block",
+            }}
+            image={imageUrl}
+            title={bouquet.name}
+            loading="lazy"
+            onLoad={() => setImageLoaded(true)}
+          />
+        )}
         <CardContent
           sx={{
             position: "absolute",
@@ -101,8 +81,8 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
     return (
       <Card
         sx={{
-          width: 378,
-          height: 378,
+          width: 350,
+          height: 350,
           borderRadius: "24px",
         }}
       >

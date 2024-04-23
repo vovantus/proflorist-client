@@ -14,13 +14,13 @@ import MenuItem from "@mui/material/MenuItem";
 import LocalFloristOutlinedIcon from "@mui/icons-material/LocalFloristOutlined";
 
 
-import useSubdomain from "../hooks/useSubdomain";
+import { useGetFloristInfo } from "../hooks/useGetFloristInfo";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function FloristAppBar() {
-  const { subdomain } = useSubdomain();
+  const { floristInfo } = useGetFloristInfo();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -48,7 +48,7 @@ function FloristAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <LocalFloristOutlinedIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
+            sx={{ display: { xxs: "none", md: "flex" }, mr: 1 }}
           />
           <Typography
             variant="h6"
@@ -57,15 +57,15 @@ function FloristAppBar() {
             href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
-              display: { xs: "none", md: "flex" },
+              display: { xxs: "none", md: "flex" },
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            {subdomain}
+            {floristInfo?.name}
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xxs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -91,7 +91,7 @@ function FloristAppBar() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xxs: "block", md: "none" },
               }}
             >
               {pages.map((page) => (
@@ -102,7 +102,7 @@ function FloristAppBar() {
             </Menu>
           </Box>
           <LocalFloristOutlinedIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+            sx={{ display: { xxs: "flex", md: "none" }, mr: 1 }}
           />
           <Typography
             variant="h5"
@@ -111,15 +111,15 @@ function FloristAppBar() {
             href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
-              display: { xs: "flex", md: "none" },
+              display: { xxs: "flex", md: "none" },
               flexGrow: 1,
               color: "inherit",
               textDecoration: "none",
             }}
           >
-            {subdomain}
+            {floristInfo?.name}
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: { xxs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
                 key={page}

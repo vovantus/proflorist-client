@@ -9,8 +9,8 @@ export default function FloristShopLayout() {
       sx={{
         // bgcolor: "grey",
         height: "100vh",
-
-        width: { xxs: "100vw", sm: "426px", md: "815px", lg: "1200px" },
+        px: { xxs: "8px", md: "8px" },
+        width: "100%",
       }}
     >
       <FloristAppBar />

@@ -8,18 +8,29 @@ export function useGetBouquets(florist: string, bouquetIds?: Bouquet["id"][]) {
   const [bouquets, setBouquets] = useState<Bouquet[]>([]);
 
   useEffect(() => {
-    if (florist)
+    const shouldFetchBouquets = () => {
+      return (
+        bouquetIds === null ||
+        bouquetIds === undefined ||
+        (Array.isArray(bouquetIds) && bouquetIds.length > 0)
+      );
+    };
+
+    if (shouldFetchBouquets()) {
+      setIsLoading(true);
+
       floristApi
         .fetchBouquets(florist, bouquetIds)
         .then((bouqs) => {
           setBouquets(bouqs);
           setIsLoading(false);
         })
-        .catch((e) => {
-          console.log(e);
+        .catch((error) => {
+          console.error(error);
+          setError(error.message);
           setIsLoading(false);
-          setError(e.name);
         });
+    }
   }, [florist, bouquetIds]);
 
   return {

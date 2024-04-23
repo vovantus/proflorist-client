@@ -1,4 +1,5 @@
-import BouquetCard from "./BouquetCard";
+import BouquetCard from "./BouquetCard/BouquetCard";
+import BouquetCardSkeleton from "./BouquetCard/BoouquetCardSkeleton";
 import Bouquet from "../types/bouquet";
 
 interface BouquetListProps {
@@ -6,24 +7,16 @@ interface BouquetListProps {
   isLoading: boolean;
 }
 
-//ASK: почему тут TS не ругается, когда создаю массив пустых?
-
-
-// букет кард положить в отдельную папку, скелетон вынести в компонент
+// ASK: 23 04 почему такой медленный переход между списком скелетонов и списком букетов?
 
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
   return (
     <>
-      {(isLoading ? Array.from(new Array(3)) : bouquets).map((bouq, index) => {
-        return bouq ? (
-          <BouquetCard key={bouq.id} bouquet={bouq} />
-        ) : (
-          <BouquetCard key={index} bouquet={bouq} />
-        );
-      })}
+      {isLoading
+        ? Array.from(new Array(3)).map((_, index) => (
+            <BouquetCardSkeleton key={index} />
+          ))
+        : bouquets.map((el) => <BouquetCard key={el.id} bouquet={el} />)}
     </>
   );
 }
-
-
-

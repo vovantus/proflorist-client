@@ -2,36 +2,20 @@ import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
-import { Link, useLocation, matchPath } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import URLS from "../routes/routes";
 
-/** ASK 17 04 24 чтобы определить актиную вкладку и поменять ее цвет используется сравнение текущего адреса со списком адресов в routes.
-я генерю список руками склеивая адрес имя фориста+ путь(имя флориста тащу из useParams), вроде бы можно использовать переменные пути типа :floristName, но у меня не заработало.
-и еще вопрос routes же не надо в стейт запихивать? они не менются в пределах одного флориста.
+// с прошлого синка: использовать useeffect в зависимости от uselocation попробоавть разные values и класит в current tab
 
-*/
-
-// использовать useeffect в зависимости от uselocation попробоавть разные values и класит в current tab
+// ASK: 23 04 выглядит странно, но работает
 
 export default function BottomNav() {
-  const relevantRoutes = [URLS.FLORIST.NEWS, "", URLS.FLORIST.CART];
+  const { pathname } = useLocation();
+
+  // paths in decending order, parent paths at the end
+  const relevantRoutes = [URLS.FLORIST.NEWS, URLS.FLORIST.CART, ""];
   const absoluteRoutes = relevantRoutes.map((url) => "/" + url);
-
-  const routeMatch = useRouteMatch(absoluteRoutes);
-  const currentTab = routeMatch?.pattern?.path;
-
-  function useRouteMatch(patterns: readonly string[]) {
-    const { pathname } = useLocation();
-
-    for (const pattern of patterns) {
-      const possibleMatch = matchPath(pattern, pathname);
-      if (possibleMatch !== null) {
-        return possibleMatch;
-      }
-    }
-
-    return null;
-  }
+  const currentTab = absoluteRoutes.find((el) => pathname.includes(el));
 
   return (
     <Paper
@@ -49,15 +33,15 @@ export default function BottomNav() {
         <BottomNavigationAction
           icon={<GridViewOutlinedIcon />}
           label="Catalog"
-          value={absoluteRoutes[1]}
-          to={absoluteRoutes[1]}
+          value={absoluteRoutes[2]}
+          to={absoluteRoutes[2]}
           component={Link}
         />
         <BottomNavigationAction
           icon={<ShoppingCartOutlinedIcon />}
           label="Cart"
-          value={absoluteRoutes[2]}
-          to={absoluteRoutes[2]}
+          value={absoluteRoutes[1]}
+          to={absoluteRoutes[1]}
           component={Link}
         />
       </BottomNavigation>

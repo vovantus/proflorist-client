@@ -2,15 +2,15 @@ import { Box, Button, Paper } from "@mui/material";
 import useCartStore from "../../store/cartStore";
 
 export default function CartPage() {
-  const { cartBouquets, addBouquet, removeBouquet } = useCartStore();
+  const { cartBouquets, addBouquet, removeBouquet, cartTotalQuantity } =
+    useCartStore();
   const cartItems = () =>
     cartBouquets.map((bouquet) => (
       <Paper key={bouquet.id} sx={{ p: 2 }}>
-        {bouquet.name}
-
-        <Button onClick={() => addBouquet(bouquet)}>+</Button>
+        {bouquet.id}
+        <Button onClick={() => addBouquet(bouquet.id)}>+</Button>
         {bouquet.quantity}
-        <Button onClick={() => removeBouquet(bouquet)}>-</Button>
+        <Button onClick={() => removeBouquet(bouquet.id)}>-</Button>
       </Paper>
     ));
   return (
@@ -29,6 +29,8 @@ export default function CartPage() {
     >
       <div>Cart</div>
       {cartItems()}
+      <div>Cart total</div>
+      {cartTotalQuantity()}
     </Box>
   );
 }

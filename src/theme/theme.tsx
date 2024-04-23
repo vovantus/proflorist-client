@@ -1,7 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
-//ASK: мне нужна ширина до 320пх для мелких телефонов, это ок так добавлять брейкпоинт? (xxs добавил)
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
     xxs: true;
@@ -13,17 +12,9 @@ declare module "@mui/material/styles" {
   }
 }
 
-// A custom theme for this app
 const theme = createTheme({
   breakpoints: {
     values: {
-      //   xxs: 0,
-      //   xs: 350,
-      //   sm: 600,
-      //   md: 830,
-      //   lg: 1200,
-      //   xl: 1536,
-
       xxs: 0,
       xs: 480,
       sm: 768,

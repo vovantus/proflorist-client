@@ -2,7 +2,6 @@ import { useGetBouquets } from "../../hooks/useGetBouquets.ts";
 import BouquetList from "../../components/BouquetsList.tsx";
 import { Box } from "@mui/material";
 
-
 interface ShopMainPageProps {
   florist: string;
 }

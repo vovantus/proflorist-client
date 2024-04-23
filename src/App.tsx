@@ -21,7 +21,10 @@ function App() {
           element={<ShopMainPage florist={floristInfo.name} />}
         />
         <Route path={URLS.FLORIST.NEWS} element={<NewsPage />} />
-        <Route path={URLS.FLORIST.CART} element={<CartPage />} />
+        <Route
+          path={URLS.FLORIST.CART}
+          element={<CartPage florist={floristInfo.name} />}
+        />
         <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>

@@ -5,27 +5,34 @@ import {
   doc,
   DocumentReference,
   DocumentData,
-} from "firebase/firestore/lite";
+  query,
+  where,
+} from "firebase/firestore";
 import api from "./instance";
 import Bouquet from "../types/bouquet";
 import { createBouquetFromDocument } from "../utils/dataTransforms";
+// import { query, where } from "firebase/firestore";
 
 interface Api {
   fetchFlorist: (
-    floristName?: string
+    floristName: string
   ) => Promise<DocumentReference<DocumentData, DocumentData>>;
 
-  fetchFloristInfo: (floristName?: string) => Promise<DocumentData | undefined>;
-  fetchBouquets: (floristName?: string) => Promise<Bouquet[]>;
+  fetchFloristInfo: (floristName: string) => Promise<DocumentData | undefined>;
+
+  fetchBouquets: (
+    floristName: string,
+    bouquetIds?: Bouquet["id"][]
+  ) => Promise<Bouquet[]>;
 }
 
 const floristApi: Api = {
-  fetchFlorist: async (floristName = "rozaexpress") => {
+  fetchFlorist: async (floristName) => {
     const floristDoc = doc(api.provider().db, "florists", floristName);
     return floristDoc;
   },
 
-  fetchFloristInfo: async (floristName = "rozaexpress") => {
+  fetchFloristInfo: async (floristName) => {
     const floristRef = await floristApi.fetchFlorist(floristName);
     const floristSnap = await getDoc(floristRef);
 
@@ -37,9 +44,15 @@ const floristApi: Api = {
     }
   },
 
-  fetchBouquets: async (floristName = "rozaexpress") => {
+  fetchBouquets: async (floristName, bouquetIds) => {
     const floristDoc = await floristApi.fetchFlorist(floristName);
-    const bouquetsCol = collection(floristDoc, "bouquets");
+    const bouquetsCol =
+      Array.isArray(bouquetIds) && bouquetIds.length > 0
+        ? query(
+            collection(floristDoc, "bouquets"),
+            where("__name__", "in", bouquetIds)
+          )
+        : collection(floristDoc, "bouquets");
     const bouquetsSnapshot = await getDocs(bouquetsCol);
     const bouquetList = bouquetsSnapshot.docs.map((doc) =>
       createBouquetFromDocument({ ...doc.data(), id: doc.id })

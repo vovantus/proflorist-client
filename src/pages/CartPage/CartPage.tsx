@@ -1,16 +1,38 @@
 import { Box, Button, Paper } from "@mui/material";
 import useCartStore from "../../store/cartStore";
+import { useGetBouquets } from "../../hooks/useGetBouquets";
+import { useMemo } from "react";
 
-export default function CartPage() {
-  const { cartBouquets, addBouquet, removeBouquet, cartTotalQuantity } =
-    useCartStore();
-  const cartItems = () =>
+interface CartPageProps {
+  florist: string;
+}
+
+export default function CartPage({ florist }: CartPageProps) {
+  const { cartItems, addItem, removeItem } = useCartStore();
+
+  const bouquetIds = useMemo(() => {
+    return cartItems.map((el) => el.id);
+  }, [cartItems]);
+
+  const { bouquets } = useGetBouquets(florist, bouquetIds);
+
+  const cartBouquets = bouquets.map((b) => ({
+    ...b,
+    quantity: cartItems.find((el) => el.id == b.id)?.quantity,
+  }));
+
+  const cartTotal = cartBouquets.reduce((acc, item) => {
+    if (item.price && item.quantity) acc += item.price * item.quantity;
+    return acc;
+  }, 0);
+
+  const cartBouquetsList = () =>
     cartBouquets.map((bouquet) => (
       <Paper key={bouquet.id} sx={{ p: 2 }}>
-        {bouquet.id}
-        <Button onClick={() => addBouquet(bouquet.id)}>+</Button>
+        {bouquet.name} {bouquet.price}
+        <Button onClick={() => addItem(bouquet.id)}>+</Button>
         {bouquet.quantity}
-        <Button onClick={() => removeBouquet(bouquet.id)}>-</Button>
+        <Button onClick={() => removeItem(bouquet.id)}>-</Button>
       </Paper>
     ));
   return (
@@ -28,9 +50,9 @@ export default function CartPage() {
       }}
     >
       <div>Cart</div>
-      {cartItems()}
+      {cartBouquetsList()}
       <div>Cart total</div>
-      {cartTotalQuantity()}
+      {cartTotal}
     </Box>
   );
 }

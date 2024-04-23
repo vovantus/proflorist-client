@@ -1,7 +1,7 @@
 export default interface Bouquet {
   name: string;
   description?: string;
-  price?: string;
+  price?: number;
   images: string[];
   availability: boolean;
   id: string;

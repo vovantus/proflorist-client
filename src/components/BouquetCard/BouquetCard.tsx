@@ -18,7 +18,7 @@ interface BouquetProps {
 export default function BouquetCard({ bouquet }: BouquetProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { imageUrl } = useFetchBouquetImage(bouquet);
-  const { addBouquet } = useCartStore();
+  const { addItem } = useCartStore();
 
   //TODO:
   //   атрибуты loading - lazy
@@ -72,7 +72,7 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
         <Typography gutterBottom variant="subtitle1" component="div">
           {bouquet.name}
         </Typography>
-        <Button size="small" onClick={() => addBouquet(bouquet.id)}>
+        <Button size="small" onClick={() => addItem(bouquet.id)}>
           From {bouquet.price}€
         </Button>
       </CardContent>

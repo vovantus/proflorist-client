@@ -6,3 +6,5 @@ export default interface Bouquet {
   availability: boolean;
   id: string;
 }
+
+

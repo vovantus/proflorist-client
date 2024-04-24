@@ -26,13 +26,23 @@ export default function BottomNav() {
 
   return (
     <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+      sx={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: "rgba(255, 2255, 255, 0.0)",
+      }}
       elevation={3}
     >
       <BottomNavigation
         showLabels
         value={currentTab}
-        sx={{ minHeight: "64px" }}
+        sx={{
+          minHeight: "64px",
+          backgroundColor: "rgba(255, 2255, 255, 0.5)",
+          backdropFilter: "blur(8px)",
+        }}
       >
         <BottomNavigationAction
           icon={<ArticleOutlinedIcon />}

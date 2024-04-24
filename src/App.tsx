@@ -10,6 +10,9 @@ import NewsPage from "./pages/NewsPage/NewsPage.tsx";
 import Page404 from "./pages/NotFoundPage/Page404.tsx";
 import { useGetFloristInfo } from "./hooks/useGetFloristInfo.ts";
 
+
+// ask: 24 04 долго грузится, сначала показыват 404 при первом обращении
+
 function App() {
   const { floristInfo } = useGetFloristInfo();
 

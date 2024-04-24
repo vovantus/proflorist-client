@@ -7,7 +7,7 @@ export default function FloristShopLayout() {
   return (
     <Container
       sx={{
-        bgcolor: "grey",
+        // bgcolor: "grey",
         height: "100vh",
         px: { xxs: "8px", md: "8px" },
         width: "100%",
@@ -17,7 +17,7 @@ export default function FloristShopLayout() {
       <Box
         sx={{
           width: "100%",
-          bgcolor: "lightBlue",
+          //   bgcolor: "lightBlue",
           display: "flex",
           flexWrap: "wrap",
           flexDirection: "row",

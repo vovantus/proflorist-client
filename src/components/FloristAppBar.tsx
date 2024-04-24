@@ -44,7 +44,14 @@ function FloristAppBar() {
   };
 
   return (
-    <AppBar position="fixed" color="secondary">
+    <AppBar
+      position="fixed"
+      color="secondary"
+      sx={{
+        backgroundColor: "rgba(118, 202, 254, 0.5)",
+        backdropFilter: "blur(8px)",
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <LocalFloristOutlinedIcon

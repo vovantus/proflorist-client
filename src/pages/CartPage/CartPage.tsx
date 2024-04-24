@@ -21,32 +21,31 @@ export default function CartPage({ florist }: CartPageProps) {
 
   const { bouquets } = useGetBouquets(florist, bouquetIds);
 
-  const cartBouquets = useMemo(() => {
-    return cartItems.reduce((acc, item) => {
-      const bouquet = bouquets.find((b) => b.id === item.id);
-      if (bouquet) {
-        acc.push({
-          ...bouquet,
-          quantity: item.quantity,
-        });
-      }
-      return acc;
-    }, [] as CartBouquet[]);
-  }, [cartItems, bouquets]);
+  const cartBouquets = cartItems.reduce((acc, item) => {
+    const bouquet = bouquets.find((b) => b.id === item.id);
+    if (bouquet) {
+      acc.push({
+        ...bouquet,
+        quantity: item.quantity,
+      });
+    }
+    return acc;
+  }, [] as CartBouquet[]);
 
-  const cartTotal = useMemo(() => {
-    return cartBouquets.reduce((total, item) => {
-      return total + item.price * item.quantity;
-    }, 0);
-  }, [cartBouquets]);
+  const cartTotal =
+    Math.round(
+      cartBouquets.reduce((total, item) => {
+        return total + item.price * item.quantity;
+      }, 0) * 100
+    ) / 100;
 
   const cartBouquetsList = (cartBouquets: CartBouquet[]) =>
     cartBouquets.map((bouquet) => (
       <Paper key={bouquet!.id} sx={{ p: 2 }}>
         {bouquet.name} {bouquet!.price}
-        <Button onClick={() => addItem(bouquet.id)}>+</Button>
-        {bouquet.quantity}
         <Button onClick={() => removeItem(bouquet.id)}>-</Button>
+        {bouquet.quantity}
+        <Button onClick={() => addItem(bouquet.id)}>+</Button>
       </Paper>
     ));
 
@@ -55,7 +54,7 @@ export default function CartPage({ florist }: CartPageProps) {
       <div>Cart</div>
       {cartBouquetsList(cartBouquets)}
       <div>Cart total</div>
-      {cartTotalQuantity()} bouquets {cartTotal}EUR
+      {cartTotalQuantity()} bouquets {cartTotal}€
     </Box>
   );
 }

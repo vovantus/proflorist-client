@@ -1,9 +1,15 @@
-import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Paper,
+  Badge,
+} from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import { Link, useLocation } from "react-router-dom";
 import URLS from "../routes/routes";
+import useCartStore from "../store/cartStore";
 
 // с прошлого синка: использовать useeffect в зависимости от uselocation попробоавть разные values и класит в current tab
 
@@ -11,6 +17,7 @@ import URLS from "../routes/routes";
 
 export default function BottomNav() {
   const { pathname } = useLocation();
+  const { cartTotalQuantity } = useCartStore();
 
   // paths in decending order, parent paths at the end
   const relevantRoutes = [URLS.FLORIST.NEWS, URLS.FLORIST.CART, ""];
@@ -22,7 +29,11 @@ export default function BottomNav() {
       sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
       elevation={3}
     >
-      <BottomNavigation showLabels value={currentTab}>
+      <BottomNavigation
+        showLabels
+        value={currentTab}
+        sx={{ minHeight: "64px" }}
+      >
         <BottomNavigationAction
           icon={<ArticleOutlinedIcon />}
           label="News"
@@ -38,7 +49,21 @@ export default function BottomNav() {
           component={Link}
         />
         <BottomNavigationAction
-          icon={<ShoppingCartOutlinedIcon />}
+          icon={
+            <Badge
+              badgeContent={cartTotalQuantity()}
+              color="primary"
+              max={99}
+              overlap="circular"
+              sx={{
+                "& .MuiBadge-badge": {
+                  color: "white",
+                },
+              }}
+            >
+              <ShoppingCartOutlinedIcon />
+            </Badge>
+          }
           label="Cart"
           value={absoluteRoutes[1]}
           to={absoluteRoutes[1]}

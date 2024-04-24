@@ -23,7 +23,7 @@ export default function FloristShopLayout() {
           flexDirection: "row",
           justifyContent: "center",
           gap: 1,
-          pb: 8,
+          pb: 9,
           pt: { xxs: 8, sm: 10 },
         }}
       >

@@ -18,7 +18,7 @@ export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
   const { removeItem, addItem } = useCartStore();
   const { imageUrl } = useFetchBouquetImage(bouquet);
   return (
-    <Card sx={{ display: "flex", minWidth: 350 }}>
+    <Card sx={{ display: "flex", minWidth: 350 }} elevation={3}>
       <CardMedia
         component="img"
         sx={{ width: 75 }}
@@ -35,21 +35,38 @@ export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
             color="text.secondary"
             component="div"
           >
-            {bouquet.name}
+            Set article
           </Typography>
         </CardContent>
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "end",
+            justifyContent: "space-between",
             pr: 1,
+            pl: 2,
             pb: 1,
           }}
         >
-          <Button onClick={() => removeItem(bouquet.id)}>-</Button>
-          {bouquet.quantity}
-          <Button onClick={() => addItem(bouquet.id)}>+</Button>
+          <Typography
+            variant="subtitle1"
+            color="text.secondary"
+            component="div"
+          >
+            {bouquet.price}€
+          </Typography>
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "end",
+            }}
+          >
+            <Button onClick={() => removeItem(bouquet.id)}>-</Button>
+            {bouquet.quantity}
+            <Button onClick={() => addItem(bouquet.id)}>+</Button>
+          </Box>
         </Box>
       </Box>
     </Card>

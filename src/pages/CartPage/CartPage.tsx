@@ -1,4 +1,4 @@
-import { Box, Button, Paper } from "@mui/material";
+import { Button, Paper, Box } from "@mui/material";
 import useCartStore from "../../store/cartStore";
 import { useGetBouquets } from "../../hooks/useGetBouquets";
 import { useMemo } from "react";
@@ -13,7 +13,7 @@ interface CartBouquet extends Bouquet {
 }
 
 export default function CartPage({ florist }: CartPageProps) {
-  const { cartItems, addItem, removeItem } = useCartStore();
+  const { cartItems, addItem, removeItem, cartTotalQuantity } = useCartStore();
 
   const bouquetIds = useMemo(() => {
     return cartItems.map((el) => el.id);
@@ -21,22 +21,24 @@ export default function CartPage({ florist }: CartPageProps) {
 
   const { bouquets } = useGetBouquets(florist, bouquetIds);
 
-  const cartBouquets: CartBouquet[] = [];
+  const cartBouquets = useMemo(() => {
+    return cartItems.reduce((acc, item) => {
+      const bouquet = bouquets.find((b) => b.id === item.id);
+      if (bouquet) {
+        acc.push({
+          ...bouquet,
+          quantity: item.quantity,
+        });
+      }
+      return acc;
+    }, [] as CartBouquet[]);
+  }, [cartItems, bouquets]);
 
-  cartItems.forEach((b) => {
-    const bouquet = bouquets.find((el) => el.id == b.id);
-    if (bouquet) {
-      cartBouquets.push({
-        ...bouquet,
-        quantity: b.quantity,
-      });
-    }
-  });
-
-  const cartTotal = cartBouquets.reduce((acc, item) => {
-    if (item && item.price && item!.quantity) acc += item.price * item.quantity;
-    return acc;
-  }, 0);
+  const cartTotal = useMemo(() => {
+    return cartBouquets.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+  }, [cartBouquets]);
 
   const cartBouquetsList = (cartBouquets: CartBouquet[]) =>
     cartBouquets.map((bouquet) => (
@@ -47,24 +49,13 @@ export default function CartPage({ florist }: CartPageProps) {
         <Button onClick={() => removeItem(bouquet.id)}>-</Button>
       </Paper>
     ));
+
   return (
-    <Box
-      sx={{
-        width: "100%",
-        bgcolor: "lightblue",
-        display: "flex",
-        flexWrap: "wrap",
-        flexDirection: "column",
-        gap: 1,
-        pb: 8,
-        pt: 10,
-        px: 2,
-      }}
-    >
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <div>Cart</div>
       {cartBouquetsList(cartBouquets)}
       <div>Cart total</div>
-      {cartTotal}
+      {cartTotalQuantity()} bouquets {cartTotal}EUR
     </Box>
   );
 }

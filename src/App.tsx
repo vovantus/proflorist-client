@@ -27,10 +27,10 @@ function App() {
             path={URLS.ROOT}
             element={<ShopMainPage florist={floristInfo.name} />}
           />
-          <Route
+          {/* <Route
             path={URLS.FLORIST.CATALOG}
             element={<CategoriesPage florist={floristInfo.name} />}
-          />
+          /> */}
           <Route path={URLS.FLORIST.NEWS} element={<NewsPage />} />
           <Route
             path={URLS.FLORIST.CART}

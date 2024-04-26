@@ -27,7 +27,6 @@ function createCategoryFromDocument(doc: DocumentData): Category {
     name: doc.name,
     id: doc.id,
     active: doc.active,
-    bouquets: doc.bouquets.map((id: string) => id as Bouquet["id"]),
   };
 }
 

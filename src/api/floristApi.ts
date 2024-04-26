@@ -15,7 +15,7 @@ import {
   createCategoryFromDocument,
 } from "../utils/dataTransforms";
 import Category from "../types/category";
-// import { query, where } from "firebase/firestore";
+
 
 interface Api {
   fetchFlorist: (
@@ -30,6 +30,11 @@ interface Api {
   ) => Promise<Bouquet[]>;
 
   fetchCategories: (floristName: string) => Promise<Category[]>;
+
+  fetchCategoryBouquets: (
+    floristName: string,
+    categoryId: Category["id"]
+  ) => Promise<Bouquet["id"][]>;
 }
 
 const floristApi: Api = {
@@ -74,6 +79,19 @@ const floristApi: Api = {
       createCategoryFromDocument({ ...doc.data(), id: doc.id })
     );
     return categoriestList;
+  },
+
+  fetchCategoryBouquets: async (floristName, categoryId) => {
+    const floristDoc = await floristApi.fetchFlorist(floristName);
+    const bouquetsCol = collection(
+      floristDoc,
+      `categories/${categoryId}/bouquets`
+    );
+    const bouquetsSnapshot = await getDocs(bouquetsCol);
+    const bouquetIds = bouquetsSnapshot.docs.map((doc) => {
+      return doc.data().bouquetId;
+    });
+    return bouquetIds;
   },
 };
 

@@ -4,7 +4,7 @@ const URLS = {
   FLORIST: {
     ROOT: "/",
     CART: "cart",
-    CATALOG: "catalog",
+    CATALOG: { ROOT: "catalog", CATEGORY: ":categoryId" },
     NEWS: "news",
   },
 } as const;

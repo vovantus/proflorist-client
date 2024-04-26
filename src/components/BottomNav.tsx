@@ -7,7 +7,7 @@ import {
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
-import StoreIcon from "@mui/icons-material/Store";
+import YardOutlinedIcon from "@mui/icons-material/YardOutlined";
 import { Link, useLocation } from "react-router-dom";
 import URLS from "../routes/routes";
 import useCartStore from "../store/cartStore";
@@ -24,7 +24,7 @@ export default function BottomNav() {
   const relevantRoutes = [
     URLS.FLORIST.NEWS,
     URLS.FLORIST.CART,
-    URLS.FLORIST.CATALOG,
+    URLS.FLORIST.CATALOG.ROOT,
     "",
   ];
   const absoluteRoutes = relevantRoutes.map((url) => "/" + url);
@@ -58,19 +58,20 @@ export default function BottomNav() {
           component={Link}
         />
         <BottomNavigationAction
+          icon={<YardOutlinedIcon />}
+          label="Showcase"
+          value={absoluteRoutes[3]}
+          to={absoluteRoutes[3]}
+          component={Link}
+        />
+        <BottomNavigationAction
           icon={<GridViewOutlinedIcon />}
           label="Catalog"
           value={absoluteRoutes[2]}
           to={absoluteRoutes[2]}
           component={Link}
         />
-        <BottomNavigationAction
-          icon={<StoreIcon />}
-          label="Home"
-          value={absoluteRoutes[3]}
-          to={absoluteRoutes[3]}
-          component={Link}
-        />
+
         <BottomNavigationAction
           icon={
             <Badge

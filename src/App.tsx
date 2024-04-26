@@ -12,6 +12,7 @@ import CategoriesPage from "./pages/CategoriesPage/CategoriesPage.tsx";
 import { useGetFloristInfo } from "./hooks/useGetFloristInfo.ts";
 import useSubdomain from "./hooks/useSubdomain.ts";
 import ShopMainPageSkeleton from "./pages/ShopMainPage/ShopMainPageSkeleton.tsx";
+import CategoryBouquetsPage from "./pages/CategoryBouquetsPage/CategoryBouquetsPage.tsx";
 
 // ask: 24 04 долго грузится, сначала показыват 404 при первом обращении
 
@@ -27,10 +28,18 @@ function App() {
             path={URLS.ROOT}
             element={<ShopMainPage florist={floristInfo.name} />}
           />
-          <Route
-            path={URLS.FLORIST.CATALOG}
-            element={<CategoriesPage florist={floristInfo.name} />}
-          />
+
+          <Route path={URLS.FLORIST.CATALOG.ROOT}>
+            <Route
+              index
+              element={<CategoriesPage florist={floristInfo.name} />}
+            />
+            <Route
+              path={URLS.FLORIST.CATALOG.CATEGORY}
+              element={<CategoryBouquetsPage florist={floristInfo.name} />}
+            />
+          </Route>
+
           <Route path={URLS.FLORIST.NEWS} element={<NewsPage />} />
           <Route
             path={URLS.FLORIST.CART}

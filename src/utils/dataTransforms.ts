@@ -1,6 +1,7 @@
 import Bouquet from "../types/bouquet";
 import { DocumentData } from "firebase/firestore/lite";
 import FloristInfo from "../types/floristInfo";
+import Category from "../types/category";
 
 function createBouquetFromDocument(doc: DocumentData): Bouquet {
   return {
@@ -21,4 +22,17 @@ function createFloristFromDocument(doc: DocumentData): FloristInfo {
   };
 }
 
-export { createBouquetFromDocument, createFloristFromDocument };
+function createCategoryFromDocument(doc: DocumentData): Category {
+  return {
+    name: doc.name,
+    id: doc.id,
+    active: doc.active,
+    bouquets: doc.bouquets.map((id: string) => id as Bouquet["id"]),
+  };
+}
+
+export {
+  createBouquetFromDocument,
+  createFloristFromDocument,
+  createCategoryFromDocument,
+};

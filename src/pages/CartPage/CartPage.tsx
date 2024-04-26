@@ -86,7 +86,7 @@ export default function CartPage({ florist }: CartPageProps) {
             component={Link}
             to={URLS.FLORIST.ROOT}
           >
-            go to catalog
+            Go to catalog
           </Button>
         </CardContent>
       </Card>
@@ -97,7 +97,7 @@ export default function CartPage({ florist }: CartPageProps) {
     <Box
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 1, pb: 30 }}>
         {cartBouquetsList}
       </Box>
       {cartTotalQuantity() ? CartTotalCard() : EmptyBasket()}

@@ -23,11 +23,12 @@ export function useGetBouquets(florist: string, bouquetIds?: Bouquet["id"][]) {
         .fetchBouquets(florist, bouquetIds)
         .then((bouqs) => {
           setBouquets(bouqs);
-          setIsLoading(false);
         })
         .catch((error) => {
           console.error(error);
           setError(error.message);
+        })
+        .finally(() => {
           setIsLoading(false);
         });
     }

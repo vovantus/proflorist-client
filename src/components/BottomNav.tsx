@@ -7,6 +7,7 @@ import {
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
+import StoreIcon from "@mui/icons-material/Store";
 import { Link, useLocation } from "react-router-dom";
 import URLS from "../routes/routes";
 import useCartStore from "../store/cartStore";
@@ -20,7 +21,12 @@ export default function BottomNav() {
   const { cartTotalQuantity } = useCartStore();
 
   // paths in decending order, parent paths at the end
-  const relevantRoutes = [URLS.FLORIST.NEWS, URLS.FLORIST.CART, ""];
+  const relevantRoutes = [
+    URLS.FLORIST.NEWS,
+    URLS.FLORIST.CART,
+    URLS.FLORIST.CATALOG,
+    "",
+  ];
   const absoluteRoutes = relevantRoutes.map((url) => "/" + url);
   const currentTab = absoluteRoutes.find((el) => pathname.includes(el));
 
@@ -56,6 +62,13 @@ export default function BottomNav() {
           label="Catalog"
           value={absoluteRoutes[2]}
           to={absoluteRoutes[2]}
+          component={Link}
+        />
+        <BottomNavigationAction
+          icon={<StoreIcon />}
+          label="Home"
+          value={absoluteRoutes[3]}
+          to={absoluteRoutes[3]}
           component={Link}
         />
         <BottomNavigationAction

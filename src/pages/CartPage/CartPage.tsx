@@ -44,63 +44,73 @@ export default function CartPage({ florist }: CartPageProps) {
 
   const CartTotalCard = () => {
     return (
-      <Card sx={{ minWidth: 350, position: "fixed", bottom: "68px" }}>
-        <CardContent>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Total:
-          </Typography>
-          <Typography variant="h5" component="div">
-            {cartTotal}€
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            {cartTotalQuantity()} bouquets
-          </Typography>
-          <Button
-            variant="contained"
-            disableElevation
-            color="secondary"
-            sx={{ width: "100%" }}
-          >
-            Proceed to checkout
-          </Button>
-        </CardContent>
-      </Card>
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          Total:
+        </Typography>
+        <Typography variant="h5" component="div">
+          {cartTotal}€
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          {cartTotalQuantity()} bouquets
+        </Typography>
+        <Button
+          variant="contained"
+          disableElevation
+          color="secondary"
+          sx={{ width: "100%" }}
+        >
+          Proceed to checkout
+        </Button>
+      </CardContent>
     );
   };
 
   const EmptyBasket = () => {
     return (
-      <Card sx={{ minWidth: 350, position: "fixed", bottom: "68px" }}>
-        <CardContent>
-          <Typography variant="h5" component="div">
-            Basket is empty
-          </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Please, go to catalog
-          </Typography>
-          <Button
-            variant="contained"
-            disableElevation
-            color="secondary"
-            sx={{ width: "100%" }}
-            component={Link}
-            to={URLS.FLORIST.ROOT}
-          >
-            Go to catalog
-          </Button>
-        </CardContent>
-      </Card>
+      <CardContent>
+        <Typography variant="h5" component="div">
+          Basket is empty
+        </Typography>
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          Please, go to catalog
+        </Typography>
+        <Button
+          variant="contained"
+          disableElevation
+          color="secondary"
+          sx={{ width: "100%" }}
+          component={Link}
+          to={URLS.FLORIST.ROOT}
+        >
+          Go to catalog
+        </Button>
+      </CardContent>
     );
   };
 
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      sx={{
+        display: "flex",
+        flexDirection: { xxs: "column", md: "row" },
+        alignItems: { xxs: "center", md: "start" },
+        gap: 1,
+      }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1, pb: 30 }}>
         {cartBouquetsList}
       </Box>
-      {cartTotalQuantity() ? CartTotalCard() : EmptyBasket()}
+      <Card
+        sx={{
+          minWidth: 350,
+          position: { xxs: "fixed", md: "sticky" },
+          bottom: { xxs: "68px", md: "" },
+          top: { xxs: "", md: "80px" },
+        }}
+      >
+        {cartTotalQuantity() ? CartTotalCard() : EmptyBasket()}
+      </Card>
     </Box>
   );
 }

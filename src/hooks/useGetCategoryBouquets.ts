@@ -3,6 +3,8 @@ import floristApi from "../api/floristApi";
 import Bouquet from "../types/bouquet";
 import Category from "../types/category";
 
+//ASK стоит ли объединять хуки  useGetBouquets и useGetCategoryBouquets
+
 export function useGetCategoryBouquets(
   florist: string,
   categoryId: Category["id"]

@@ -7,6 +7,8 @@ import CartBouquetItem from "./CartBouquetItem";
 import URLS from "../../routes/routes";
 import { Link } from "react-router-dom";
 
+//ASK: как подключить css modules? тогда весь кайф mui пропадет
+
 interface CartPageProps {
   florist: string;
 }

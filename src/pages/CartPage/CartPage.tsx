@@ -41,7 +41,7 @@ export default function CartPage({ florist }: CartPageProps) {
     ) / 100;
 
   const cartBouquetsList = cartBouquets.map((bouquet) => (
-    <CartBouquetItem bouquet={bouquet} />
+    <CartBouquetItem key={bouquet.id} bouquet={bouquet} />
   ));
 
   const CartTotalCard = () => {

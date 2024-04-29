@@ -3,8 +3,8 @@ import {
   Button,
   Card,
   Skeleton,
-  CardMedia,
   CardContent,
+  Box,
 } from "@mui/material";
 import { useState } from "react";
 import Bouquet from "../../types/bouquet";
@@ -18,7 +18,9 @@ interface BouquetProps {
 export default function BouquetCard({ bouquet }: BouquetProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { imageUrl } = useFetchBouquetImage(bouquet);
+  //const imageUrl = "";
   const { addItem } = useCartStore();
+  console.log(imageLoaded);
 
   //TODO:
   //   атрибуты loading - lazy
@@ -38,24 +40,30 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
         <Skeleton
           variant="rectangular"
           width="100%"
-          height={350}
+          height="350px"
           animation="wave"
-          sx={{ borderRadius: "24px", position: "absolute" }}
-        />
-      )}
-      {imageUrl && (
-        <CardMedia
-          component="img"
           sx={{
-            height: 350,
-            display: "block",
+            borderRadius: "24px",
+            position: "absolute",
+            top: "0px",
+            left: "0px",
           }}
-          image={imageUrl}
-          title={bouquet.name}
-          loading="lazy"
-          onLoad={() => setImageLoaded(true)}
         />
       )}
+      <Box
+        component="img"
+        sx={{
+          height: 350,
+          display: "block",
+          borderRadius: "24px",
+          opacity: imageLoaded ? "100%" : "0%",
+        }}
+        src={imageUrl}
+        title={bouquet.name}
+        loading="lazy"
+        onLoad={() => setImageLoaded(true)}
+      />
+
       <CardContent
         sx={{
           position: "absolute",

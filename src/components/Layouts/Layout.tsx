@@ -11,6 +11,7 @@ export default function Layout() {
         width: { xxs: "100vw", sm: "426px", md: "815px", lg: "1200px" },
       }}
     >
+      {/* //TODO! florist info????? + skeleton */}
       <Outlet />
     </Container>
   );

@@ -3,7 +3,14 @@ import floristApi from "../api/floristApi";
 import Bouquet from "../types/bouquet";
 import Category from "../types/category";
 
-//ASK стоит ли объединять хуки  useGetBouquets и useGetCategoryBouquets
+
+// TODO! возвращать букеты а не айдишники
+
+// не перегружать карточки букетов в корзине при добавлении 
+// + добавить скелетоны везде
+// + сохранять положение элементов за счет скелетонов
+// + поменять верстку контейнера
+
 
 export function useGetCategoryBouquets(
   florist: string,

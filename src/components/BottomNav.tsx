@@ -12,13 +12,9 @@ import { Link, useLocation } from "react-router-dom";
 import URLS from "../routes/routes";
 import useCartStore from "../store/cartStore";
 
-// с прошлого синка: использовать useeffect в зависимости от uselocation попробоавть разные values и класит в current tab
+//TODO! избавится от абс путей!!!
 
 // ASK: 23 04 выглядит странно, но работает
-
-export default function BottomNav() {
-  const { pathname } = useLocation();
-  const { cartTotalQuantity } = useCartStore();
 
   // paths in decending order, parent paths at the end
   const relevantRoutes = [
@@ -27,8 +23,15 @@ export default function BottomNav() {
     URLS.FLORIST.CATALOG.ROOT,
     "",
   ];
+
+export default function BottomNav() {
+  const { pathname } = useLocation();
+  const { cartTotalQuantity } = useCartStore();
+
   const absoluteRoutes = relevantRoutes.map((url) => "/" + url);
   const currentTab = absoluteRoutes.find((el) => pathname.includes(el));
+
+  console.log(absoluteRoutes, relevantRoutes);
 
   return (
     <Paper

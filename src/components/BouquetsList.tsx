@@ -7,8 +7,6 @@ interface BouquetListProps {
   isLoading: boolean;
 }
 
-// ASK: 23 04 почему такой медленный переход между списком скелетонов и списком букетов?
-
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
   return (
     <>

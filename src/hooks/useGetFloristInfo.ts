@@ -17,7 +17,6 @@ export function useGetFloristInfo() {
       floristApi
         .fetchFloristInfo(subdomain)
         .then((data) => {
-            console.log("fetch florist");
           if (data) {
             setFloristInfos(createFloristFromDocument(data));
           }
@@ -32,8 +31,6 @@ export function useGetFloristInfo() {
         });
     }
   }, [subdomain]);
-
-  console.log("get florist info");
 
   return {
     subdomain,

@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import floristApi from "../api/floristApi";
 import Bouquet from "../types/bouquet";
 
-export function useGetBouquets(florist: string, bouquetIds?: Bouquet["id"][]) {
+export function useGetBouquets(
+  florist: string = "",
+  bouquetIds?: Bouquet["id"][]
+) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [bouquets, setBouquets] = useState<Bouquet[]>([]);
 
   useEffect(() => {
+    if (florist == "") return;
     const shouldFetchBouquets = () => {
       return (
         bouquetIds === null ||

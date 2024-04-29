@@ -1,13 +1,15 @@
 import { useGetBouquets } from "../../hooks/useGetBouquets.ts";
 import BouquetList from "../../components/BouquetsList.tsx";
+import { useGetFloristInfo } from "../../hooks/useGetFloristInfo.ts";
 
 
-interface ShopMainPageProps {
-  florist: string;
-}
+// interface ShopMainPageProps {
+//   florist: string;
+// }
 
-function ShopMainPage({ florist }: ShopMainPageProps) {
-  const { bouquets, isLoading } = useGetBouquets(florist);
+function ShopMainPage() {
+  const { floristInfo } = useGetFloristInfo();
+  const { bouquets, isLoading } = useGetBouquets(floristInfo?.name || "");
 
   return (
     <>

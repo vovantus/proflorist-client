@@ -4,23 +4,23 @@ import { useGetBouquets } from "../../hooks/useGetBouquets";
 import { useMemo } from "react";
 import CartBouquet from "../../types/cartBouquet";
 import CartBouquetItem from "./CartBouquetItem";
-import URLS from "../../routes/routes";
+import { FLORIST_URLS } from "../../routes/routes";
 import { Link } from "react-router-dom";
+import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
 
-//ASK: как подключить css modules? тогда весь кайф mui пропадет
+// interface CartPageProps {
+//   florist: string;
+// }
 
-interface CartPageProps {
-  florist: string;
-}
-
-export default function CartPage({ florist }: CartPageProps) {
+export default function CartPage() {
   const { cartItems, cartTotalQuantity } = useCartStore();
+  const { floristInfo } = useGetFloristInfo();
 
   const bouquetIds = useMemo(() => {
     return cartItems.map((el) => el.id);
   }, [cartItems]);
 
-  const { bouquets } = useGetBouquets(florist, bouquetIds);
+  const { bouquets } = useGetBouquets(floristInfo?.name, bouquetIds);
 
   const cartBouquets = cartItems.reduce((acc, item) => {
     const bouquet = bouquets.find((b) => b.id === item.id);
@@ -83,7 +83,7 @@ export default function CartPage({ florist }: CartPageProps) {
           color="secondary"
           sx={{ width: "100%" }}
           component={Link}
-          to={URLS.FLORIST.ROOT}
+          to={FLORIST_URLS.ROOT}
         >
           Go to catalog
         </Button>

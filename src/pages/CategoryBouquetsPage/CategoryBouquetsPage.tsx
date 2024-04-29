@@ -2,22 +2,19 @@ import { useGetBouquets } from "../../hooks/useGetBouquets.ts";
 import BouquetList from "../../components/BouquetsList.tsx";
 import { useParams } from "react-router-dom";
 import { useGetCategoryBouquets } from "../../hooks/useGetCategoryBouquets.ts";
+import { useGetFloristInfo } from "../../hooks/useGetFloristInfo.ts";
 
-interface CategoryBouquetsPageProps {
-  florist: string;
-}
+//ASK продолжение
+// в хуке useGetCategoryBouquets, добавил дефолтное значение floristName = "" и передаю в хук floristInfo?.name, это ок? я так все хуки переделал)
 
-// ASK: очень странная логика - сначала фетчим айдишники букетов, потом по айди из другой коллекции фетчим букеты
-
-export default function CategoryBouquetsPage({
-  florist,
-}: CategoryBouquetsPageProps) {
+export default function CategoryBouquetsPage() {
   const params = useParams();
+  const { floristInfo } = useGetFloristInfo();
   const { bouquetIds } = useGetCategoryBouquets(
-    florist,
+    floristInfo?.name,
     params.categoryId ? params.categoryId : ""
   );
-  const { bouquets, isLoading } = useGetBouquets(florist, bouquetIds);
+  const { bouquets, isLoading } = useGetBouquets(floristInfo?.name, bouquetIds);
 
   return (
     <>

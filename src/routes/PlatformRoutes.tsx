@@ -1,4 +1,4 @@
-import URLS from "./routes";
+import { PLATFORM_URLS } from "./routes";
 import { Route, Routes } from "react-router-dom";
 import Layout from "../components/Layouts/Layout";
 import MainPage from "../pages/MainPage/MainPage";
@@ -9,8 +9,8 @@ const PlatformRoutes = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path={URLS.ROOT} element={<MainPage />} />
-        <Route path={URLS.ABOUT} element={<AboutPage />} />
+        <Route path={PLATFORM_URLS.ROOT} element={<MainPage />} />
+        <Route path={PLATFORM_URLS.ABOUT} element={<AboutPage />} />
         <Route path="*" element={<Page404 />} />
       </Route>
     </Routes>

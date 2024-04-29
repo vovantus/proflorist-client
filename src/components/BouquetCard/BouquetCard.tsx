@@ -18,9 +18,8 @@ interface BouquetProps {
 export default function BouquetCard({ bouquet }: BouquetProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { imageUrl } = useFetchBouquetImage(bouquet);
-  //const imageUrl = "";
   const { addItem } = useCartStore();
-  console.log(imageLoaded);
+
 
   //TODO:
   //   атрибуты loading - lazy

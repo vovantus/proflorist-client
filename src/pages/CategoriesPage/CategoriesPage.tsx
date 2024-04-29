@@ -1,13 +1,16 @@
 import { useGetCategories } from "../../hooks/useGetCategories";
 import { Box } from "@mui/material";
 import CatalogCategory from "./CatalogCategory";
+import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
 
-interface CategoriesPageProps {
-  florist: string;
-}
+// interface CategoriesPageProps {
+//   florist: string;
+// }
 
-export default function CategoriesPage({ florist }: CategoriesPageProps) {
-  const { categories, isLoading } = useGetCategories(florist);
+export default function CategoriesPage() {
+  const { floristInfo } = useGetFloristInfo();
+
+  const { categories, isLoading } = useGetCategories(floristInfo?.name);
   return (
     <Box
       sx={{

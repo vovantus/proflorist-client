@@ -13,7 +13,7 @@ import Category from "../types/category";
 
 
 export function useGetCategoryBouquets(
-  florist: string,
+  florist: string = "",
   categoryId: Category["id"]
 ) {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +21,7 @@ export function useGetCategoryBouquets(
   const [bouquetIds, setBouquetIds] = useState<Bouquet["id"][]>([]);
 
   useEffect(() => {
+    if (florist == "") return;
     setIsLoading(true);
 
     floristApi

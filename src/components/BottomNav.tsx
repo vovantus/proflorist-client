@@ -9,29 +9,22 @@ import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import YardOutlinedIcon from "@mui/icons-material/YardOutlined";
 import { Link, useLocation } from "react-router-dom";
-import URLS from "../routes/routes";
 import useCartStore from "../store/cartStore";
+import { FLORIST_URLS } from "../routes/routes";
 
-//TODO! избавится от абс путей!!!
-
-// ASK: 23 04 выглядит странно, но работает
-
-  // paths in decending order, parent paths at the end
-  const relevantRoutes = [
-    URLS.FLORIST.NEWS,
-    URLS.FLORIST.CART,
-    URLS.FLORIST.CATALOG.ROOT,
-    "",
-  ];
+// paths in decending order, parent paths at the end
+const tabRoutes = [
+  FLORIST_URLS.NEWS,
+  FLORIST_URLS.CART,
+  FLORIST_URLS.CATALOG.ROOT,
+  FLORIST_URLS.ROOT,
+];
 
 export default function BottomNav() {
   const { pathname } = useLocation();
   const { cartTotalQuantity } = useCartStore();
 
-  const absoluteRoutes = relevantRoutes.map((url) => "/" + url);
-  const currentTab = absoluteRoutes.find((el) => pathname.includes(el));
-
-  console.log(absoluteRoutes, relevantRoutes);
+  const currentTab = tabRoutes.find((el) => pathname.includes(el));
 
   return (
     <Paper
@@ -56,22 +49,22 @@ export default function BottomNav() {
         <BottomNavigationAction
           icon={<ArticleOutlinedIcon />}
           label="News"
-          value={absoluteRoutes[0]}
-          to={absoluteRoutes[0]}
+          value={tabRoutes[0]}
+          to={tabRoutes[0]}
           component={Link}
         />
         <BottomNavigationAction
           icon={<YardOutlinedIcon />}
           label="Showcase"
-          value={absoluteRoutes[3]}
-          to={absoluteRoutes[3]}
+          value={tabRoutes[3]}
+          to={tabRoutes[3]}
           component={Link}
         />
         <BottomNavigationAction
           icon={<GridViewOutlinedIcon />}
           label="Catalog"
-          value={absoluteRoutes[2]}
-          to={absoluteRoutes[2]}
+          value={tabRoutes[2]}
+          to={tabRoutes[2]}
           component={Link}
         />
 
@@ -92,8 +85,8 @@ export default function BottomNav() {
             </Badge>
           }
           label="Cart"
-          value={absoluteRoutes[1]}
-          to={absoluteRoutes[1]}
+          value={tabRoutes[1]}
+          to={tabRoutes[1]}
           component={Link}
         />
       </BottomNavigation>

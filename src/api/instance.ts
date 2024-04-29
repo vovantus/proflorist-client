@@ -1,13 +1,7 @@
-// Import the functions you need from the SDKs you need
 import { FirebaseApp, initializeApp, getApp, getApps } from "firebase/app";
-// import { Firestore } from "firebase/firestore";
-// import { getFirestore } from "firebase/firestore/lite";
 import { Firestore, getFirestore } from "firebase/firestore";
 
 import { firebaseConfig } from "../utils/config";
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 interface ApiSdk {
   firebaseApp: FirebaseApp;
@@ -36,8 +30,4 @@ const api: Api = {
   },
 };
 
-
 export default api;
-
-
-

@@ -2,9 +2,8 @@ import { Outlet } from "react-router-dom";
 import BottomNav from "../BottomNav";
 import FloristAppBar from "../FloristAppBar";
 import { Container, Box } from "@mui/material";
-import ShopMainPageSkeleton from "../../pages/ShopMainPage/ShopMainPageSkeleton";
+import ShopLoadingIndicator from "../../pages/ShopMainPage/ShopLoadingIndicator.tsx";
 import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
-
 
 // interface FloristShopLayoutProps {
 //   florist: FloristInfo | null;
@@ -44,7 +43,7 @@ export default function FloristShopLayout() {
           <BottomNav />
         </>
       ) : (
-        <ShopMainPageSkeleton />
+        <ShopLoadingIndicator />
       )}
     </Container>
   );

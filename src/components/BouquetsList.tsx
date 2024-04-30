@@ -16,6 +16,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
   const gap = 1;
   const [containerWidth, setContainerWidth] = useState(0);
 
+
   const updateContainerWidth = () => {
     const viewportWidth = window.innerWidth;
     const itemsPerRow = Math.floor(viewportWidth / (itemWidth + gap * 8));
@@ -44,7 +45,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
         }}
       >
         {isLoading
-          ? Array.from(new Array(4)).map((_, index) => (
+          ? Array.from(new Array(12)).map((_, index) => (
               <BouquetCardSkeleton key={index} />
             ))
           : bouquets.map((el) => <BouquetCard key={el.id} bouquet={el} />)}

@@ -33,19 +33,20 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
         width: 350,
         position: "relative",
         borderRadius: "24px",
+        flex: "0 0 auto",
       }}
     >
       {!imageLoaded && (
         <Skeleton
           variant="rectangular"
-          width="100%"
-          height="350px"
           animation="wave"
           sx={{
             borderRadius: "24px",
             position: "absolute",
             top: "0px",
             left: "0px",
+            width: 350,
+            height: 350,
           }}
         />
       )}
@@ -53,6 +54,7 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
         component="img"
         sx={{
           height: 350,
+          width: 350,
           display: "block",
           borderRadius: "24px",
           opacity: imageLoaded ? "100%" : "0%",
@@ -67,7 +69,7 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
         sx={{
           position: "absolute",
           bottom: 0,
-          width: "100%",
+          width: "350px",
           background: "rgba(255, 255, 255, 0.8)",
           display: "flex",
           justifyContent: "space-between",

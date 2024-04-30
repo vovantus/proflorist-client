@@ -16,8 +16,9 @@ export default function CategoriesPage() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        justifyContent: "start",
         gap: 1,
+        // backgroundColor: "blue",
       }}
     >
       <>

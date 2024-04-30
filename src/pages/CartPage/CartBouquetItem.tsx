@@ -4,12 +4,12 @@ import {
   Card,
   CardContent,
   Typography,
-  CardMedia,
+  Skeleton,
 } from "@mui/material";
 import useCartStore from "../../store/cartStore";
 import CartBouquet from "../../types/cartBouquet";
 import useFetchBouquetImage from "../../hooks/useFetchBouquetUrl";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 interface CartBouquetProps {
   bouquet: CartBouquet;
@@ -18,17 +18,55 @@ interface CartBouquetProps {
 export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
   const { removeItem, addItem } = useCartStore();
   const { imageUrl } = useFetchBouquetImage(bouquet);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  console.log("imageloaded", imageLoaded);
 
   const CardRender = useMemo(() => {
     return (
-      <Card sx={{ display: "flex", minWidth: 350 }} elevation={3}>
-        <CardMedia
-          component="img"
-          sx={{ width: 75 }}
-          image={imageUrl}
-          alt={bouquet.name}
-        />
-        <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
+      <Card
+        sx={{
+          display: "flex",
+          width: 350,
+          height: 120,
+          justifyContent: "space-between",
+          flexDirection: "row",
+        }}
+        elevation={3}
+      >
+        <Box sx={{ position: "relative", width: 75, height: 120 }}>
+          {!imageLoaded && (
+            <Skeleton
+              variant="rectangular"
+              animation="wave"
+              sx={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                width: 75,
+                height: 120,
+              }}
+            />
+          )}
+          <Box
+            component="img"
+            sx={{
+              position: "absolute",
+              top: "0px",
+              left: "0px",
+              width: 75,
+              height: 120,
+              objectFit: "cover",
+              objectPosition: "center",
+              opacity: imageLoaded ? "100%" : "0%",
+            }}
+            src={imageUrl}
+            title={bouquet.name}
+            loading="lazy"
+            onLoad={() => setImageLoaded(true)}
+          />
+        </Box>
+
+        <Box sx={{ display: "flex", flexDirection: "column", width: 275 }}>
           <CardContent sx={{ flex: "1 0 auto", py: 1 }}>
             <Typography component="div" variant="h5">
               {bouquet.name}
@@ -74,7 +112,7 @@ export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
         </Box>
       </Card>
     );
-  }, [bouquet.id, bouquet.quantity, imageUrl]);
+  }, [bouquet.id, bouquet.quantity, imageUrl, imageLoaded]);
 
   return CardRender;
 }

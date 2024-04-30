@@ -1,16 +1,19 @@
-import { Box, Card, CardContent, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Skeleton,
+} from "@mui/material";
 import useCartStore from "../../store/cartStore";
 import { useGetBouquets } from "../../hooks/useGetBouquets";
 import { useMemo } from "react";
 import CartBouquet from "../../types/cartBouquet";
 import CartBouquetItem from "./CartBouquetItem";
-import { FLORIST_URLS } from "../../routes/routes";
-import { Link } from "react-router-dom";
 import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
-
-// interface CartPageProps {
-//   florist: string;
-// }
+import CartEmpty from "./CartEmpty";
+import CartItemSkeleton from "./CartItemSkeleton";
 
 export default function CartPage() {
   const { cartItems, cartTotalQuantity } = useCartStore();
@@ -20,7 +23,7 @@ export default function CartPage() {
     return cartItems.map((el) => el.id);
   }, [cartItems]);
 
-  const { bouquets } = useGetBouquets(floristInfo?.name, bouquetIds);
+  const { bouquets, isLoading } = useGetBouquets(floristInfo?.name, bouquetIds);
 
   const cartBouquets = cartItems.reduce((acc, item) => {
     const bouquet = bouquets.find((b) => b.id === item.id);
@@ -47,13 +50,17 @@ export default function CartPage() {
   const CartTotalCard = () => {
     return (
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography
+          sx={{ fontSize: 14, textAlign: "end" }}
+          color="text.secondary"
+          gutterBottom
+        >
           Total:
         </Typography>
-        <Typography variant="h5" component="div">
-          {cartTotal}€
+        <Typography variant="h5" sx={{ textAlign: "end" }}>
+          {isLoading ? <Skeleton width={"100%"} /> : `${cartTotal}€`}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+        <Typography sx={{ mb: 1.5, textAlign: "end" }} color="text.secondary">
           {cartTotalQuantity()} bouquets
         </Typography>
         <Button
@@ -63,29 +70,6 @@ export default function CartPage() {
           sx={{ width: "100%" }}
         >
           Proceed to checkout
-        </Button>
-      </CardContent>
-    );
-  };
-
-  const EmptyBasket = () => {
-    return (
-      <CardContent>
-        <Typography variant="h5" component="div">
-          Basket is empty
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Please, go to catalog
-        </Typography>
-        <Button
-          variant="contained"
-          disableElevation
-          color="secondary"
-          sx={{ width: "100%" }}
-          component={Link}
-          to={FLORIST_URLS.ROOT}
-        >
-          Go to catalog
         </Button>
       </CardContent>
     );
@@ -101,7 +85,11 @@ export default function CartPage() {
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1, pb: 30 }}>
-        {cartBouquetsList}
+        {isLoading
+          ? Array.from(new Array(3)).map((_, index) => (
+              <CartItemSkeleton key={index} />
+            ))
+          : cartBouquetsList}
       </Box>
       <Card
         sx={{
@@ -111,7 +99,7 @@ export default function CartPage() {
           top: { xxs: "", md: "80px" },
         }}
       >
-        {cartTotalQuantity() ? CartTotalCard() : EmptyBasket()}
+        {cartTotalQuantity() ? CartTotalCard() : <CartEmpty />}
       </Card>
     </Box>
   );

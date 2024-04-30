@@ -2,6 +2,7 @@ import { useGetCategories } from "../../hooks/useGetCategories";
 import { Box } from "@mui/material";
 import CatalogCategory from "./CatalogCategory";
 import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
+import CatalogCategorySkeleton from "./CatalogCategorySkeleton";
 
 // interface CategoriesPageProps {
 //   florist: string;
@@ -22,13 +23,13 @@ export default function CategoriesPage() {
       }}
     >
       <>
-        {isLoading ? (
-          <div>Loading!</div>
-        ) : (
-          categories.map((cat) => (
-            <CatalogCategory key={cat.id} category={cat} />
-          ))
-        )}
+        {isLoading
+          ? Array.from(new Array(5)).map((_, index) => (
+              <CatalogCategorySkeleton key={index} />
+            ))
+          : categories.map((cat) => (
+              <CatalogCategory key={cat.id} category={cat} />
+            ))}
       </>
     </Box>
   );

@@ -13,11 +13,11 @@ export default function CatalogCategory({ category }: CatalogCategoryProps) {
       sx={{
         minWidth: 350,
         textDecoration: "none",
-        backgroundColor: "white",
+        backgroundColor: "#f5f5f5",
         "&:hover": {
-          backgroundColor: "#f5f5f5",
+          backgroundColor: "rgba(118, 202, 254, 0.5)",
           transition: "background-color 0.3s ease",
-          textDecoration: "underline",
+          //   textDecoration: "underline",
         },
       }}
       component={Link}

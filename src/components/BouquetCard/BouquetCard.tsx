@@ -31,9 +31,9 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
     <Card
       sx={{
         width: 350,
+        height: 350,
         position: "relative",
         borderRadius: "24px",
-        flex: "0 0 auto",
       }}
     >
       {!imageLoaded && (
@@ -53,9 +53,11 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
       <Box
         component="img"
         sx={{
+          position: "absolute",
+          top: "0px",
+          left: "0px",
           height: 350,
           width: 350,
-          display: "block",
           borderRadius: "24px",
           opacity: imageLoaded ? "100%" : "0%",
         }}
@@ -69,7 +71,7 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
         sx={{
           position: "absolute",
           bottom: 0,
-          width: "350px",
+          width: "100%",
           background: "rgba(255, 255, 255, 0.8)",
           display: "flex",
           justifyContent: "space-between",

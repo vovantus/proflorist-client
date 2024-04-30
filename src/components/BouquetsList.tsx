@@ -9,6 +9,8 @@ interface BouquetListProps {
   isLoading: boolean;
 }
 
+//ASK 30 04 так ок выставлять ширину в зависимости от контента?
+
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
   const itemWidth = 350;
   const gap = 1;
@@ -36,6 +38,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
           flexWrap: "wrap",
           flexDirection: "row",
           justifyContent: "start",
+          alignContent: "start",
           width: containerWidth,
           gap: gap,
         }}

@@ -86,7 +86,7 @@ export default function CartPage() {
     >
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1, pb: 30 }}>
         {isLoading
-          ? Array.from(new Array(3)).map((_, index) => (
+          ? Array.from(new Array(2)).map((_, index) => (
               <CartItemSkeleton key={index} />
             ))
           : cartBouquetsList}

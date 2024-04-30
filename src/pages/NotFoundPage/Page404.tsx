@@ -5,7 +5,7 @@ export default function Page404() {
     <Box
       sx={{
         width: "100%",
-        bgcolor: "tomato",
+        // bgcolor: "tomato",
         display: "flex",
         flexWrap: "wrap",
         flexDirection: { xxs: "column", sm: "row" },

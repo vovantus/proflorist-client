@@ -24,7 +24,7 @@ export default function CategoriesPage() {
     >
       <>
         {isLoading
-          ? Array.from(new Array(5)).map((_, index) => (
+          ? Array.from(new Array(3)).map((_, index) => (
               <CatalogCategorySkeleton key={index} />
             ))
           : categories.map((cat) => (

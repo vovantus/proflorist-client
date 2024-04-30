@@ -19,7 +19,11 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
 
   const updateContainerWidth = () => {
     const viewportWidth = window.innerWidth;
-    const itemsPerRow = Math.floor(viewportWidth / (itemWidth + gap * 8));
+    const maxItemsPerRow = 4;
+    const itemsPerRow = Math.min(
+      Math.floor(viewportWidth / (itemWidth + gap)),
+      maxItemsPerRow
+    );
     const newWidth = itemsPerRow * itemWidth + (itemsPerRow - 1) * gap * 8;
     setContainerWidth(newWidth);
   };

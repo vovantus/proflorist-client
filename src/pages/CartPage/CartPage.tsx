@@ -86,23 +86,40 @@ export default function CartPage() {
         gap: 1,
       }}
     >
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 1, pb: 30 }}>
-        {isLoading
-          ? Array.from(new Array(2)).map((_, index) => (
-              <CartItemSkeleton key={index} />
-            ))
-          : cartBouquetsList}
-      </Box>
-      <Card
-        sx={{
-          minWidth: 350,
-          position: { xxs: "fixed", md: "sticky" },
-          bottom: { xxs: "68px", md: "" },
-          top: { xxs: "", md: "80px" },
-        }}
-      >
-        {cartTotalQuantity() ? CartTotalCard() : <CartEmpty />}
-      </Card>
+      {cartTotalQuantity() ? (
+        <>
+          <Box
+            sx={{ display: "flex", flexDirection: "column", gap: 1, pb: 30 }}
+          >
+            {isLoading
+              ? Array.from(new Array(2)).map((_, index) => (
+                  <CartItemSkeleton key={index} />
+                ))
+              : cartBouquetsList}
+          </Box>
+          <Card
+            sx={{
+              minWidth: 350,
+              position: { xxs: "fixed", md: "sticky" },
+              bottom: { xxs: "68px", md: "" },
+              top: { xxs: "", md: "80px" },
+            }}
+          >
+            {CartTotalCard()}
+          </Card>
+        </>
+      ) : (
+        <Card
+          sx={{
+            minWidth: 350,
+            position: { xxs: "fixed", md: "sticky" },
+            bottom: { xxs: "68px", md: "" },
+            top: { xxs: "", md: "80px" },
+          }}
+        >
+          <CartEmpty />
+        </Card>
+      )}
     </Box>
   );
 }

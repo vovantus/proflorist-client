@@ -6,7 +6,7 @@ export function useGetBouquets(
   florist: string = "",
   bouquetIds?: Bouquet["id"][]
 ) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [bouquets, setBouquets] = useState<Bouquet[]>([]);
 

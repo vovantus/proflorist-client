@@ -20,26 +20,26 @@ const useCartStore = create<CartState>()(
       addItem: (id) =>
         set((state) => {
           const bouquetIndex = state.cartItems.findIndex(
-            (cartBouquet) => id === cartBouquet.id
+            (item) => id === item.id
           );
           return bouquetIndex === -1
             ? {
                 cartItems: [...state.cartItems, { id: id, quantity: 1 }],
               }
             : ((state.cartItems[bouquetIndex].quantity += 1),
-              { cartBouquets: [...state.cartItems] });
+              { cartItems: [...state.cartItems] });
         }),
       removeItem: (id) =>
         set((state) => {
           const bouquetIndex = state.cartItems.findIndex((b) => b.id === id);
-          if (bouquetIndex === -1) return { cartBouquets: state.cartItems };
+          if (bouquetIndex === -1) return { cartItems: state.cartItems };
           const newQuantity = state.cartItems[bouquetIndex].quantity - 1;
-          const newCartBouquets =
+          const newCartItems =
             newQuantity > 0
               ? ((state.cartItems[bouquetIndex].quantity = newQuantity),
                 [...state.cartItems])
               : state.cartItems.filter((b) => b.id !== id);
-          return { cartItems: newCartBouquets };
+          return { cartItems: newCartItems };
         }),
       cartTotalQuantity: () => {
         const items = get().cartItems;

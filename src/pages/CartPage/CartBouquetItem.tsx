@@ -19,7 +19,7 @@ export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
   const { removeItem, addItem } = useCartStore();
   const { imageUrl } = useFetchBouquetImage(bouquet);
   const [imageLoaded, setImageLoaded] = useState(false);
-  console.log("imageloaded", imageLoaded);
+
 
   const CardRender = useMemo(() => {
     return (

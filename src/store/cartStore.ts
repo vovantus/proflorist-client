@@ -3,6 +3,7 @@ import { persist } from "zustand/middleware";
 import Bouquet from "../types/bouquet";
 
 //ASk а если мне нужен массив в cartItems как избежать ре-рендера списка cartItems если я меняю один элемент
+//если я поменял тип обхекта в сторе(ли структуру хранилища) как сделать миграцию для тех юзеров которые пользовалис предыдущей версией и у них лежит что-то в локал сторидже
 
 interface CartItems {
   [key: Bouquet["id"]]: number;

@@ -6,7 +6,7 @@ export function useGetBouquets(
   florist: string = "",
   bouquetIds?: Bouquet["id"][]
 ) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [bouquets, setBouquets] = useState<Bouquet[]>([]);
 
@@ -21,8 +21,6 @@ export function useGetBouquets(
     };
 
     if (shouldFetchBouquets()) {
-      setIsLoading(true);
-
       floristApi
         .fetchBouquets(florist, bouquetIds)
         .then((bouqs) => {
@@ -35,6 +33,8 @@ export function useGetBouquets(
         .finally(() => {
           setIsLoading(false);
         });
+    } else {
+      setIsLoading(false);
     }
   }, [florist, bouquetIds]);
 

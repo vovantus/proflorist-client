@@ -2,12 +2,14 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import Bouquet from "../types/bouquet";
 
-interface CartItem extends Pick<Bouquet, "id"> {
-  quantity: number;
+//ASk а если мне нужен массив в cartItems как избежать ре-рендера списка cartItems если я меняю один элемент
+
+interface CartItems {
+  [key: Bouquet["id"]]: number;
 }
 
 interface CartState {
-  cartItems: CartItem[];
+  cartItems: CartItems;
   addItem: (id: Bouquet["id"]) => void;
   removeItem: (bouquet: Bouquet["id"]) => void;
   cartTotalQuantity: () => number;
@@ -16,35 +18,30 @@ interface CartState {
 const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
-      cartItems: [],
+      cartItems: {},
       addItem: (id) =>
         set((state) => {
-          const bouquetIndex = state.cartItems.findIndex(
-            (item) => id === item.id
-          );
-          return bouquetIndex === -1
-            ? {
-                cartItems: [...state.cartItems, { id: id, quantity: 1 }],
-              }
-            : ((state.cartItems[bouquetIndex].quantity += 1),
-              { cartItems: [...state.cartItems] });
+          const currentQuantity = state.cartItems[id];
+          state.cartItems[id] = currentQuantity ? currentQuantity + 1 : 1;
+          return { cartItems: state.cartItems };
         }),
+
       removeItem: (id) =>
         set((state) => {
-          const bouquetIndex = state.cartItems.findIndex((b) => b.id === id);
-          if (bouquetIndex === -1) return { cartItems: state.cartItems };
-          const newQuantity = state.cartItems[bouquetIndex].quantity - 1;
-          const newCartItems =
-            newQuantity > 0
-              ? ((state.cartItems[bouquetIndex].quantity = newQuantity),
-                [...state.cartItems])
-              : state.cartItems.filter((b) => b.id !== id);
-          return { cartItems: newCartItems };
+          const currentQuantity = state.cartItems[id];
+          if (currentQuantity) {
+            if (currentQuantity > 1) {
+              state.cartItems[id] -= 1;
+            } else {
+              delete state.cartItems[id];
+            }
+          }
+          return { cartItems: state.cartItems };
         }),
+
       cartTotalQuantity: () => {
         const items = get().cartItems;
-
-        return items.reduce((qty, item) => (qty += item.quantity), 0);
+        return Object.entries(items).reduce((qty, item) => (qty += item[1]), 0);
       },
     }),
     {

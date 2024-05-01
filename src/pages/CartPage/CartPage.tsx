@@ -14,23 +14,25 @@ import CartBouquetItem from "./CartBouquetItem";
 import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
 import CartEmpty from "./CartEmpty";
 import CartItemSkeleton from "./CartItemSkeleton";
+import { shallow } from "zustand/shallow";
 
 export default function CartPage() {
-  const { cartItems, cartTotalQuantity } = useCartStore();
+  const cartItems = useCartStore((state) => state.cartItems, shallow);
+  const { cartTotalQuantity } = useCartStore();
   const { floristInfo } = useGetFloristInfo();
 
   const bouquetIds = useMemo(() => {
-    return cartItems.map((el) => el.id);
+    return Object.keys(cartItems);
   }, [cartItems]);
 
   const { bouquets, isLoading } = useGetBouquets(floristInfo?.name, bouquetIds);
 
-  const cartBouquets = cartItems.reduce((acc, item) => {
-    const bouquet = bouquets.find((b) => b.id === item.id);
+  const cartBouquets = Object.entries(cartItems).reduce((acc, item) => {
+    const bouquet = bouquets.find((b) => b.id === item[0]);
     if (bouquet) {
       acc.push({
         ...bouquet,
-        quantity: item.quantity,
+        quantity: item[1],
       });
     }
     return acc;

@@ -46,6 +46,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
           alignContent: "start",
           width: containerWidth,
           gap: gap,
+          pb: 9,
         }}
       >
         {isLoading

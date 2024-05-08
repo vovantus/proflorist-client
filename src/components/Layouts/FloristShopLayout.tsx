@@ -5,18 +5,14 @@ import { Container, Box } from "@mui/material";
 import ShopLoadingIndicator from "../../pages/ShopMainPage/ShopLoadingIndicator.tsx";
 import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
 
-// interface FloristShopLayoutProps {
-//   florist: FloristInfo | null;
-// }
 
 export default function FloristShopLayout() {
-  const { floristInfo } = useGetFloristInfo();
+  const { isLoading } = useGetFloristInfo();
 
   return (
     <Container
       sx={{
-        //bgcolor: "grey",
-        height: "100vh",
+        // bgcolor: "grey",
         px: { xxs: "8px", md: "8px" },
         width: "100%",
         display: "flex",
@@ -24,7 +20,7 @@ export default function FloristShopLayout() {
         justifyContent: "center",
       }}
     >
-      {floristInfo ? (
+      {!isLoading ? (
         <>
           <FloristAppBar />
           <Box
@@ -34,6 +30,9 @@ export default function FloristShopLayout() {
               flexWrap: "wrap",
               flexDirection: "row",
               justifyContent: "center",
+              alignItems: "start",
+              width: "100%",
+              height: "100%",
               pb: 9,
               pt: { xxs: 8, sm: 10 },
             }}

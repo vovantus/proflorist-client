@@ -37,14 +37,14 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
     <>
       <Box
         sx={{
-          bgcolor: "lightBlue",
-          display: "flex",
-          flexWrap: "wrap",
-          flexDirection: "row",
-          justifyContent: "start",
+          //   bgcolor: "blue",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,350px)",
+          width: "100%",
+          marginX: "auto",
+          gap: "8px",
+          justifyContent: "center",
           alignContent: "start",
-          gap: 1,
-          pb: 9,
         }}
       >
         {isLoading

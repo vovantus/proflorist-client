@@ -1,7 +1,6 @@
 import BouquetCard from "./BouquetCard/BouquetCard";
 import BouquetCardSkeleton from "./BouquetCard/BouquetCardSkeleton";
 import Bouquet from "../types/bouquet";
-// import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 
 interface BouquetListProps {
@@ -9,30 +8,7 @@ interface BouquetListProps {
   isLoading: boolean;
 }
 
-//ASK 30 04 так ок выставлять ширину в зависимости от контента?
-
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
-  //   const itemWidth = 350;
-  //   const gap = 1;
-  //   const [containerWidth, setContainerWidth] = useState(0);
-
-  //   const updateContainerWidth = () => {
-  //     const viewportWidth = window.innerWidth;
-  //     const maxItemsPerRow = 4;
-  //     const itemsPerRow = Math.min(
-  //       Math.floor(viewportWidth / (itemWidth + gap)),
-  //       maxItemsPerRow
-  //     );
-  //     const newWidth = itemsPerRow * itemWidth + (itemsPerRow - 1) * gap * 8;
-  //     setContainerWidth(newWidth);
-  //   };
-
-  //   useEffect(() => {
-  //     updateContainerWidth();
-  //     window.addEventListener("resize", updateContainerWidth);
-  //     return () => window.removeEventListener("resize", updateContainerWidth);
-  //   }, []);
-
   return (
     <>
       <Box

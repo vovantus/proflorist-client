@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, MouseEvent } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,31 +7,25 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import LocalFloristOutlinedIcon from "@mui/icons-material/LocalFloristOutlined";
-
-
+import { Fingerprint } from "@mui/icons-material";
 import { useGetFloristInfo } from "../hooks/useGetFloristInfo";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = ["About", "Contacts", "Delivery"];
+const settings = ["Back to platform"];
 
 function FloristAppBar() {
   const { floristInfo } = useGetFloristInfo();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -41,6 +35,13 @@ function FloristAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleGoToPlatform = () => {
+    setAnchorElUser(null);
+    const hostArray = window.location.host.split(".");
+    hostArray.shift();
+    window.location.href = `//${hostArray.join(".")}`;
   };
 
   return (
@@ -90,6 +91,7 @@ function FloristAppBar() {
                 vertical: "bottom",
                 horizontal: "left",
               }}
+              disableScrollLock
               keepMounted
               transformOrigin={{
                 vertical: "top",
@@ -140,14 +142,19 @@ function FloristAppBar() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ p: 1, bgcolor: "#cfd8dc", color: "#ffffff" }}
+                aria-label="delete"
+              >
+                <Fingerprint />
               </IconButton>
             </Tooltip>
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
+              disableScrollLock
               anchorOrigin={{
                 vertical: "top",
                 horizontal: "right",
@@ -161,7 +168,7 @@ function FloristAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleGoToPlatform}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

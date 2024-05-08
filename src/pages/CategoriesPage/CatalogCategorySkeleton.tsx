@@ -21,14 +21,14 @@ export default function CatalogCategorySkeleton() {
           <Skeleton
             variant="rounded"
             width={200}
-            height={40}
+            height={32}
             sx={{ bgcolor: "#ffffff" }}
           />
 
           <Skeleton
             variant="circular"
-            width={40}
-            height={40}
+            width={32}
+            height={32}
             sx={{ bgcolor: "#ffffff" }}
           />
         </Box>

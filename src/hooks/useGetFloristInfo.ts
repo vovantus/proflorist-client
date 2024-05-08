@@ -37,7 +37,6 @@ export function useGetFloristInfo() {
   }, [subdomain]);
 
   return {
-    subdomain,
     floristInfo,
     isLoading,
     error,

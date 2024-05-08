@@ -8,10 +8,6 @@ import NewsPage from "../pages/NewsPage/NewsPage";
 import ShopMainPage from "../pages/ShopMainPage/ShopMainPage";
 import Page404 from "../pages/NotFoundPage/Page404";
 
-//ASK 29 04: перенес вызов хука с запрсосм данных флориста внутрь компонентов страниц и убрал у них попс "floristname"
-// это ок? проверил чтоб в базу за данными флориста часто не долбило, запрос уходит только если субдомен меняется
-// продолжение вопроса в компоненете CategoryBouquetsPage...
-
 
 
 const FloristRoutes = () => {

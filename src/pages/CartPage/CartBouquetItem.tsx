@@ -15,6 +15,7 @@ interface CartBouquetProps {
   bouquet: CartBouquet;
 }
 
+
 export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
   const { removeItem, addItem } = useCartStore();
   const { imageUrl } = useFetchBouquetImage(bouquet);

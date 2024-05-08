@@ -1,24 +1,28 @@
 import { useEffect, useState } from "react";
 import floristApi from "../api/floristApi";
-import FloristInfo from "../types/floristInfo";
+import useFloristInfoStore from "../store/floristInfoStore";
 import { createFloristFromDocument } from "../utils/dataTransforms";
 import { useLocation } from "react-router-dom";
 import useSubdomain from "./useSubdomain";
 
 export function useGetFloristInfo() {
-  const [floristInfo, setFloristInfos] = useState<FloristInfo | null>(null);
+  const { floristInfo, updateFloristInfo } = useFloristInfoStore();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const location = useLocation();
   const { subdomain } = useSubdomain();
 
   useEffect(() => {
+    if (floristInfo.name) {
+      setIsLoading(false);
+      return;
+    }
     if (subdomain) {
       floristApi
         .fetchFloristInfo(subdomain)
         .then((data) => {
           if (data) {
-            setFloristInfos(createFloristFromDocument(data));
+            updateFloristInfo(createFloristFromDocument(data));
           }
         })
         .catch((e) => {

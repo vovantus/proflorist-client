@@ -12,6 +12,8 @@ import Page404 from "../pages/NotFoundPage/Page404";
 // это ок? проверил чтоб в базу за данными флориста часто не долбило, запрос уходит только если субдомен меняется
 // продолжение вопроса в компоненете CategoryBouquetsPage...
 
+
+
 const FloristRoutes = () => {
   return (
     <Routes>

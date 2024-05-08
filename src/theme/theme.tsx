@@ -40,6 +40,15 @@ const theme = createTheme({
       main: red.A400,
     },
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+        html {
+          overflow-y: scroll; // Always show vertical scrollbar
+        }
+      `,
+    },
+  },
 });
 
 export default theme;

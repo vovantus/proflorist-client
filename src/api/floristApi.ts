@@ -10,12 +10,13 @@ import {
 } from "firebase/firestore";
 import api from "./instance";
 import Bouquet from "../types/bouquet";
+import Category from "../types/category";
+import News from "../types/news";
 import {
   createBouquetFromDocument,
   createCategoryFromDocument,
+  createNewsFromDocument,
 } from "../utils/dataTransforms";
-import Category from "../types/category";
-
 
 interface Api {
   fetchFlorist: (
@@ -35,6 +36,8 @@ interface Api {
     floristName: string,
     categoryId: Category["id"]
   ) => Promise<Bouquet[]>;
+
+  fetchNews: (floristName: string) => Promise<News[]>;
 }
 
 const floristApi: Api = {
@@ -92,6 +95,16 @@ const floristApi: Api = {
       createBouquetFromDocument({ ...doc.data(), id: doc.id })
     );
     return bouquetList;
+  },
+
+  fetchNews: async (floristName) => {
+    const floristDoc = await floristApi.fetchFlorist(floristName);
+    const newsCol = collection(floristDoc, "news");
+    const newsSnapshot = await getDocs(newsCol);
+    const newsList = newsSnapshot.docs.map((doc) =>
+      createNewsFromDocument({ ...doc.data(), id: doc.id })
+    );
+    return newsList;
   },
 };
 

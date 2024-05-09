@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import LocalFloristOutlinedIcon from "@mui/icons-material/LocalFloristOutlined";
-import { Fingerprint } from "@mui/icons-material";
+import PersonIcon from "@mui/icons-material/Person";
 import { useGetFloristInfo } from "../hooks/useGetFloristInfo";
 
 const pages = ["About", "Contacts", "Delivery"];
@@ -147,7 +147,7 @@ function FloristAppBar() {
                 sx={{ p: 1, bgcolor: "#cfd8dc", color: "#ffffff" }}
                 aria-label="delete"
               >
-                <Fingerprint />
+                <PersonIcon />
               </IconButton>
             </Tooltip>
             <Menu

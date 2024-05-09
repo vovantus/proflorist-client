@@ -59,7 +59,8 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
           height: 350,
           width: 350,
           borderRadius: "24px",
-          opacity: imageLoaded ? "100%" : "0%",
+          opacity: imageLoaded ? 1 : 0,
+          transition: "opacity 0.5s ease-in-out",
         }}
         src={imageUrl}
         title={bouquet.name}

@@ -58,7 +58,8 @@ export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
               height: 120,
               objectFit: "cover",
               objectPosition: "center",
-              opacity: imageLoaded ? "100%" : "0%",
+              opacity: imageLoaded ? 1 : 0,
+              transition: "opacity 0.5s ease-in-out",
             }}
             src={imageUrl}
             title={bouquet.name}

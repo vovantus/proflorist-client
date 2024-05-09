@@ -2,6 +2,7 @@ import Bouquet from "../types/bouquet";
 import { DocumentData } from "firebase/firestore/lite";
 import FloristInfo from "../types/floristInfo";
 import Category from "../types/category";
+import News from "../types/news";
 
 function createBouquetFromDocument(doc: DocumentData): Bouquet {
   return {
@@ -30,8 +31,21 @@ function createCategoryFromDocument(doc: DocumentData): Category {
   };
 }
 
+function createNewsFromDocument(doc: DocumentData): News {
+  return {
+    id: doc.id,
+    header: doc.header,
+    text: doc.text,
+    date: doc.date.toDate(),
+    imageUrl: doc.imageUrl,
+    linkTitle: doc.linkTitle ?? null,
+    categoryId: doc.categoryId ?? null,
+  };
+}
+
 export {
   createBouquetFromDocument,
   createFloristFromDocument,
   createCategoryFromDocument,
+  createNewsFromDocument,
 };

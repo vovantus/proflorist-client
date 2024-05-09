@@ -11,19 +11,19 @@ export default function NewsCardSkeleton() {
   return (
     <Card
       sx={{
-        width: { xxs: 420, sm: 700 },
+        width: { xxs: 360, sm: 720 },
         position: "relative",
         display: { xxs: "block", sm: "flex" },
         justifyContent: "end",
-        height: 420,
+        height: 360,
       }}
     >
       <Box>
         <Skeleton
           variant="rectangular"
           animation="pulse"
-          width={420}
-          height={420}
+          width={360}
+          height={360}
           sx={{ position: "absolute", top: 0, right: 0 }}
         />
       </Box>
@@ -35,7 +35,7 @@ export default function NewsCardSkeleton() {
           top: { xxs: "auto", sm: 0 },
 
           bgcolor: "rgba(255,255,255,0.85)",
-          width: { xxs: "100%", sm: 280 },
+          width: { xxs: "100%", sm: 360 },
           height: { xxs: 160, sm: "auto" },
         }}
       >

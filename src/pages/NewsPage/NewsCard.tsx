@@ -23,7 +23,7 @@ export default function NewsCard({ news }: NewsCardProps) {
   return (
     <Card
       sx={{
-        width: { xxs: 420, sm: 700 },
+        width: { xxs: 360, sm: 720 },
         position: "relative",
         display: { xxs: "block", sm: "flex" },
         justifyContent: "end",
@@ -33,7 +33,7 @@ export default function NewsCard({ news }: NewsCardProps) {
         <CardMedia
           component="img"
           sx={{
-            height: 420,
+            height: 360,
             opacity: imgLoading ? 0 : 1,
             transition: "opacity 0.5s ease-in-out",
           }}
@@ -45,8 +45,8 @@ export default function NewsCard({ news }: NewsCardProps) {
           <Skeleton
             variant="rectangular"
             animation="pulse"
-            width={420}
-            height={420}
+            width={360}
+            height={360}
             sx={{ position: "absolute", top: 0, right: 0 }}
           />
         )}
@@ -59,7 +59,7 @@ export default function NewsCard({ news }: NewsCardProps) {
           top: { xxs: "auto", sm: 0 },
 
           bgcolor: "rgba(255,255,255,0.85)",
-          width: { xxs: "100%", sm: 280 },
+          width: { xxs: "100%", sm: 360 },
         }}
       >
         <CardContent>

@@ -13,19 +13,13 @@ import useFetchBouquetImage from "../../hooks/useFetchBouquetUrl";
 
 interface BouquetProps {
   bouquet: Bouquet;
+  showBouquet: (bouquet: Bouquet) => void;
 }
 
-export default function BouquetCard({ bouquet }: BouquetProps) {
+export default function BouquetCard({ bouquet, showBouquet }: BouquetProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { imageUrl } = useFetchBouquetImage(bouquet);
   const { addItem } = useCartStore();
-
-
-  //TODO:
-  //   атрибуты loading - lazy
-  //   decoding
-  // настроить кэширование картинок, когда сделаю админку и загрузку картинок
-  // настроить lazyload чтоб нормально грузились картинки
 
   return (
     <Card
@@ -81,7 +75,13 @@ export default function BouquetCard({ bouquet }: BouquetProps) {
           ":last-child": { pb: 1 },
         }}
       >
-        <Typography gutterBottom variant="subtitle1" component="div">
+        <Typography
+          onClick={() => showBouquet(bouquet)}
+          gutterBottom
+          variant="subtitle1"
+          component="div"
+          sx={{ cursor: "pointer" }}
+        >
           {bouquet.name}
         </Typography>
         <Button size="small" onClick={() => addItem(bouquet.id)}>

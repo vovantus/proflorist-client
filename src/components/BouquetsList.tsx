@@ -1,7 +1,9 @@
 import BouquetCard from "./BouquetCard/BouquetCard";
 import BouquetCardSkeleton from "./BouquetCard/BouquetCardSkeleton";
 import Bouquet from "../types/bouquet";
-import { Box } from "@mui/material";
+import { Box, Backdrop } from "@mui/material";
+import { useState } from "react";
+import BouquetDetailesCard from "./BouquetDetailesCard/BouquetDetailesCard";
 
 interface BouquetListProps {
   bouquets: Bouquet[];
@@ -9,6 +11,18 @@ interface BouquetListProps {
 }
 
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
+  const [activeBouquet, setActiveBouquet] = useState<Bouquet | null>(null);
+  const [showActiveBouquet, setShowActiveBouquet] = useState(false);
+
+  const handleCloseActiveBouquet = () => {
+    setActiveBouquet(null);
+    setShowActiveBouquet(false);
+  };
+  const handleOpenActiveBouquet = (bouquet: Bouquet) => {
+    setActiveBouquet(bouquet);
+    setShowActiveBouquet(true);
+  };
+
   return (
     <>
       <Box
@@ -27,8 +41,21 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
           ? Array.from(new Array(12)).map((_, index) => (
               <BouquetCardSkeleton key={index} />
             ))
-          : bouquets.map((el) => <BouquetCard key={el.id} bouquet={el} />)}
+          : bouquets.map((el) => (
+              <BouquetCard
+                key={el.id}
+                bouquet={el}
+                showBouquet={handleOpenActiveBouquet}
+              />
+            ))}
       </Box>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: 99999 }}
+        open={showActiveBouquet}
+        onClick={handleCloseActiveBouquet}
+      >
+        {activeBouquet && <BouquetDetailesCard bouquet={activeBouquet} />}
+      </Backdrop>
     </>
   );
 }

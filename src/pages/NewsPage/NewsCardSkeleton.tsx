@@ -36,7 +36,7 @@ export default function NewsCardSkeleton() {
 
           bgcolor: "rgba(255,255,255,0.85)",
           width: { xxs: "100%", sm: 360 },
-          height: { xxs: 160, sm: "auto" },
+          height: { xxs: 197, sm: "auto" },
         }}
       >
         <CardContent>

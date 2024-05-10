@@ -17,8 +17,16 @@ interface NewsCardProps {
   news: News;
 }
 
+
+
 export default function NewsCard({ news }: NewsCardProps) {
   const [imgLoading, setImageLoading] = useState(true);
+
+  const dateString = news.date.toLocaleDateString("en-US", {
+   year: "2-digit",
+   month: "long",
+   day: "2-digit",
+ });
 
   return (
     <Card
@@ -66,9 +74,10 @@ export default function NewsCard({ news }: NewsCardProps) {
           <Typography gutterBottom variant="h5" component="div">
             {news.header}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {news.text}
+          <Typography sx={{ fontSize: 12 }} color="text.secondary">
+            {dateString}
           </Typography>
+          <Typography variant="body2">{news.text}</Typography>
         </CardContent>
 
         {news.categoryId && (

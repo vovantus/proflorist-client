@@ -76,7 +76,6 @@ export default function NewsCard({ news }: NewsCardProps) {
             <Button
               component={Link}
               to={FLORIST_URLS.CATALOG.ROOT + "/" + news.categoryId}
-              reloadDocument
               size="small"
               color="primary"
             >

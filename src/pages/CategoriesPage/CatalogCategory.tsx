@@ -22,6 +22,7 @@ export default function CatalogCategory({ category }: CatalogCategoryProps) {
       }}
       component={Link}
       to={category.id}
+      reloadDocument
     >
       <CardContent>
         <Box

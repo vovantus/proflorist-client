@@ -52,7 +52,6 @@ export default function BottomNav() {
           value={tabRoutes[0]}
           to={tabRoutes[0]}
           component={Link}
-          reloadDocument
         />
         <BottomNavigationAction
           icon={<YardOutlinedIcon />}
@@ -60,7 +59,6 @@ export default function BottomNav() {
           value={tabRoutes[3]}
           to={tabRoutes[3]}
           component={Link}
-          reloadDocument
         />
         <BottomNavigationAction
           icon={<GridViewOutlinedIcon />}
@@ -68,7 +66,6 @@ export default function BottomNav() {
           value={tabRoutes[2]}
           to={tabRoutes[2]}
           component={Link}
-          reloadDocument
         />
 
         <BottomNavigationAction
@@ -91,7 +88,6 @@ export default function BottomNav() {
           value={tabRoutes[1]}
           to={tabRoutes[1]}
           component={Link}
-          reloadDocument
         />
       </BottomNavigation>
     </Paper>

@@ -61,6 +61,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
             handleClose={handleCloseActiveBouquet}
           />
         )}
+
       </Backdrop>
     </>
   );

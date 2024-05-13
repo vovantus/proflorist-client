@@ -14,14 +14,12 @@ interface BouquetListProps {
 const transitionTime = 500;
 
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
-  const [activeBouquet, setActiveBouquet] = useState<Bouquet | undefined>(
-    undefined
-  );
+  const [activeBouquet, setActiveBouquet] = useState<Bouquet | null>(null);
   const [showActiveBouquet, setShowActiveBouquet] = useState(false);
 
   const handleCloseActiveBouquet = () => {
     setShowActiveBouquet(false);
-    setTimeout(() => setActiveBouquet(undefined), transitionTime);
+    setTimeout(() => setActiveBouquet(null), transitionTime);
   };
   const setActiveBouquetAndOpen = (bouquet: Bouquet) => {
     setActiveBouquet(bouquet);
@@ -32,7 +30,6 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
     <>
       <Box
         sx={{
-          //   bgcolor: "blue",
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit,350px)",
           width: "100%",

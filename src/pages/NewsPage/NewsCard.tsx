@@ -53,9 +53,13 @@ export default function NewsCard({ news }: NewsCardProps) {
           <Skeleton
             variant="rectangular"
             animation="pulse"
-            width={360}
-            height={360}
-            sx={{ position: "absolute", top: 0, right: 0 }}
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              width: 360,
+              height: 360,
+            }}
           />
         )}
       </Box>
@@ -65,7 +69,6 @@ export default function NewsCard({ news }: NewsCardProps) {
           bottom: 0,
           left: 0,
           top: { xxs: "auto", sm: 0 },
-
           bgcolor: "rgba(255,255,255,0.85)",
           width: { xxs: "100%", sm: 360 },
         }}

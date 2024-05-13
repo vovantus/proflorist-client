@@ -1,4 +1,12 @@
-import { Card, CardContent, Typography, Box, Button } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  Button,
+  Skeleton,
+  CardMedia,
+} from "@mui/material";
 import Bouquet from "../../types/bouquet";
 import { useState } from "react";
 import useFetchBouquetImage from "../../hooks/useFetchBouquetUrl";
@@ -18,7 +26,7 @@ export default function BouquetDetailesCard({
   const { addItem } = useCartStore();
 
   const addAndClose = () => {
-    addItem(bouquet.id);
+    bouquet && addItem(bouquet.id);
     handleClose();
   };
   return (
@@ -26,17 +34,17 @@ export default function BouquetDetailesCard({
       elevation={0}
       sx={{
         px: 0,
-        width: { xxs: "95%", lg: 1200 },
-        minHeight: 500,
+        width: { xxs: "100%", lg: 1200 },
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
       }}
     >
-      <Box
+      <CardMedia
         component="img"
         sx={{
           width: "100%",
+          aspectRatio: "1 / 1",
           opacity: imageLoaded ? 1 : 0,
           transition: "opacity 0.5s ease-in-out",
         }}
@@ -45,6 +53,20 @@ export default function BouquetDetailesCard({
         loading="lazy"
         onLoad={() => setImageLoaded(true)}
       />
+      {!imageLoaded && (
+        <Skeleton
+          component="div"
+          animation="pulse"
+          sx={{
+            width: "100%",
+            aspectRatio: "1 / 1",
+            position: "absolute",
+            top: 0,
+            right: 0,
+            transform: "none",
+          }}
+        />
+      )}
       <CardContent>
         <Box
           sx={{
@@ -58,12 +80,14 @@ export default function BouquetDetailesCard({
             size="small"
             variant="outlined"
             onClick={addAndClose}
-            sx={{ width: 110 }}
+            sx={{ width: 110, ml: 1, mt: 1 }}
           >
             Add to cart
           </Button>
         </Box>
-        <Typography variant="h6">{bouquet.price}€</Typography>
+        <Typography variant="h6" gutterBottom>
+          {bouquet.price}€
+        </Typography>
         <Typography variant="body2">{bouquet.description}</Typography>
       </CardContent>
     </Card>

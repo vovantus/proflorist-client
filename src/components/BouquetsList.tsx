@@ -1,9 +1,10 @@
 import BouquetCard from "./BouquetCard/BouquetCard";
 import BouquetCardSkeleton from "./BouquetCard/BouquetCardSkeleton";
 import Bouquet from "../types/bouquet";
-import { Box, Backdrop } from "@mui/material";
+import { Box, SwipeableDrawer } from "@mui/material";
 import { useState } from "react";
-import BouquetDetailesCard from "./BouquetDetailesCard/BouquetDetailesCard";
+import BouquetDetailesCard from "./BouquetDetailesCard/BouquetDetailsCard";
+//import BouquetDetailsCardSkeleton from "./BouquetDetailesCard/BouquetDetailsCardSkeleton";
 
 interface BouquetListProps {
   bouquets: Bouquet[];
@@ -49,11 +50,17 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
               />
             ))}
       </Box>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: 99999 }}
+      <SwipeableDrawer
+        anchor="bottom"
         open={showActiveBouquet}
-        onClick={handleCloseActiveBouquet}
-        transitionDuration={{ enter: 500, exit: 300 }}
+        onClose={handleCloseActiveBouquet}
+        onOpen={() => setShowActiveBouquet(true)}
+        PaperProps={{
+          sx: { borderTopLeftRadius: "24px", borderTopRightRadius: "24px" },
+        }}
+        ModalProps={{
+          keepMounted: false,
+        }}
       >
         {activeBouquet && (
           <BouquetDetailesCard
@@ -61,8 +68,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
             handleClose={handleCloseActiveBouquet}
           />
         )}
-
-      </Backdrop>
+      </SwipeableDrawer>
     </>
   );
 }

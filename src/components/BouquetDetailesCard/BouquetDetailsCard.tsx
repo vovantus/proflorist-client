@@ -26,7 +26,7 @@ export default function BouquetDetailesCard({
   const { addItem } = useCartStore();
 
   const addAndClose = () => {
-    bouquet && addItem(bouquet.id);
+    addItem(bouquet.id);
     handleClose();
   };
   return (
@@ -53,6 +53,7 @@ export default function BouquetDetailesCard({
         loading="lazy"
         onLoad={() => setImageLoaded(true)}
       />
+
       {!imageLoaded && (
         <Skeleton
           component="div"

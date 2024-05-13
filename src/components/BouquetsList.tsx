@@ -11,15 +11,19 @@ interface BouquetListProps {
   isLoading: boolean;
 }
 
+const transitionTime = 500;
+
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
-  const [activeBouquet, setActiveBouquet] = useState<Bouquet | null>(null);
+  const [activeBouquet, setActiveBouquet] = useState<Bouquet | undefined>(
+    undefined
+  );
   const [showActiveBouquet, setShowActiveBouquet] = useState(false);
 
   const handleCloseActiveBouquet = () => {
-    setActiveBouquet(null);
     setShowActiveBouquet(false);
+    setTimeout(() => setActiveBouquet(undefined), transitionTime);
   };
-  const handleOpenActiveBouquet = (bouquet: Bouquet) => {
+  const setActiveBouquetAndOpen = (bouquet: Bouquet) => {
     setActiveBouquet(bouquet);
     setShowActiveBouquet(true);
   };
@@ -46,7 +50,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
               <BouquetCard
                 key={el.id}
                 bouquet={el}
-                showBouquet={handleOpenActiveBouquet}
+                showBouquet={setActiveBouquetAndOpen}
               />
             ))}
       </Box>
@@ -55,6 +59,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
         open={showActiveBouquet}
         onClose={handleCloseActiveBouquet}
         onOpen={() => setShowActiveBouquet(true)}
+        transitionDuration={transitionTime}
         PaperProps={{
           sx: { borderTopLeftRadius: "24px", borderTopRightRadius: "24px" },
         }}
@@ -65,7 +70,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
         {activeBouquet && (
           <BouquetDetailesCard
             bouquet={activeBouquet}
-            handleClose={handleCloseActiveBouquet}
+            handleClose={() => setShowActiveBouquet(false)}
           />
         )}
       </SwipeableDrawer>

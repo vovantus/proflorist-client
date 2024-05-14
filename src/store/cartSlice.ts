@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand";
 import FloristInfoSlice from "../types/floristInfoSlice";
-import CartSlice from "../types/CartSlice";
+import CartSlice from "../types/cartSlice";
 
 export const createCartSlice: StateCreator<
   FloristInfoSlice & CartSlice,

@@ -96,7 +96,7 @@ export default function CartPage() {
         gap: 1,
       }}
     >
-      {cartTotalQuantity ? (
+      {cartTotalQuantity !== 0 ? (
         <>
           <Box
             sx={{ display: "flex", flexDirection: "column", gap: 1, pb: 30 }}

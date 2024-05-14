@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import { createCartSlice } from "./cartSlice";
 import { createFloristInfoSlice } from "./floristInfoSlice";
 import FloristInfoSlice from "../types/floristInfoSlice";
-import CartSlice from "../types/CartSlice";
+import CartSlice from "../types/cartSlice";
 
 const useBoundStore = create<FloristInfoSlice & CartSlice>()(
   persist(

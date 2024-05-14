@@ -55,11 +55,13 @@ export default function BouquetCard({ bouquet, showBouquet }: BouquetProps) {
           borderRadius: "24px",
           opacity: imageLoaded ? 1 : 0,
           transition: "opacity 0.5s ease-in-out",
+          cursor: "pointer",
         }}
         src={imageUrl}
         title={bouquet.name}
         loading="lazy"
         onLoad={() => setImageLoaded(true)}
+        onClick={() => showBouquet(bouquet)}
       />
 
       <CardContent

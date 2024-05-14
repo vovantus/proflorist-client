@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import floristApi from "../api/floristApi";
-import useFloristInfoStore from "../store/floristInfoStore";
+import useBoundStore from "../store/boundStore";
 import { createFloristFromDocument } from "../utils/dataTransforms";
 import { useLocation } from "react-router-dom";
 import useSubdomain from "./useSubdomain";
 
 export function useGetFloristInfo() {
-  const { floristInfo, updateFloristInfo } = useFloristInfoStore();
+  const floristInfo = useBoundStore((state) => state.floristInfo);
+  const updateFloristInfo = useBoundStore((state) => state.updateFloristInfo);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const location = useLocation();

@@ -11,7 +11,7 @@ import {
 import Bouquet from "../../types/bouquet";
 import { useState } from "react";
 import useFetchBouquetImage from "../../hooks/useFetchBouquetUrl";
-import useCartStore from "../../store/cartStore";
+import useBoundStore from "../../store/boundStore";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
 interface BouquetDetailesCardProps {
@@ -25,7 +25,7 @@ export default function BouquetDetailesCard({
 }: BouquetDetailesCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { imageUrl } = useFetchBouquetImage(bouquet);
-  const { addItem } = useCartStore();
+  const addItem = useBoundStore((state) => state.addItem);
 
   const addAndClose = () => {
     addItem(bouquet.id);

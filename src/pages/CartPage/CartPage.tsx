@@ -6,7 +6,7 @@ import {
   Button,
   Skeleton,
 } from "@mui/material";
-import useCartStore from "../../store/cartStore";
+import useBoundStore from "../../store/boundStore";
 import { useGetBouquets } from "../../hooks/useGetBouquets";
 import { useMemo } from "react";
 import CartBouquet from "../../types/cartBouquet";
@@ -15,9 +15,9 @@ import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
 import CartEmpty from "./CartEmpty";
 import CartItemSkeleton from "./CartItemSkeleton";
 
-
 export default function CartPage() {
-  const { cartItems, cartTotalQuantity } = useCartStore();
+  const cartItems = useBoundStore((state) => state.cartItems);
+  const cartTotalQuantity = useBoundStore((state) => state.cartTotalQuantity);
   const { floristInfo } = useGetFloristInfo();
 
   const bouquetIds = useMemo(() => {
@@ -72,7 +72,7 @@ export default function CartPage() {
             {isLoading ? <Skeleton width={"100%"} /> : `${cartTotal}€`}
           </Typography>
           <Typography sx={{ mb: 1.5, textAlign: "end" }} color="text.secondary">
-            {cartTotalQuantity()} bouquets
+            {cartTotalQuantity} bouquets
           </Typography>
           <Button
             variant="contained"
@@ -96,7 +96,7 @@ export default function CartPage() {
         gap: 1,
       }}
     >
-      {cartTotalQuantity() ? (
+      {cartTotalQuantity ? (
         <>
           <Box
             sx={{ display: "flex", flexDirection: "column", gap: 1, pb: 30 }}

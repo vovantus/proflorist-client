@@ -9,7 +9,7 @@ import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import YardOutlinedIcon from "@mui/icons-material/YardOutlined";
 import { Link, useLocation } from "react-router-dom";
-import useCartStore from "../store/cartStore";
+import useBoundStore from "../store/boundStore";
 import { FLORIST_URLS } from "../routes/routes";
 
 // paths in decending order, parent paths at the end
@@ -22,7 +22,7 @@ const tabRoutes = [
 
 export default function BottomNav() {
   const { pathname } = useLocation();
-  const { cartTotalQuantity } = useCartStore();
+  const cartTotalQuantity = useBoundStore((state) => state.cartTotalQuantity);
 
   const currentTab = tabRoutes.find((el) => pathname.includes(el));
 
@@ -71,7 +71,7 @@ export default function BottomNav() {
         <BottomNavigationAction
           icon={
             <Badge
-              badgeContent={cartTotalQuantity()}
+              badgeContent={cartTotalQuantity}
               color="primary"
               max={99}
               overlap="circular"

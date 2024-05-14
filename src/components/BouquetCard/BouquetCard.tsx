@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import Bouquet from "../../types/bouquet";
-import useCartStore from "../../store/cartStore";
+import useBoundStore from "../../store/boundStore";
 import useFetchBouquetImage from "../../hooks/useFetchBouquetUrl";
 
 interface BouquetProps {
@@ -19,7 +19,7 @@ interface BouquetProps {
 export default function BouquetCard({ bouquet, showBouquet }: BouquetProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { imageUrl } = useFetchBouquetImage(bouquet);
-  const { addItem } = useCartStore();
+  const addItem = useBoundStore((state) => state.addItem);
 
   return (
     <Card

@@ -6,7 +6,7 @@ import {
   Typography,
   Skeleton,
 } from "@mui/material";
-import useCartStore from "../../store/cartStore";
+import useBoundStore from "../../store/boundStore";
 import CartBouquet from "../../types/cartBouquet";
 import useFetchBouquetImage from "../../hooks/useFetchBouquetUrl";
 import { useMemo, useState } from "react";
@@ -15,12 +15,12 @@ interface CartBouquetProps {
   bouquet: CartBouquet;
 }
 
-
 export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
-  const { removeItem, addItem } = useCartStore();
+  const addItem = useBoundStore((state) => state.addItem);
+  const removeItem = useBoundStore((state) => state.removeItem);
+
   const { imageUrl } = useFetchBouquetImage(bouquet);
   const [imageLoaded, setImageLoaded] = useState(false);
-
 
   const CardRender = useMemo(() => {
     return (

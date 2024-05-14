@@ -7,7 +7,6 @@ import NewsCardSkeleton from "./NewsCardSkeleton";
 export default function NewsPage() {
   const { floristInfo } = useGetFloristInfo();
   const { news, isLoading } = useGetNews(floristInfo.name);
-  console.log(news, isLoading);
   return (
     <Box
       sx={{

@@ -46,12 +46,10 @@ export default function BouquetDetailesCard({
         sx={{
           width: { xxs: "100%", sm: "50%" },
           aspectRatio: "1 / 1",
-          opacity: imageLoaded ? 1 : 0,
-          transition: "opacity 0.5s ease-in-out",
           position: "relative",
         }}
       >
-        {imageLoaded && (
+        {!imageLoaded && (
           <Skeleton
             component="div"
             animation={false}

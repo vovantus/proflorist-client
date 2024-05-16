@@ -1,5 +1,5 @@
-import { useGetNews } from "../../hooks/useGetNews";
-import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
+import { useGetNews } from "../../../hooks/useGetNews";
+import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo";
 import NewsCard from "./NewsCard";
 import { Box } from "@mui/material";
 import NewsCardSkeleton from "./NewsCardSkeleton";

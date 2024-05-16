@@ -13,9 +13,14 @@ import MenuItem from "@mui/material/MenuItem";
 import LocalFloristOutlinedIcon from "@mui/icons-material/LocalFloristOutlined";
 import PersonIcon from "@mui/icons-material/Person";
 import { useGetFloristInfo } from "../hooks/useGetFloristInfo";
+import { Link } from "react-router-dom";
+import { FLORIST_URLS } from "../routes/routes";
 
-const pages = ["About", "Contacts", "Delivery"];
-const settings = ["Back to platform"];
+const pages = [
+  { text: "About", to: FLORIST_URLS.ABOUT },
+  { text: "Contacts", to: FLORIST_URLS.CONTACTS },
+  { text: "Delivery", to: FLORIST_URLS.DELIVERY },
+];
 
 function FloristAppBar() {
   const { floristInfo } = useGetFloristInfo();
@@ -43,6 +48,8 @@ function FloristAppBar() {
     hostArray.shift();
     window.location.href = `//${hostArray.join(".")}`;
   };
+
+  const settings = [{ text: "Back to platform", func: handleGoToPlatform }];
 
   return (
     <AppBar
@@ -104,8 +111,13 @@ function FloristAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem
+                  component={Link}
+                  to={page.to}
+                  key={page.text}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography textAlign="center">{page.text}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -131,11 +143,13 @@ function FloristAppBar() {
           <Box sx={{ flexGrow: 1, display: { xxs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
+                component={Link}
+                to={page.to}
+                key={page.text}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.text}
               </Button>
             ))}
           </Box>
@@ -168,8 +182,8 @@ function FloristAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleGoToPlatform}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.text} onClick={setting.func}>
+                  <Typography textAlign="center">{setting.text}</Typography>
                 </MenuItem>
               ))}
             </Menu>

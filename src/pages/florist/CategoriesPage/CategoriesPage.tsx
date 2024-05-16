@@ -1,7 +1,7 @@
-import { useGetCategories } from "../../hooks/useGetCategories";
+import { useGetCategories } from "../../../hooks/useGetCategories";
 import { Box } from "@mui/material";
 import CatalogCategory from "./CatalogCategory";
-import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
+import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo";
 import CatalogCategorySkeleton from "./CatalogCategorySkeleton";
 
 // interface CategoriesPageProps {

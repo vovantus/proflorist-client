@@ -8,25 +8,23 @@ import {
   Box,
   Skeleton,
 } from "@mui/material";
-import News from "../../types/news";
+import News from "../../../types/news";
 import { Link } from "react-router-dom";
-import { FLORIST_URLS } from "../../routes/routes";
+import { FLORIST_URLS } from "../../../routes/routes";
 import { useState } from "react";
 
 interface NewsCardProps {
   news: News;
 }
 
-
-
 export default function NewsCard({ news }: NewsCardProps) {
   const [imgLoading, setImageLoading] = useState(true);
 
   const dateString = news.date.toLocaleDateString("en-US", {
-   year: "2-digit",
-   month: "long",
-   day: "2-digit",
- });
+    year: "2-digit",
+    month: "long",
+    day: "2-digit",
+  });
 
   return (
     <Card

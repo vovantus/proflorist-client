@@ -3,6 +3,7 @@ import { DocumentData } from "firebase/firestore/lite";
 import FloristInfo from "../types/floristInfo";
 import Category from "../types/category";
 import News from "../types/news";
+import About from "../types/about";
 
 function createBouquetFromDocument(doc: DocumentData): Bouquet {
   return {
@@ -43,9 +44,18 @@ function createNewsFromDocument(doc: DocumentData): News {
   };
 }
 
+function createAboutFromDocument(doc: DocumentData): About {
+  return {
+    text: doc.text,
+    header: doc.header,
+    image: doc.image,
+  };
+}
+
 export {
   createBouquetFromDocument,
   createFloristFromDocument,
   createCategoryFromDocument,
   createNewsFromDocument,
+  createAboutFromDocument,
 };

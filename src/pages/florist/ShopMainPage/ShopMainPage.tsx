@@ -1,6 +1,6 @@
-import { useGetBouquets } from "../../hooks/useGetBouquets.ts";
-import BouquetList from "../../components/BouquetsList.tsx";
-import useBoundStore from "../../store/boundStore.ts";
+import { useGetBouquets } from "../../../hooks/useGetBouquets.ts";
+import BouquetList from "../../../components/BouquetsList.tsx";
+import useBoundStore from "../../../store/boundStore.ts";
 
 // interface ShopMainPageProps {
 //   florist: string;

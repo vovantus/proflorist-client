@@ -6,9 +6,9 @@ import {
   Typography,
   Skeleton,
 } from "@mui/material";
-import useBoundStore from "../../store/boundStore";
-import CartBouquet from "../../types/cartBouquet";
-import useFetchBouquetImage from "../../hooks/useFetchBouquetUrl";
+import useBoundStore from "../../../store/boundStore";
+import CartBouquet from "../../../types/cartBouquet";
+import useFetchBouquetImage from "../../../hooks/useFetchBouquetUrl";
 import { useMemo, useState } from "react";
 
 interface CartBouquetProps {

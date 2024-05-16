@@ -6,12 +6,12 @@ import {
   Button,
   Skeleton,
 } from "@mui/material";
-import useBoundStore from "../../store/boundStore";
-import { useGetBouquets } from "../../hooks/useGetBouquets";
+import useBoundStore from "../../../store/boundStore";
+import { useGetBouquets } from "../../../hooks/useGetBouquets";
 import { useMemo } from "react";
-import CartBouquet from "../../types/cartBouquet";
+import CartBouquet from "../../../types/cartBouquet";
 import CartBouquetItem from "./CartBouquetItem";
-import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
+import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo";
 import CartEmpty from "./CartEmpty";
 import CartItemSkeleton from "./CartItemSkeleton";
 

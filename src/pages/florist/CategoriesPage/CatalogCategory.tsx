@@ -1,4 +1,4 @@
-import Category from "../../types/category";
+import Category from "../../../types/category";
 import { Card, CardContent, Typography, Box } from "@mui/material";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { Link } from "react-router-dom";

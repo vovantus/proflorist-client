@@ -24,7 +24,10 @@ export default function BottomNav() {
   const { pathname } = useLocation();
   const cartTotalQuantity = useBoundStore((state) => state.cartTotalQuantity);
 
-  const currentTab = tabRoutes.find((el) => pathname.includes(el));
+  let currentTab: string | undefined = tabRoutes.find((el) =>
+    pathname.startsWith(el)
+  );
+  if (currentTab === "/") currentTab = pathname;
 
   return (
     <Paper
@@ -33,7 +36,7 @@ export default function BottomNav() {
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: "rgba(255, 2255, 255, 0.0)",
+        backgroundColor: "rgba(255, 255, 255, 0.0)",
       }}
       elevation={3}
     >
@@ -42,7 +45,7 @@ export default function BottomNav() {
         value={currentTab}
         sx={{
           minHeight: "64px",
-          backgroundColor: "rgba(255, 2255, 255, 0.5)",
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
           backdropFilter: "blur(8px)",
         }}
       >

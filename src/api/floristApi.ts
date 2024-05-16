@@ -12,7 +12,9 @@ import api from "./instance";
 import Bouquet from "../types/bouquet";
 import Category from "../types/category";
 import News from "../types/news";
+import About from "../types/about";
 import {
+  createAboutFromDocument,
   createBouquetFromDocument,
   createCategoryFromDocument,
   createNewsFromDocument,
@@ -38,6 +40,11 @@ interface Api {
   ) => Promise<Bouquet[]>;
 
   fetchNews: (floristName: string) => Promise<News[]>;
+
+  fetchStaticInfo: (
+    floristName: string,
+    pageName: string
+  ) => Promise<About | undefined>;
 }
 
 const floristApi: Api = {
@@ -105,6 +112,25 @@ const floristApi: Api = {
       createNewsFromDocument({ ...doc.data(), id: doc.id })
     );
     return newsList;
+  },
+
+  fetchStaticInfo: async (floristName, pageName) => {
+    const floristDoc = await floristApi.fetchFlorist(floristName);
+    const staticDoc = doc(floristDoc, "info", pageName);
+    const staticSnapshot = await getDoc(staticDoc);
+
+    if (staticSnapshot.exists()) {
+      const staticData = staticSnapshot.data();
+      let staticInfo: About | undefined;
+      switch (pageName) {
+        case "about":
+          staticInfo = createAboutFromDocument(staticData);
+          break;
+      }
+      return staticInfo;
+    } else {
+      throw new Error("static data not found");
+    }
   },
 };
 

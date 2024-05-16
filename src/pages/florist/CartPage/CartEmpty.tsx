@@ -1,5 +1,5 @@
 import { Card, CardContent, Typography, Button } from "@mui/material";
-import { FLORIST_URLS } from "../../routes/routes";
+import { FLORIST_URLS } from "../../../routes/routes";
 import { Link } from "react-router-dom";
 
 const CartEmpty = function () {

@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import BottomNav from "../BottomNav";
 import FloristAppBar from "../FloristAppBar";
 import { Container, Box } from "@mui/material";
-import ShopLoadingIndicator from "../../pages/ShopMainPage/ShopLoadingIndicator.tsx";
+import ShopLoadingIndicator from "../../pages/florist/ShopMainPage/ShopLoadingIndicator.tsx";
 import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
 
 

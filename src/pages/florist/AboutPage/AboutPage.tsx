@@ -22,7 +22,7 @@ export default function AboutPage() {
   };
 
   return (
-    <Card sx={{ width: { xxs: 400, sm: 750 } }}>
+    <Card sx={{ width: { xxs: 400, sm: 720 }, pb: 2 }}>
       <Box
         sx={{
           width: { xxs: "100%", sm: 400 },
@@ -53,9 +53,9 @@ export default function AboutPage() {
         )}
       </Box>
       <CardContent>
-        <Typography variant="h4">
+        <Typography variant="h4" sx={{ mb: 2 }}>
           {isLoading ? (
-            <Skeleton sx={{ width: { xxs: "100%", sm: 300 } }} />
+            <Skeleton sx={{ width: { xxs: "100%", sm: 270 } }} />
           ) : (
             info?.header
           )}
@@ -67,13 +67,13 @@ export default function AboutPage() {
             <Typography variant="h3">
               <Skeleton
                 variant="rounded"
-                sx={{ width: { xxs: "100%", sm: 300 }, mb: 1 }}
+                sx={{ width: { xxs: "100%", sm: 270 }, mb: 1 }}
               />
             </Typography>
             <Typography variant="body2">
               <Skeleton
                 variant="rounded"
-                sx={{ height: 200, width: { xxs: "100%", sm: 300 } }}
+                sx={{ height: 200, width: { xxs: "100%", sm: 270 } }}
               />
             </Typography>
           </>

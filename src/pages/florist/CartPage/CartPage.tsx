@@ -126,12 +126,18 @@ export default function CartPage() {
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={snackbarOpen}
-        // sx={{ top: "300px" }}
-        // autoHideDuration={2000}
+        sx={{ top: { xxs: 64, sm: 80 } }}
+        autoHideDuration={2000}
+        onClose={() => setSnackbarOpen(false)}
       >
         <Alert
           severity="info"
-          sx={{ width: "100%", color: theme.palette.primary.main }}
+          variant="outlined"
+          sx={{
+            width: "100%",
+            color: theme.palette.secondary.contrastText,
+            bgcolor: theme.palette.secondary.main,
+          }}
         >
           This is just a demo app!
         </Alert>

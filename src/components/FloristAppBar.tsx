@@ -104,6 +104,7 @@ function FloristAppBar() {
                 vertical: "top",
                 horizontal: "left",
               }}
+              variant="menu"
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{

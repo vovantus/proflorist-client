@@ -32,7 +32,7 @@ export default function useGetStaticInfo<T extends "about" | "contacts">(
       })
       .catch((e) => setError(e))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [florist, pageName]);
 
   return { info, isLoading, error };
 }

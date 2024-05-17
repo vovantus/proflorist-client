@@ -117,6 +117,11 @@ function FloristAppBar() {
                   to={page.to}
                   key={page.text}
                   onClick={handleCloseNavMenu}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "#ffffff",
+                    },
+                  }}
                 >
                   <Typography textAlign="center">{page.text}</Typography>
                 </MenuItem>

@@ -4,6 +4,8 @@ import FloristInfo from "../types/floristInfo";
 import Category from "../types/category";
 import News from "../types/news";
 import About from "../types/about";
+import Contacts from "../types/contacts";
+import Social from "../types/social";
 
 function createBouquetFromDocument(doc: DocumentData): Bouquet {
   return {
@@ -52,10 +54,33 @@ function createAboutFromDocument(doc: DocumentData): About {
   };
 }
 
+function createSocialFromDoc(doc: DocumentData): Social {
+  return {
+    facebook: doc.facebook ?? null,
+    instagram: doc.instagram ?? null,
+    phone: doc.phone ?? null,
+    twitter: doc.twitter ?? null,
+    whatsapp: doc.whatsapp ?? null,
+  };
+}
+
+function createContactsFromDocument(doc: DocumentData): Contacts {
+  const contacts: Contacts = {
+    text: doc.text,
+  };
+
+  if (doc.contacts) {
+    contacts.contacts = createSocialFromDoc(doc.contacts);
+  }
+
+  return contacts;
+}
+
 export {
   createBouquetFromDocument,
   createFloristFromDocument,
   createCategoryFromDocument,
   createNewsFromDocument,
   createAboutFromDocument,
+  createContactsFromDocument,
 };

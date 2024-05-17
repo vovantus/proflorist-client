@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
+
 export default function AboutPage() {
   const { floristInfo } = useGetFloristInfo();
   const { isLoading, info } = useGetStaticInfo(floristInfo?.name, "about");
@@ -54,31 +55,26 @@ export default function AboutPage() {
       </Box>
       <CardContent>
         <Typography variant="h4" sx={{ mb: 2 }}>
-          {isLoading ? (
-            <Skeleton sx={{ width: { xxs: "100%", sm: 270 } }} />
-          ) : (
-            info?.header
-          )}
+          {isLoading ? <Skeleton width={280} /> : info?.header}
         </Typography>
-        {info ? (
+        {imageLoaded && info ? (
           convertTextToParagraps(info.text)
         ) : (
           <>
-            <Typography variant="h3">
-              <Skeleton
-                variant="rounded"
-                sx={{ width: { xxs: "100%", sm: 270 }, mb: 1 }}
-              />
-            </Typography>
-            <Typography variant="body2">
-              <Skeleton
-                variant="rounded"
-                sx={{ height: 200, width: { xxs: "100%", sm: 270 } }}
-              />
-            </Typography>
+            <Skeleton sx={{ width: { xxs: "auto", sm: 280 } }} />
+            <Skeleton sx={{ width: { xxs: "auto", sm: 280 } }} />
+            <Skeleton sx={{ width: { xxs: "auto", sm: 280 } }} />
+            <Skeleton sx={{ width: { xxs: "auto", sm: 280 } }} />
           </>
         )}
       </CardContent>
+      {!imageLoaded && (
+        <>
+          <div style={{ clear: "both" }}></div>
+          <Skeleton sx={{ position: "relative", bottom: 0, m: 2 }} />
+          <Skeleton sx={{ position: "relative", bottom: 0, m: 2 }} />
+        </>
+      )}
     </Card>
   );
 }

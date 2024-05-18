@@ -4,6 +4,6 @@ import Bouquet from "./bouquet";
 export default interface CartSlice {
   cartItems: CartItems;
   addItem: (id: Bouquet["id"]) => void;
-  removeItem: (bouquet: Bouquet["id"]) => void;
+  removeItem: (bouquet: Bouquet["id"], all?: "all") => void;
   cartTotalQuantity: number;
 }

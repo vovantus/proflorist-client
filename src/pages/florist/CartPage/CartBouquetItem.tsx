@@ -5,11 +5,13 @@ import {
   CardContent,
   Typography,
   Skeleton,
+  IconButton,
 } from "@mui/material";
 import useBoundStore from "../../../store/boundStore";
 import CartBouquet from "../../../types/cartBouquet";
 import useFetchBouquetImage from "../../../hooks/useFetchBouquetUrl";
 import { useMemo, useState } from "react";
+import ClearIcon from "@mui/icons-material/Clear";
 
 interface CartBouquetProps {
   bouquet: CartBouquet;
@@ -31,6 +33,7 @@ export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
           height: 120,
           justifyContent: "space-between",
           flexDirection: "row",
+          position: "relative",
         }}
         elevation={3}
       >
@@ -112,6 +115,12 @@ export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
             </Box>
           </Box>
         </Box>
+        <IconButton
+          sx={{ position: "absolute", top: 0, right: 0 }}
+          onClick={() => removeItem(bouquet.id, "all")}
+        >
+          <ClearIcon fontSize="small" />
+        </IconButton>
       </Card>
     );
   }, [bouquet.id, bouquet.quantity, imageUrl, imageLoaded]);

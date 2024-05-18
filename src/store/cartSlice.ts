@@ -23,12 +23,16 @@ export const createCartSlice: StateCreator<
       return { cartItems: state.cartItems, cartTotalQuantity: quantity };
     }),
 
-  removeItem: (id) =>
+  removeItem: (id, all) =>
     set((state) => {
       const currentQuantity = state.cartItems[id];
       if (currentQuantity) {
         if (currentQuantity > 1) {
-          state.cartItems[id] -= 1;
+          if (all) {
+            delete state.cartItems[id];
+          } else {
+            state.cartItems[id] -= 1;
+          }
         } else {
           delete state.cartItems[id];
         }

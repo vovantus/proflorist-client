@@ -14,12 +14,21 @@ import useFetchBouquetImage from "../../hooks/useFetchBouquetUrl";
 interface BouquetProps {
   bouquet: Bouquet;
   showBouquet: (bouquet: Bouquet) => void;
+  onAddToCart: (bouquetName: string) => void;
 }
 
-export default function BouquetCard({ bouquet, showBouquet }: BouquetProps) {
+export default function BouquetCard({
+  bouquet,
+  showBouquet,
+  onAddToCart,
+}: BouquetProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { imageUrl } = useFetchBouquetImage(bouquet);
   const addItem = useBoundStore((state) => state.addItem);
+
+  const addToCart = () => {
+    addItem(bouquet.id), onAddToCart(bouquet.name);
+  };
 
   return (
     <Card
@@ -86,7 +95,7 @@ export default function BouquetCard({ bouquet, showBouquet }: BouquetProps) {
         >
           {bouquet.name}
         </Typography>
-        <Button size="small" onClick={() => addItem(bouquet.id)}>
+        <Button size="small" onClick={addToCart}>
           From {bouquet.price}€
         </Button>
       </CardContent>

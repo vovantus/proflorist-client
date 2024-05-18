@@ -1,29 +1,60 @@
 import BouquetCard from "./BouquetCard/BouquetCard";
 import BouquetCardSkeleton from "./BouquetCard/BouquetCardSkeleton";
 import Bouquet from "../types/bouquet";
-import { Box, SwipeableDrawer } from "@mui/material";
-import { useState } from "react";
+import { Alert, Box, Snackbar, SwipeableDrawer } from "@mui/material";
+import { useState, useEffect } from "react";
 import BouquetDetailesCard from "./BouquetDetailesCard/BouquetDetailsCard";
-//import BouquetDetailsCardSkeleton from "./BouquetDetailesCard/BouquetDetailsCardSkeleton";
+import theme from "../theme/theme";
 
 interface BouquetListProps {
   bouquets: Bouquet[];
   isLoading: boolean;
 }
 
-const transitionTime = 500;
+export interface SnackbarMessage {
+  message: string;
+  key: number;
+}
+
+const detailesCardTransitionTime = 500;
 
 export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
   const [activeBouquet, setActiveBouquet] = useState<Bouquet | null>(null);
   const [showActiveBouquet, setShowActiveBouquet] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackPack, setSnackPack] = useState<readonly SnackbarMessage[]>([]);
+  const [messageInfo, setMessageInfo] = useState<SnackbarMessage | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    if (snackPack.length && !messageInfo) {
+      setMessageInfo({ ...snackPack[0] });
+      setSnackPack((prev) => prev.slice(1));
+      setShowSnackbar(true);
+    } else if (snackPack.length && messageInfo && showSnackbar) {
+      setShowSnackbar(false);
+    }
+  }, [snackPack, messageInfo, showSnackbar]);
 
   const handleCloseActiveBouquet = () => {
     setShowActiveBouquet(false);
-    setTimeout(() => setActiveBouquet(null), transitionTime);
+    setTimeout(() => setActiveBouquet(null), detailesCardTransitionTime);
   };
   const setActiveBouquetAndOpen = (bouquet: Bouquet) => {
     setActiveBouquet(bouquet);
     setShowActiveBouquet(true);
+  };
+
+  const handelAddToCart = (bouquetName: string) => {
+    setSnackPack((prev) => [
+      ...prev,
+      { message: bouquetName, key: new Date().getTime() },
+    ]);
+  };
+
+  const handleSnackbarExited = () => {
+    setMessageInfo(undefined);
   };
 
   return (
@@ -48,6 +79,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
                 key={el.id}
                 bouquet={el}
                 showBouquet={setActiveBouquetAndOpen}
+                onAddToCart={handelAddToCart}
               />
             ))}
       </Box>
@@ -56,7 +88,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
         open={showActiveBouquet}
         onClose={handleCloseActiveBouquet}
         onOpen={() => setShowActiveBouquet(true)}
-        transitionDuration={transitionTime}
+        transitionDuration={detailesCardTransitionTime}
         PaperProps={{
           sx: { borderTopLeftRadius: "24px", borderTopRightRadius: "24px" },
         }}
@@ -71,6 +103,28 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
           />
         )}
       </SwipeableDrawer>
+      <Snackbar
+        key={messageInfo ? messageInfo.key : undefined}
+        open={showSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        autoHideDuration={1000}
+        onClose={() => setShowSnackbar(false)}
+        TransitionProps={{ onExited: handleSnackbarExited }}
+        sx={{ top: { xxs: 64, sm: 80 } }}
+      >
+        <Alert
+          icon={false}
+          severity="info"
+          variant="outlined"
+          sx={{
+            width: "100%",
+            color: theme.palette.secondary.contrastText,
+            bgcolor: theme.palette.secondary.main,
+          }}
+        >
+          {`${messageInfo?.message} added to cart`}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

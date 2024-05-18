@@ -29,8 +29,23 @@ export default function AboutPage() {
           width: { xxs: "100%", sm: 400 },
           float: { xxs: "none", sm: "right" },
           aspectRatio: "1 / 1",
+          position: "relative",
         }}
       >
+        {!imageLoaded && (
+          <Skeleton
+            sx={{
+              width: "100%",
+              aspectRatio: "1 / 1",
+              transform: "none",
+              borderRadius: 0,
+              borderBottomLeftRadius: { xxs: 0, sm: 4 },
+              position: "absolute",
+              top: 0,
+              right: 0,
+            }}
+          />
+        )}
         <CardMedia
           component="img"
           src={info?.image}
@@ -41,17 +56,6 @@ export default function AboutPage() {
           }}
           onLoad={() => setImageLoaded(true)}
         />
-        {!imageLoaded && (
-          <Skeleton
-            sx={{
-              width: "100%",
-              aspectRatio: "1 / 1",
-              transform: "none",
-              borderRadius: 0,
-              borderBottomLeftRadius: { xxs: 0, sm: 4 },
-            }}
-          />
-        )}
       </Box>
       <CardContent>
         <Typography variant="h4" sx={{ mb: 2 }}>

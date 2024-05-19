@@ -7,6 +7,7 @@ import {
   DocumentData,
   query,
   where,
+  orderBy,
 } from "firebase/firestore";
 import api from "./instance";
 import Bouquet from "../types/bouquet";
@@ -104,7 +105,10 @@ const floristApi: Api = {
 
   fetchNews: async (floristName) => {
     const floristDoc = await floristApi.fetchFlorist(floristName);
-    const newsCol = collection(floristDoc, "news");
+    const newsCol = query(
+      collection(floristDoc, "news"),
+      orderBy("date", "desc")
+    );
     const newsSnapshot = await getDocs(newsCol);
     const newsList = newsSnapshot.docs.map((doc) =>
       createNewsFromDocument({ ...doc.data(), id: doc.id })

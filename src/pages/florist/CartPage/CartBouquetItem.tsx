@@ -119,7 +119,7 @@ export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
           sx={{ position: "absolute", top: 0, right: 0 }}
           onClick={() => removeItem(bouquet.id, "all")}
         >
-          <ClearIcon fontSize="small" />
+          <ClearIcon fontSize="small" sx={{ color: "primary.main" }} />
         </IconButton>
       </Card>
     );

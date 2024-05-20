@@ -8,6 +8,8 @@ import {
   query,
   where,
   orderBy,
+  startAfter,
+  limit,
 } from "firebase/firestore";
 import api from "./instance";
 import Bouquet from "../types/bouquet";
@@ -38,7 +40,7 @@ interface Api {
     categoryId: Category["id"]
   ) => Promise<Bouquet[]>;
 
-  fetchNews: (floristName: string) => Promise<News[]>;
+  fetchNews: (floristName: string, lastVisibleId?: string) => Promise<News[]>;
 
   fetchStaticInfo: (
     floristName: string,
@@ -103,12 +105,27 @@ const floristApi: Api = {
     return bouquetList;
   },
 
-  fetchNews: async (floristName) => {
+  fetchNews: async (floristName, lastVisibleId) => {
     const floristDoc = await floristApi.fetchFlorist(floristName);
-    const newsCol = query(
-      collection(floristDoc, "news"),
-      orderBy("date", "desc")
-    );
+    const lastVisibleIdDoc = lastVisibleId
+      ? doc(api.provider().db, `florists/${floristName}/news/`, lastVisibleId)
+      : undefined;
+    const lastVisibleIdDocRef = lastVisibleIdDoc
+      ? await getDoc(lastVisibleIdDoc)
+      : undefined;
+
+    const newsCol = lastVisibleIdDocRef
+      ? query(
+          collection(floristDoc, "news"),
+          orderBy("date", "desc"),
+          startAfter(lastVisibleIdDocRef),
+          limit(3)
+        )
+      : query(
+          collection(floristDoc, "news"),
+          orderBy("date", "desc"),
+          limit(3)
+        );
     const newsSnapshot = await getDocs(newsCol);
     const newsList = newsSnapshot.docs.map((doc) =>
       createNewsFromDocument({ ...doc.data(), id: doc.id })

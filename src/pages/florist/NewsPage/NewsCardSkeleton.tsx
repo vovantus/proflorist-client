@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { forwardRef } from "react";
 
-const NewsCardSkeleton = forwardRef<HTMLDivElement>((props, ref) => (
+const NewsCardSkeleton = forwardRef<HTMLDivElement>((_props, ref) => (
   <Card
     ref={ref}
     sx={{

@@ -21,6 +21,11 @@ import {
   createNewsFromDocument,
 } from "../utils/dataTransforms";
 
+interface NewsData {
+  newsList: News[];
+  totalNewsCount: number;
+}
+
 interface Api {
   fetchFlorist: (
     floristName: string
@@ -40,7 +45,7 @@ interface Api {
     categoryId: Category["id"]
   ) => Promise<Bouquet[]>;
 
-  fetchNews: (floristName: string, lastVisibleId?: string) => Promise<News[]>;
+  fetchNews: (floristName: string, lastVisibleId?: string) => Promise<NewsData>;
 
   fetchStaticInfo: (
     floristName: string,
@@ -130,7 +135,12 @@ const floristApi: Api = {
     const newsList = newsSnapshot.docs.map((doc) =>
       createNewsFromDocument({ ...doc.data(), id: doc.id })
     );
-    return newsList;
+
+    const newsCollectionRef = collection(floristDoc, "news");
+    const totalNewsSnapshot = await getDocs(newsCollectionRef);
+    const totalNewsCount = totalNewsSnapshot.docs.length;
+
+    return { newsList, totalNewsCount };
   },
 
   fetchStaticInfo: async (floristName, pageName) => {

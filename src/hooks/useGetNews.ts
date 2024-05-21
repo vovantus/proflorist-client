@@ -3,38 +3,41 @@ import floristApi from "../api/floristApi";
 import News from "../types/news";
 
 export function useGetNews(florist: string = "") {
-  const [isLoading, setIsLoading] = useState(true);
+  const [status, setStatus] = useState<"idle" | "loading" | "endReached">(
+    "idle"
+  );
   const [error, setError] = useState("");
   const [news, setNews] = useState<News[]>([]);
   const [lastNewsId, setLastNewsId] = useState("");
 
   const fetchUpdate = () => {
-    setLastNewsId(news[news.length - 1].id);
+    if (status === "idle") setLastNewsId(news[news.length - 1].id);
   };
 
   useEffect(() => {
     if (florist == "") return;
-    console.log("useEffect", lastNewsId);
-    setIsLoading(true);
+    setStatus("loading");
     floristApi
       .fetchNews(florist, lastNewsId !== "" ? lastNewsId : undefined)
       .then((newsUpdate) => {
         lastNewsId === ""
-          ? setNews(newsUpdate)
-          : setNews((prevNews) => [...prevNews, ...newsUpdate]);
+          ? setNews(newsUpdate.newsList)
+          : setNews((prevNews) => [...prevNews, ...newsUpdate.newsList]);
+
+        newsUpdate.newsList.length + news.length >= newsUpdate.totalNewsCount
+          ? setStatus(() => "endReached")
+          : setStatus("idle");
       })
       .catch((error) => {
         console.error(error);
         setError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
+        setStatus("idle");
       });
   }, [florist, lastNewsId]);
 
   return {
     news,
-    isLoading,
+    status,
     error,
     fetchUpdate,
   };

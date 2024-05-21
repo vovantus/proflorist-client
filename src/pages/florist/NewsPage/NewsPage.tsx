@@ -4,26 +4,29 @@ import NewsCard from "./NewsCard";
 import { Box } from "@mui/material";
 import NewsCardSkeleton from "./NewsCardSkeleton";
 import { useEffect } from "react";
+import useDebounce from "../../../hooks/useDebounce";
 
 export default function NewsPage() {
   const { floristInfo } = useGetFloristInfo();
-  const { news, isLoading, fetchUpdate } = useGetNews(floristInfo.name);
-  console.log(news);
+  const { news, status, fetchUpdate } = useGetNews(floristInfo.name);
+  console.log(status);
   const handleScroll = () => {
     if (
-      window.innerHeight + document.documentElement.scrollTop !==
+      window.innerHeight + document.documentElement.scrollTop + 360 <
         document.documentElement.offsetHeight ||
-      isLoading
+      status !== "idle"
     ) {
       return;
     }
     fetchUpdate();
   };
 
+  const debouncedScroll = useDebounce(handleScroll, 500);
+
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isLoading]);
+    window.addEventListener("scroll", debouncedScroll);
+    return () => window.removeEventListener("scroll", debouncedScroll);
+  }, [status]);
 
   return (
     <Box
@@ -34,9 +37,8 @@ export default function NewsPage() {
         justifyContent: "start",
         gap: 1,
       }}
-      onScroll={handleScroll}
     >
-      {isLoading ? (
+      {status === "loading" ? (
         news.length === 0 ? (
           Array.from(new Array(3)).map((_, index) => (
             <NewsCardSkeleton key={index} />
@@ -46,7 +48,6 @@ export default function NewsPage() {
             {news.map((el) => (
               <NewsCard key={el.id} news={el} />
             ))}
-            <NewsCardSkeleton />
           </>
         )
       ) : (
@@ -56,6 +57,8 @@ export default function NewsPage() {
           ))}
         </>
       )}
+
+      {status !== "endReached" && <NewsCardSkeleton />}
     </Box>
   );
 }

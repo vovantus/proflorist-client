@@ -11,13 +11,13 @@ import {
 import News from "../../../types/news";
 import { Link } from "react-router-dom";
 import { FLORIST_URLS } from "../../../routes/routes";
-import { useState } from "react";
+import { useState, memo } from "react";
 
 interface NewsCardProps {
   news: News;
 }
 
-export default function NewsCard({ news }: NewsCardProps) {
+const NewsCard = memo(function NewsCard({ news }: NewsCardProps) {
   const [imgLoading, setImageLoading] = useState(true);
 
   const dateString = news.date.toLocaleDateString("en-US", {
@@ -96,4 +96,8 @@ export default function NewsCard({ news }: NewsCardProps) {
       </Box>
     </Card>
   );
-}
+});
+
+export default NewsCard;
+
+

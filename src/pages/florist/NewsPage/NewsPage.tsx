@@ -3,19 +3,17 @@ import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo";
 import NewsCard from "./NewsCard";
 import { Box } from "@mui/material";
 import NewsCardSkeleton from "./NewsCardSkeleton";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useDebounce from "../../../hooks/useDebounce";
 
 export default function NewsPage() {
   const { floristInfo } = useGetFloristInfo();
   const { news, status, fetchUpdate } = useGetNews(floristInfo.name);
-  console.log(status);
+
+  const targetRef = useRef<HTMLDivElement>(null);
+
   const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop + 360 <
-        document.documentElement.offsetHeight ||
-      status !== "idle"
-    ) {
+    if (status !== "idle") {
       return;
     }
     fetchUpdate();
@@ -24,8 +22,31 @@ export default function NewsPage() {
   const debouncedScroll = useDebounce(handleScroll, 500);
 
   useEffect(() => {
-    window.addEventListener("scroll", debouncedScroll);
-    return () => window.removeEventListener("scroll", debouncedScroll);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            debouncedScroll();
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.0,
+      }
+    );
+    const target = targetRef.current;
+
+    if (target) {
+      observer.observe(target);
+    }
+
+    return () => {
+      if (target) {
+        observer.unobserve(target);
+      }
+    };
   }, [status]);
 
   return (
@@ -38,18 +59,10 @@ export default function NewsPage() {
         gap: 1,
       }}
     >
-      {status === "loading" ? (
-        news.length === 0 ? (
-          Array.from(new Array(3)).map((_, index) => (
-            <NewsCardSkeleton key={index} />
-          ))
-        ) : (
-          <>
-            {news.map((el) => (
-              <NewsCard key={el.id} news={el} />
-            ))}
-          </>
-        )
+      {status === "loading" && news.length === 0 ? (
+        Array.from(new Array(3)).map((_, index) => (
+          <NewsCardSkeleton key={index} />
+        ))
       ) : (
         <>
           {news.map((el) => (
@@ -58,7 +71,7 @@ export default function NewsPage() {
         </>
       )}
 
-      {status !== "endReached" && <NewsCardSkeleton />}
+      {status !== "endReached" && <NewsCardSkeleton ref={targetRef} />}
     </Box>
   );
 }

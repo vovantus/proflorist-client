@@ -6,6 +6,8 @@ import News from "../types/news";
 import About from "../types/about";
 import Contacts from "../types/contacts";
 import Social from "../types/social";
+import DeliveryOptions from "../types/deliveryOptions";
+import Delivery from "../types/delivery";
 
 function createBouquetFromDocument(doc: DocumentData): Bouquet {
   return {
@@ -76,6 +78,28 @@ function createContactsFromDocument(doc: DocumentData): Contacts {
   return contacts;
 }
 
+function createDeliveryOptionsFromDoc(doc: DocumentData): DeliveryOptions {
+  return {
+    courier: doc.courier ?? null,
+    event: doc.event ?? null,
+    pickup: doc.pickup ?? null,
+  };
+}
+
+function createDeliveryInfoFromDocument(doc: DocumentData): Delivery {
+  const delivery: Delivery = {
+    text: doc.text,
+  };
+
+  if (doc.deliveryOptions) {
+    delivery.deliveryOptions = createDeliveryOptionsFromDoc(
+      doc.deliveryOptions
+    );
+  }
+
+  return delivery;
+}
+
 export {
   createBouquetFromDocument,
   createFloristFromDocument,
@@ -83,4 +107,5 @@ export {
   createNewsFromDocument,
   createAboutFromDocument,
   createContactsFromDocument,
+  createDeliveryInfoFromDocument,
 };

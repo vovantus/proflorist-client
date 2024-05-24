@@ -10,6 +10,7 @@ import Page404 from "../pages/NotFoundPage/Page404";
 import ScrollToTop from "../components/ScrollToTop";
 import AboutPage from "../pages/florist/AboutPage/AboutPage";
 import ContactsPage from "../pages/florist/ContactsPage/ContactsPage";
+import DeliveryPage from "../pages/florist/DeliveryPage/DeliveryPage";
 
 const FloristRoutes = () => {
   return (
@@ -31,7 +32,7 @@ const FloristRoutes = () => {
           <Route path={FLORIST_URLS.CART} element={<CartPage />} />
           <Route path={FLORIST_URLS.ABOUT} element={<AboutPage />} />
           <Route path={FLORIST_URLS.CONTACTS} element={<ContactsPage />} />
-          <Route path={FLORIST_URLS.DELIVERY} element={<AboutPage />} />
+          <Route path={FLORIST_URLS.DELIVERY} element={<DeliveryPage />} />
           <Route path="*" element={<Page404 />} />
         </Route>
       </Routes>

@@ -49,7 +49,7 @@ interface Api {
 
   fetchStaticInfo: (
     floristName: string,
-    pageName: "about" | "contacts"
+    pageName: "about" | "contacts" | "delivery"
   ) => Promise<DocumentData>;
 }
 

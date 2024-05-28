@@ -3,6 +3,7 @@ import { FLORIST_URLS } from "./routes";
 import FloristShopLayout from "../components/Layouts/FloristShopLayout";
 import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
+import ShopLoadingFallback from "../components/ShopLoadingFallback/ShopLoadingFallback";
 
 const CategoriesPage = lazy(
   () => import("../pages/florist/CategoriesPage/CategoriesPage")
@@ -28,7 +29,7 @@ const FloristRoutes = () => {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<ShopLoadingFallback />}>
         <Routes>
           <Route element={<FloristShopLayout />}>
             <Route path={FLORIST_URLS.ROOT} element={<ShopMainPage />} />

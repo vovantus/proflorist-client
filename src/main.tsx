@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
@@ -9,17 +9,10 @@ import "./firebase";
 // Lazy load the App component
 const App = lazy(() => import("./App.tsx"));
 
-// Create a fallback component for Suspense
-const LoadingFallback = () => <div>Loading main...</div>;
-
 const router = createBrowserRouter([
   {
     path: "/*",
-    element: (
-      <Suspense fallback={<LoadingFallback />}>
-        <App />
-      </Suspense>
-    ),
+    element: <App />,
   },
 ]);
 

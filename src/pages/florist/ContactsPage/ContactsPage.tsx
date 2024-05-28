@@ -11,7 +11,11 @@ import {
 } from "@mui/material";
 import useGetStaticInfo from "../../../hooks/useGetStaticInfo";
 import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo";
-import { X, Facebook, Instagram, Phone, WhatsApp } from "@mui/icons-material";
+import X from "@mui/icons-material/X";
+import Facebook from "@mui/icons-material/Facebook";
+import Instagram from "@mui/icons-material/Instagram";
+import Phone from "@mui/icons-material/Phone";
+import WhatsApp from "@mui/icons-material/WhatsApp";
 
 export default function ContactsPage() {
   const { floristInfo } = useGetFloristInfo();

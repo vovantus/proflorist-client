@@ -8,7 +8,9 @@ import {
   ListItemIcon,
   Skeleton,
 } from "@mui/material";
-import { LocalShipping, Storefront, Event } from "@mui/icons-material";
+import LocalShipping from "@mui/icons-material/LocalShipping";
+import Storefront from "@mui/icons-material/Storefront";
+import Event from "@mui/icons-material/Event";
 import useGetStaticInfo from "../../../hooks/useGetStaticInfo";
 import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo";
 

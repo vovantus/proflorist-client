@@ -6,7 +6,7 @@ import {
   CardContent,
   Box,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, memo } from "react";
 import Bouquet from "../../types/bouquet";
 import useBoundStore from "../../store/boundStore";
 import useFetchBouquetImage from "../../hooks/useFetchBouquetUrl";
@@ -17,7 +17,7 @@ interface BouquetProps {
   onAddToCart: (bouquetName: string) => void;
 }
 
-export default function BouquetCard({
+const BouquetCard = memo(function BouquetCard({
   bouquet,
   showBouquet,
   onAddToCart,
@@ -63,7 +63,7 @@ export default function BouquetCard({
           width: 350,
           borderRadius: "24px",
           opacity: imageLoaded ? 1 : 0,
-          transition: "opacity 0.5s ease-in-out",
+          transition: "opacity 0.8s ease-in-out",
           cursor: "pointer",
         }}
         src={imageUrl}
@@ -91,14 +91,26 @@ export default function BouquetCard({
           gutterBottom
           variant="subtitle1"
           component="div"
-          sx={{ cursor: "pointer" }}
+          sx={{
+            cursor: "pointer",
+            textWrap: "nowrap",
+            overflow: "clip",
+            textOverflow: "ellipsis",
+            pr: 1,
+          }}
         >
           {bouquet.name}
         </Typography>
-        <Button size="small" onClick={addToCart}>
+        <Button
+          sx={{ minWidth: "100px", textWrap: "nowrap" }}
+          size="small"
+          onClick={addToCart}
+        >
           From {bouquet.price}€
         </Button>
       </CardContent>
     </Card>
   );
-}
+});
+
+export default BouquetCard;

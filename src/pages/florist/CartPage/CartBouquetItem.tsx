@@ -73,7 +73,15 @@ export default function CartBouquetItem({ bouquet }: CartBouquetProps) {
 
         <Box sx={{ display: "flex", flexDirection: "column", width: 275 }}>
           <CardContent sx={{ flex: "1 0 auto", py: 1 }}>
-            <Typography component="div" variant="h5">
+            <Typography
+              component="div"
+              variant="h5"
+              sx={{
+                textWrap: "nowrap",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+              }}
+            >
               {bouquet.name}
             </Typography>
             <Typography

@@ -41,7 +41,7 @@ const NewsCard = memo(function NewsCard({ news }: NewsCardProps) {
           sx={{
             height: 360,
             opacity: imgLoading ? 0 : 1,
-            transition: "opacity 0.5s ease-in-out",
+            transition: "opacity 0.8s ease-in-out",
           }}
           image={news.imageUrl}
           alt={news.header}

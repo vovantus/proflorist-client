@@ -1,13 +1,17 @@
-import PlatformRoutes from "./routes/PlatformRoutes.tsx";
-import FloristRoutes from "./routes/FloristRoutes.tsx";
+import { Suspense, lazy } from "react";
 import useSubdomain from "./hooks/useSubdomain.ts";
 
-//plit into two seperate apps and serve on web server level depending on subdomain
+const PlatformRoutes = lazy(() => import("./routes/PlatformRoutes.tsx"));
+const FloristRoutes = lazy(() => import("./routes/FloristRoutes.tsx"));
 
 function App() {
   const { subdomain } = useSubdomain();
 
-  return subdomain ? <FloristRoutes /> : <PlatformRoutes />;
+  return (
+    <Suspense fallback={<div>Loading app...</div>}>
+      {subdomain ? <FloristRoutes /> : <PlatformRoutes />}
+    </Suspense>
+  );
 }
 
 export default App;

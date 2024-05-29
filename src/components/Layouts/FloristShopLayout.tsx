@@ -2,9 +2,8 @@ import { Outlet } from "react-router-dom";
 import BottomNav from "../BottomNav";
 import FloristAppBar from "../FloristAppBar";
 import { Container, Box } from "@mui/material";
-import ShopLoadingIndicator from "../../pages/florist/ShopMainPage/ShopLoadingIndicator.tsx";
 import { useGetFloristInfo } from "../../hooks/useGetFloristInfo";
-
+import AppLoadingIndicator from "../AppLoadingIndicator.tsx";
 
 export default function FloristShopLayout() {
   const { isLoading } = useGetFloristInfo();
@@ -42,7 +41,7 @@ export default function FloristShopLayout() {
           <BottomNav />
         </>
       ) : (
-        <ShopLoadingIndicator />
+        <AppLoadingIndicator />
       )}
     </Container>
   );

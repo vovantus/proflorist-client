@@ -4,9 +4,6 @@ import CatalogCategory from "./CatalogCategory";
 import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo";
 import CatalogCategorySkeleton from "./CatalogCategorySkeleton";
 
-// interface CategoriesPageProps {
-//   florist: string;
-// }
 
 export default function CategoriesPage() {
   const { floristInfo } = useGetFloristInfo();

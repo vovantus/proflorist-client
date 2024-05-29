@@ -1,4 +1,7 @@
-import { Card, CardContent, Box, Skeleton } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 
 export default function CatalogCategorySkeleton() {
   return (

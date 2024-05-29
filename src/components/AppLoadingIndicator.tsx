@@ -1,15 +1,18 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/material";
 
-export default function ShopLoadingIndicator() {
+export default function AppLoadingIndicator() {
+  console.log("app loading");
   return (
     <Box
       sx={{
         color: "#fff",
         height: "100vh",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <svg width={0} height={0}>

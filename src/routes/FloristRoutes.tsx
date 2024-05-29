@@ -3,7 +3,13 @@ import { FLORIST_URLS } from "./routes";
 import FloristShopLayout from "../components/Layouts/FloristShopLayout";
 import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
-import ShopLoadingFallback from "../components/ShopLoadingFallback/ShopLoadingFallback";
+import NewsPageSkeleton from "../pages/florist/NewsPage/NewsPageSkeleton";
+import ShopMainPageSkeleton from "../pages/florist/ShopMainPage/ShopMainPageSkeleton";
+import Page404 from "../pages/NotFoundPage/Page404";
+import CategoriesPageSkeleton from "../pages/florist/CategoriesPage/CategoriesPageSkeleton";
+import CategoryBouquetPageSkeleton from "../pages/florist/CategoryBouquetsPage/CategoryBouquetPageSkeleton";
+import AppLoadingIndicator from "../components/AppLoadingIndicator";
+import CartPageSkeleton from "../pages/florist/CartPage/CartPageSkeleton";
 
 const CategoriesPage = lazy(
   () => import("../pages/florist/CategoriesPage/CategoriesPage")
@@ -16,7 +22,6 @@ const NewsPage = lazy(() => import("../pages/florist/NewsPage/NewsPage"));
 const ShopMainPage = lazy(
   () => import("../pages/florist/ShopMainPage/ShopMainPage")
 );
-const Page404 = lazy(() => import("../pages/NotFoundPage/Page404"));
 const AboutPage = lazy(() => import("../pages/florist/AboutPage/AboutPage"));
 const ContactsPage = lazy(
   () => import("../pages/florist/ContactsPage/ContactsPage")
@@ -29,28 +34,83 @@ const FloristRoutes = () => {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={<ShopLoadingFallback />}>
-        <Routes>
-          <Route element={<FloristShopLayout />}>
-            <Route path={FLORIST_URLS.ROOT} element={<ShopMainPage />} />
 
-            <Route path={FLORIST_URLS.CATALOG.ROOT}>
-              <Route index element={<CategoriesPage />} />
-              <Route
-                path={FLORIST_URLS.CATALOG.CATEGORY}
-                element={<CategoryBouquetsPage />}
-              />
-            </Route>
+      <Routes>
+        <Route element={<FloristShopLayout />}>
+          <Route
+            path={FLORIST_URLS.ROOT}
+            element={
+              <Suspense fallback={<ShopMainPageSkeleton />}>
+                <ShopMainPage />
+              </Suspense>
+            }
+          />
 
-            <Route path={FLORIST_URLS.NEWS} element={<NewsPage />} />
-            <Route path={FLORIST_URLS.CART} element={<CartPage />} />
-            <Route path={FLORIST_URLS.ABOUT} element={<AboutPage />} />
-            <Route path={FLORIST_URLS.CONTACTS} element={<ContactsPage />} />
-            <Route path={FLORIST_URLS.DELIVERY} element={<DeliveryPage />} />
-            <Route path="*" element={<Page404 />} />
+          <Route path={FLORIST_URLS.CATALOG.ROOT}>
+            <Route
+              index
+              element={
+                <Suspense fallback={<CategoriesPageSkeleton />}>
+                  <CategoriesPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path={FLORIST_URLS.CATALOG.CATEGORY}
+              element={
+                <Suspense fallback={<CategoryBouquetPageSkeleton />}>
+                  <CategoryBouquetsPage />
+                </Suspense>
+              }
+            />
           </Route>
-        </Routes>
-      </Suspense>
+
+          <Route
+            path={FLORIST_URLS.NEWS}
+            element={
+              <Suspense fallback={<NewsPageSkeleton />}>
+                <NewsPage />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path={FLORIST_URLS.CART}
+            element={
+              <Suspense fallback={<CartPageSkeleton />}>
+                <CartPage />
+              </Suspense>
+            }
+          />
+
+          <Route
+            path={FLORIST_URLS.ABOUT}
+            element={
+              <Suspense fallback={<AppLoadingIndicator />}>
+                <AboutPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path={FLORIST_URLS.CONTACTS}
+            element={
+              <Suspense fallback={<AppLoadingIndicator />}>
+                <ContactsPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path={FLORIST_URLS.DELIVERY}
+            element={
+              <Suspense fallback={<AppLoadingIndicator />}>
+                <DeliveryPage />
+              </Suspense>
+            }
+          />
+
+          <Route path="*" element={<Page404 />} />
+        </Route>
+      </Routes>
     </>
   );
 };

@@ -1,10 +1,11 @@
 import { useGetNews } from "../../../hooks/useGetNews";
 import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo";
 import NewsCard from "./NewsCard";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import NewsCardSkeleton from "./NewsCardSkeleton";
 import { useEffect, useRef } from "react";
 import useDebounce from "../../../hooks/useDebounce";
+import NewsPageSkeleton from "./NewsPageSkeleton";
 
 export default function NewsPage() {
   const { floristInfo } = useGetFloristInfo();
@@ -49,7 +50,9 @@ export default function NewsPage() {
     };
   }, [status]);
 
-  return (
+  return status === "loading" && news.length === 0 ? (
+    <NewsPageSkeleton />
+  ) : (
     <Box
       sx={{
         display: "flex",
@@ -59,17 +62,11 @@ export default function NewsPage() {
         gap: 1,
       }}
     >
-      {status === "loading" && news.length === 0 ? (
-        Array.from(new Array(3)).map((_, index) => (
-          <NewsCardSkeleton key={index} />
-        ))
-      ) : (
-        <>
-          {news.map((el) => (
-            <NewsCard key={el.id} news={el} />
-          ))}
-        </>
-      )}
+      <>
+        {news.map((el) => (
+          <NewsCard key={el.id} news={el} />
+        ))}
+      </>
 
       {status !== "endReached" && <NewsCardSkeleton ref={targetRef} />}
     </Box>

@@ -1,19 +1,26 @@
 import { PLATFORM_URLS } from "./routes";
 import { Route, Routes } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import Layout from "../components/Layouts/Layout";
-import MainPage from "../pages/platform/MainPage/MainPage";
-import AboutPage from "../pages/platform/AboutPage/AboutPage";
-import Page404 from "../pages/NotFoundPage/Page404";
+import Page404Platform from "../pages/NotFoundPage/Page404Platform";
+import ShopLoadingIndicator from "../pages/florist/ShopMainPage/ShopLoadingIndicator";
+
+const MainPage = lazy(() => import("../pages/platform/MainPage/MainPage"));
+const AboutPage = lazy(() => import("../pages/platform/AboutPage/AboutPage"));
+
+
 
 const PlatformRoutes = () => {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path={PLATFORM_URLS.ROOT} element={<MainPage />} />
-        <Route path={PLATFORM_URLS.ABOUT} element={<AboutPage />} />
-        <Route path="*" element={<Page404 />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<ShopLoadingIndicator />}>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path={PLATFORM_URLS.ROOT} element={<MainPage />} />
+          <Route path={PLATFORM_URLS.ABOUT} element={<AboutPage />} />
+          <Route path="*" element={<Page404Platform />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 };
 

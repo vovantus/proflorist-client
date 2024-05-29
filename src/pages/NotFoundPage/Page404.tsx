@@ -1,20 +1,10 @@
-import { Box } from "@mui/material";
-
-export default function Page404() {
+const Page404 = () => {
   return (
-    <Box
-      sx={{
-        width: "100%",
-        // bgcolor: "tomato",
-        display: "flex",
-        flexWrap: "wrap",
-        flexDirection: { xxs: "column", sm: "row" },
-        gap: 1,
-        pb: 8,
-        pt: 10,
-      }}
-    >
-      <div>Not found</div>
-    </Box>
+    <div>
+      <h1>404 - Page Not Found</h1>
+      <p>Don't upset our florists.</p>
+    </div>
   );
-}
+};
+
+export default Page404;

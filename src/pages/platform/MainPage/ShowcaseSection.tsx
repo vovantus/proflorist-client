@@ -11,6 +11,7 @@ import {
 interface Showcase {
   img: string;
   title: string;
+  link: string;
 }
 
 interface ShowcaseSectionProps {
@@ -27,19 +28,25 @@ const ShowcaseSection = ({ showcases }: ShowcaseSectionProps) => {
         <Grid container spacing={4}>
           {showcases.map((showcase, index) => (
             <Grid item xs={4} key={index}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={showcase.img}
-                  alt={`Florist ${index + 1}`}
-                />
-                <CardContent>
-                  <Typography variant="h6" component="p">
-                    {showcase.title}
-                  </Typography>
-                </CardContent>
-              </Card>
+              <a
+                href={showcase.link}
+                target="_blank"
+                style={{ textDecoration: "none" }}
+              >
+                <Card>
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={showcase.img}
+                    alt={`Florist ${index + 1}`}
+                  />
+                  <CardContent>
+                    <Typography variant="h6" component="p">
+                      {showcase.title}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </a>
             </Grid>
           ))}
         </Grid>

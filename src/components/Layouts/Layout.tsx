@@ -8,7 +8,7 @@ export default function Layout() {
         // bgcolor: "grey",
         height: "100vh",
 
-        width: { xxs: "100vw", sm: "426px", md: "815px", lg: "1200px" },
+        width: { xxs: "100vw", md: 815, lg: 1200 },
       }}
     >
       <Outlet />

@@ -7,11 +7,23 @@ import CallToActionSection from "./CallToActionSection";
 import Footer from "./Footer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { RefObject, useRef } from "react";
 
 const LandingPage = () => {
   const theme = useTheme();
   const isSmallerThanLg = useMediaQuery(theme.breakpoints.down("lg"));
   const isSmallerThanMd = useMediaQuery(theme.breakpoints.down("md"));
+
+  const heroRef = useRef<HTMLDivElement>(null);
+  const featuresRef = useRef<HTMLDivElement>(null);
+  const showcaseRef = useRef<HTMLDivElement>(null);
+  const testimonialsRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = (ref: RefObject<HTMLDivElement>) => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const heroImageUrl =
     "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fhero3.webp?alt=media&token=638400fb-648e-4c55-af7a-2987cc83215c";
@@ -19,7 +31,7 @@ const LandingPage = () => {
   const showcases = [
     {
       img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fshowcase4.jpg?alt=media&token=c0cd935a-f092-4ab1-89b9-f1d628458366",
-      title: "Beautiful Blooms",
+      title: "Montefleur",
       link: "https://montefleur.proflorist.app",
     },
     {
@@ -69,10 +81,10 @@ const LandingPage = () => {
 
   const testimonials = [
     {
-      img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fflorist1.jpg?alt=media&token=62c51bb2-ef0a-4f60-92e3-fdfca9b1bb93",
+      img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fflorist4.jpg?alt=media&token=f6c8c195-abd7-4096-9be9-7747df810740",
       quote:
-        "This platform made it so easy for me to create a beautiful website for my floral business. Highly recommend!",
-      name: "Jane Doe, Beautiful Blooms",
+        "Proflorist has revolutionized how I manage my floral business online. The ease of use and the beautiful templates have saved me so much time.",
+      name: "Anna Lee, Montefleur",
     },
     {
       img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fflorist2.jpg?alt=media&token=d73f99f6-1bf2-4ee8-9e25-fdda083d4f2e",
@@ -86,20 +98,41 @@ const LandingPage = () => {
         "My customers find it so easy to browse my arrangements on my new site. It's been a game-changer for my business.",
       name: "Mary Johnson, Petal Perfect",
     },
+    {
+      img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fflorist1.jpg?alt=media&token=62c51bb2-ef0a-4f60-92e3-fdfca9b1bb93",
+      quote:
+        "This platform made it so easy for me to create a beautiful website for my floral business. Highly recommend!",
+      name: "Jane Doe, Flower Haven",
+    },
   ];
 
   return (
     <div>
-      <HeroSection
-        heroImageUrl={heroImageUrl}
-        isSmallerThanLg={isSmallerThanLg}
-      />
-      <FeaturesSection features={features} isSmallerThanMd={isSmallerThanMd} />
-      <ShowcaseSection showcases={showcases} />
-      <StatisticsSection statistics={statistics} />
-      <TestimonialsSection testimonials={testimonials} />
+      <div ref={heroRef}>
+        <HeroSection
+          heroImageUrl={heroImageUrl}
+          isSmallerThanLg={isSmallerThanLg}
+        />
+      </div>
+      <div ref={featuresRef}>
+        <FeaturesSection
+          features={features}
+          isSmallerThanMd={isSmallerThanMd}
+        />
+      </div>
+      <div ref={showcaseRef}>
+        <ShowcaseSection showcases={showcases} />
+      </div>
+      <div ref={testimonialsRef}>
+        <StatisticsSection statistics={statistics} />
+        <TestimonialsSection testimonials={testimonials} />
+      </div>
       <CallToActionSection />
-      <Footer />
+      <Footer
+        onFeaturesClick={() => scrollToSection(featuresRef)}
+        onShowcaseClick={() => scrollToSection(showcaseRef)}
+        onTestimonialsClick={() => scrollToSection(testimonialsRef)}
+      />
     </div>
   );
 };

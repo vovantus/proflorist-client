@@ -23,7 +23,7 @@ const ShowcaseSection = ({ showcases }: ShowcaseSectionProps) => {
     <Box sx={{ py: 8, bgcolor: "grey.100" }}>
       <Container>
         <Typography variant="h4" component="h2" gutterBottom align="center">
-          Our Florists
+          Our Customers
         </Typography>
         <Grid container spacing={4}>
           {showcases.map((showcase, index) => (

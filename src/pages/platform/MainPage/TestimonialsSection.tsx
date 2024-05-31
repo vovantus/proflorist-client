@@ -27,8 +27,8 @@ const TestimonialsSection = ({ testimonials }: TestimonialsSectionProps) => {
         </Typography>
         <Grid container spacing={4}>
           {testimonials.map((testimonial, index) => (
-            <Grid item xs={6} sm={4} key={index}>
-              <Card>
+            <Grid item xxs={12} xs={6} sm={4} key={index}>
+              <Card sx={{ height: "100%" }}>
                 <CardMedia
                   component="img"
                   height="300"

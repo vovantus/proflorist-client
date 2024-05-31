@@ -6,17 +6,14 @@ import {
   AppBar,
   Toolbar,
 } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
+
 
 interface HeroSectionProps {
   heroImageUrl: string;
+  isSmallerThanLg?: boolean;
 }
 
-const HeroSection = ({ heroImageUrl }: HeroSectionProps) => {
-  const theme = useTheme();
-  const isSmallerThanLg = useMediaQuery(theme.breakpoints.down("lg"));
-
+const HeroSection = ({ heroImageUrl, isSmallerThanLg }: HeroSectionProps) => {
   return (
     <div>
       <AppBar position="static" color="secondary">
@@ -46,7 +43,7 @@ const HeroSection = ({ heroImageUrl }: HeroSectionProps) => {
           sx={{
             position: "absolute",
             width: { xxs: "90%", md: 500 },
-            bottom: { xxs: "10%", md: 15 },
+            bottom: { xxs: "5%", xs: "10%", md: 15 },
             left: { xxs: "50%", md: "auto" },
             right: { xxs: "auto", md: 10 },
             transform: { xxs: "translateX(-50%)", md: "none" },

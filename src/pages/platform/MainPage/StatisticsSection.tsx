@@ -25,7 +25,7 @@ const StatisticsSection = ({ statistics }: StatisticsSectionProps) => {
         </Typography>
         <Grid container spacing={4}>
           {statistics.map((stat, index) => (
-            <Grid item xs={12} md={4} key={index}>
+            <Grid item xxs={12} md={4} key={index}>
               <Card>
                 <CardContent>
                   <Typography variant="h3" component="h4" align="center">

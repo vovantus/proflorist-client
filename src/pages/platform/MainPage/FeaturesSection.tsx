@@ -16,19 +16,23 @@ interface Feature {
 
 interface FeaturesSectionProps {
   features: Feature[];
+  isSmallerThanMd?: boolean;
 }
 
-const FeaturesSection = ({ features }: FeaturesSectionProps) => {
+const FeaturesSection = ({
+  features,
+  isSmallerThanMd,
+}: FeaturesSectionProps) => {
   return (
     <Box sx={{ py: 8 }}>
       <Container>
         <Typography variant="h4" component="h2" gutterBottom align="center">
           Proflorist Features
         </Typography>
-        <Grid container spacing={4}>
+        <Grid container spacing={3}>
           {features.map((feature, index) => (
-            <Grid item xs={12} sm={4} key={index}>
-              <Card>
+            <Grid item xxs={12} sm={4} key={index}>
+              <Card sx={{ height: "100%" }}>
                 <CardContent>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <Avatar
@@ -37,11 +41,15 @@ const FeaturesSection = ({ features }: FeaturesSectionProps) => {
                       sx={{
                         width: 56,
                         height: 56,
-                        mr: 2,
+                        mr: 1,
                         border: "2px solid #000",
                       }}
                     />
-                    <Typography variant="h5" component="h3" gutterBottom>
+                    <Typography
+                      variant={isSmallerThanMd ? "h6" : "h5"}
+                      component="h3"
+                      gutterBottom
+                    >
                       {feature.header}
                     </Typography>
                   </Box>

@@ -5,28 +5,34 @@ import StatisticsSection from "./StatisticsSection";
 import TestimonialsSection from "./TestimonialsSection";
 import CallToActionSection from "./CallToActionSection";
 import Footer from "./Footer";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const LandingPage = () => {
+  const theme = useTheme();
+  const isSmallerThanLg = useMediaQuery(theme.breakpoints.down("lg"));
+  const isSmallerThanMd = useMediaQuery(theme.breakpoints.down("md"));
+
   const heroImageUrl =
     "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fhero3.webp?alt=media&token=638400fb-648e-4c55-af7a-2987cc83215c";
 
-    const showcases = [
-      {
-        img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fshowcase4.jpg?alt=media&token=c0cd935a-f092-4ab1-89b9-f1d628458366",
-        title: "Beautiful Blooms",
-        link: "https://montefleur.proflorist.app",
-      },
-      {
-        img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fshowcase5.jpg?alt=media&token=2da70a25-bdf8-4c19-900c-1057ebfc71ad",
-        title: "Floral Fantasies",
-        link: "https://rozaexpress.proflorist.app",
-      },
-      {
-        img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fshowcase6.jpg?alt=media&token=0c375207-fa87-47e4-9766-f60e7c17c3e9",
-        title: "Petal Perfect",
-        link: "https://bloom.proflorist.app",
-      },
-    ];
+  const showcases = [
+    {
+      img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fshowcase4.jpg?alt=media&token=c0cd935a-f092-4ab1-89b9-f1d628458366",
+      title: "Beautiful Blooms",
+      link: "https://montefleur.proflorist.app",
+    },
+    {
+      img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fshowcase5.jpg?alt=media&token=2da70a25-bdf8-4c19-900c-1057ebfc71ad",
+      title: "Floral Fantasies",
+      link: "https://rozaexpress.proflorist.app",
+    },
+    {
+      img: "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fshowcase6.jpg?alt=media&token=0c375207-fa87-47e4-9766-f60e7c17c3e9",
+      title: "Petal Perfect",
+      link: "https://bloom.proflorist.app",
+    },
+  ];
 
   const features = [
     {
@@ -84,8 +90,11 @@ const LandingPage = () => {
 
   return (
     <div>
-      <HeroSection heroImageUrl={heroImageUrl} />
-      <FeaturesSection features={features} />
+      <HeroSection
+        heroImageUrl={heroImageUrl}
+        isSmallerThanLg={isSmallerThanLg}
+      />
+      <FeaturesSection features={features} isSmallerThanMd={isSmallerThanMd} />
       <ShowcaseSection showcases={showcases} />
       <StatisticsSection statistics={statistics} />
       <TestimonialsSection testimonials={testimonials} />

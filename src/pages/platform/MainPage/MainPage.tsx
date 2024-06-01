@@ -26,7 +26,7 @@ const LandingPage = () => {
   };
 
   const heroImageUrl =
-    "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fhero3.webp?alt=media&token=638400fb-648e-4c55-af7a-2987cc83215c";
+    "https://firebasestorage.googleapis.com/v0/b/proflorist-54699.appspot.com/o/platform%2Fimg%2Flanding%2Fhero4.jpg?alt=media&token=9e152ac9-53e1-45e8-af1d-8bf117b358f0";
 
   const showcases = [
     {
@@ -123,8 +123,9 @@ const LandingPage = () => {
       <div ref={showcaseRef}>
         <ShowcaseSection showcases={showcases} />
       </div>
+
+      <StatisticsSection statistics={statistics} />
       <div ref={testimonialsRef}>
-        <StatisticsSection statistics={statistics} />
         <TestimonialsSection testimonials={testimonials} />
       </div>
       <CallToActionSection />

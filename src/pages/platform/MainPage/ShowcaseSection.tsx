@@ -53,7 +53,7 @@ const ShowcaseSection = ({ showcases }: ShowcaseSectionProps) => {
                       alignItems: "center",
                       justifyContent: "space-between",
                       px: 1,
-                      height: 104,
+                      height: { xxs: "auto", sm: 104, md: "auto" },
                     }}
                   >
                     <Typography variant="h6" component="p">

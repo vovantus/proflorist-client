@@ -42,11 +42,11 @@ const HeroSection = ({ heroImageUrl, isSmallerThanLg }: HeroSectionProps) => {
         <Box
           sx={{
             position: "absolute",
-            width: { xxs: "90%", md: 500 },
+            width: { xxs: "90%", sm: 500 },
             bottom: { xxs: "5%", xs: "10%", md: 15 },
-            left: { xxs: "50%", md: "auto" },
-            right: { xxs: "auto", md: 10 },
-            transform: { xxs: "translateX(-50%)", md: "none" },
+            // left: { xxs: "50%", md: "auto" },
+            right: { xxs: "50%", sm: 10 },
+            transform: { xxs: "translateX(50%)", sm: "none" },
             bgcolor: "rgba(0, 0, 0, 0.6)",
             p: { xxs: 1, md: 4 },
             borderRadius: 1,

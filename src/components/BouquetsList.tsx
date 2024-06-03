@@ -39,7 +39,6 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
 
   const handleCloseActiveBouquet = () => {
     setShowActiveBouquet(false);
-    setTimeout(() => setActiveBouquet(null), detailesCardTransitionTime);
   };
   const setActiveBouquetAndOpen = (bouquet: Bouquet) => {
     setActiveBouquet(bouquet);

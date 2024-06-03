@@ -2,7 +2,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/material";
 
 export default function AppLoadingIndicator() {
-  console.log("app loading");
   return (
     <Box
       sx={{

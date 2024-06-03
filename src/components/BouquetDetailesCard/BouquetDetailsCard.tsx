@@ -52,7 +52,6 @@ export default function BouquetDetailesCard({
         {!imageLoaded && (
           <Skeleton
             component="div"
-            animation={false}
             sx={{
               position: "absolute",
               top: 0,
@@ -77,52 +76,47 @@ export default function BouquetDetailesCard({
         />
       </Box>
       <CardContent
-        sx={{ width: "100%", display: { xxs: "block", sm: "none" } }}
+        sx={{
+          width: { xxs: "100%", sm: "50%" },
+          display: "flex",
+          flexDirection: "column",
+        }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography variant="h5">{bouquet.name}</Typography>
-          <Button
-            size="small"
-            variant="outlined"
-            onClick={addAndClose}
-            sx={{ width: 110, ml: 1, mt: 1 }}
-          >
-            Add to cart
-          </Button>
-        </Box>
-        <Typography variant="h6" gutterBottom>
-          {bouquet.price}€
-        </Typography>
-        <Typography variant="body2">{bouquet.description}</Typography>
-      </CardContent>
-
-      <CardContent sx={{ width: "50%", display: { xxs: "none", sm: "block" } }}>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" sx={{ maxWidth: "90%" }}>
           {bouquet.name}
         </Typography>
-        <Typography variant="body2">{bouquet.description}</Typography>
+        <Typography variant="body2" sx={{ order: { xxs: 1, sm: 0 } }}>
+          {bouquet.description}
+        </Typography>
         <Box
-          sx={{ display: "flex", flexDirection: "column", alignItems: "end" }}
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: { xxs: "row", sm: "column" },
+            justifyContent: { xxs: "space-between", sm: "start" },
+            alignItems: "end",
+          }}
         >
-          <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+          <Typography variant="h6" gutterBottom>
             {bouquet.price}€
           </Typography>
           <Button
             size="small"
             variant="outlined"
             onClick={addAndClose}
-            sx={{ width: 110 }}
+            sx={{
+              width: 110,
+              ml: 1,
+              mt: 1,
+              position: { xxs: "relative", sm: "auto" },
+              bottom: { xxs: "40px", sm: "auto" },
+            }}
           >
             Add to cart
           </Button>
         </Box>
       </CardContent>
+
       <IconButton
         onClick={handleClose}
         sx={{ position: "absolute", top: 0, right: 0, mt: 1, mr: 1 }}

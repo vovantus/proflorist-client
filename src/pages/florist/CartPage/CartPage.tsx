@@ -30,16 +30,27 @@ export default function CartPage() {
 
   const { bouquets, isLoading } = useGetBouquets(floristInfo.name, bouquetIds);
 
-  const cartBouquets = Object.entries(cartItems).reduce((acc, item) => {
-    const bouquet = bouquets.find((b) => b.id === item[0]);
-    if (bouquet) {
-      acc.push({
-        ...bouquet,
-        quantity: item[1],
-      });
-    }
-    return acc;
-  }, [] as CartBouquet[]);
+  const populateBouquetsWithQuantity = function () {
+    return bouquets.reduce((acc, bouquet) => {
+      const cartItem = Object.entries(cartItems).find(
+        (item) => item[0] === bouquet.id
+      );
+      if (cartItem) acc.push({ ...bouquet, quantity: cartItem[1] });
+      return acc;
+    }, [] as CartBouquet[]);
+  };
+
+  const cartBouquets = useMemo(() => {
+    return populateBouquetsWithQuantity();
+  }, [cartItems, bouquets]);
+
+  const cartBouquetsList = useMemo(
+    () =>
+      cartBouquets.map((bouquet) => (
+        <CartBouquetItem key={bouquet.id} bouquet={bouquet} />
+      )),
+    [cartBouquets]
+  );
 
   const cartTotal =
     Math.round(
@@ -47,10 +58,6 @@ export default function CartPage() {
         return total + item.price * item.quantity;
       }, 0) * 100
     ) / 100;
-
-  const cartBouquetsList = cartBouquets.map((bouquet) => (
-    <CartBouquetItem key={bouquet.id} bouquet={bouquet} />
-  ));
 
   const CartTotalCard = () => {
     return (
@@ -80,7 +87,7 @@ export default function CartPage() {
               sx={{ mb: 1.5, textAlign: "end" }}
               color="text.secondary"
             >
-              {cartTotalQuantity} bouquets
+              {cartTotalQuantity()} bouquets
             </Typography>
             <Button
               variant="contained"
@@ -106,7 +113,7 @@ export default function CartPage() {
         gap: 1,
       }}
     >
-      {cartTotalQuantity !== 0 ? (
+      {cartTotalQuantity() !== 0 ? (
         <>
           <Box
             sx={{ display: "flex", flexDirection: "column", gap: 1, pb: 30 }}

@@ -11,6 +11,7 @@ import YardOutlinedIcon from "@mui/icons-material/YardOutlined";
 import { Link, useLocation } from "react-router-dom";
 import useBoundStore from "../store/boundStore";
 import { FLORIST_URLS } from "../routes/routes";
+import { useEffect, useState } from "react";
 
 // paths in decending order, parent paths at the end
 const tabRoutes = [
@@ -23,6 +24,12 @@ const tabRoutes = [
 export default function BottomNav() {
   const { pathname } = useLocation();
   const cartTotalQuantity = useBoundStore((state) => state.cartTotalQuantity);
+  const cartItems = useBoundStore((state) => state.cartItems);
+  const [cartCounter, setCartCounter] = useState(cartTotalQuantity());
+
+  useEffect(() => {
+    setCartCounter(cartTotalQuantity());
+  }, [cartItems]);
 
   let currentTab: string | undefined = tabRoutes.find((el) =>
     pathname.startsWith(el)
@@ -74,7 +81,7 @@ export default function BottomNav() {
         <BottomNavigationAction
           icon={
             <Badge
-              badgeContent={cartTotalQuantity}
+              badgeContent={cartCounter}
               color="primary"
               max={99}
               overlap="circular"

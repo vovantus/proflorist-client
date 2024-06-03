@@ -2,25 +2,34 @@ import { StateCreator } from "zustand";
 import FloristInfoSlice from "../types/floristInfoSlice";
 import CartSlice from "../types/cartSlice";
 
+
+//todo посмотреть прослойку для computed state
+
 export const createCartSlice: StateCreator<
   FloristInfoSlice & CartSlice,
   [],
   [],
   CartSlice
-> = (set) => ({
+> = (set, get) => ({
   cartItems: {},
-  cartTotalQuantity: 0,
+
+  cartTotalQuantity: () => {
+    const cartTotal = Object.entries(get().cartItems).reduce((acc, item) => {
+      return acc + item[1];
+    }, 0);
+    return cartTotal;
+  },
 
   addItem: (id) =>
     set((state) => {
       const currentQuantity = state.cartItems[id];
-      state.cartItems[id] = currentQuantity ? currentQuantity + 1 : 1;
-      const quantity = Object.entries(state.cartItems).reduce(
-        (qty, item) => (qty += item[1]),
-        0
-      );
 
-      return { cartItems: state.cartItems, cartTotalQuantity: quantity };
+      return {
+        cartItems: {
+          ...state.cartItems,
+          [id]: currentQuantity ? currentQuantity + 1 : 1,
+        },
+      };
     }),
 
   removeItem: (id, all) =>
@@ -37,10 +46,7 @@ export const createCartSlice: StateCreator<
           delete state.cartItems[id];
         }
       }
-      const quantity = Object.entries(state.cartItems).reduce(
-        (qty, item) => (qty += item[1]),
-        0
-      );
-      return { cartItems: state.cartItems, cartTotalQuantity: quantity };
+
+      return { cartItems: { ...state.cartItems } };
     }),
 });

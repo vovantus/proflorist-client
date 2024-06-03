@@ -11,7 +11,7 @@ const useBoundStore = create<FloristInfoSlice & CartSlice>()(
       ...createCartSlice(...a),
       ...createFloristInfoSlice(...a),
     }),
-    { name: "proflorist-store" }
+    { name: "proflorist-store", version: 2 }
   )
 );
 

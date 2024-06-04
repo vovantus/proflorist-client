@@ -17,12 +17,31 @@ import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo";
 import CartEmpty from "./CartEmpty";
 import CartItemSkeleton from "./CartItemSkeleton";
 import theme from "../../../theme/theme";
+import CartBouquetDeletionDialog from "./CartBouquetDeletionDialog";
 
 export default function CartPage() {
   const cartItems = useBoundStore((state) => state.cartItems);
+  const removeItem = useBoundStore((state) => state.removeItem);
   const cartTotalQuantity = useBoundStore((state) => state.cartTotalQuantity);
   const { floristInfo } = useGetFloristInfo();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [deletionAlertOpen, setDeletionAlertOpen] = useState(true);
+  const [activeBouquet, setActiveBouquet] = useState<CartBouquet>();
+
+  const handleDeletionDialogOpen = (bouquet: CartBouquet) => {
+    setActiveBouquet(bouquet);
+    setDeletionAlertOpen(true);
+  };
+
+  const closeDialog = () => {
+    setActiveBouquet(undefined);
+    setDeletionAlertOpen(false);
+  };
+
+  const deleteAndCloseDialog = () => {
+    activeBouquet && removeItem(activeBouquet.id, "all");
+    closeDialog();
+  };
 
   const bouquetIds = useMemo(() => {
     return Object.keys(cartItems);
@@ -47,7 +66,11 @@ export default function CartPage() {
   const cartBouquetsList = useMemo(
     () =>
       cartBouquets.map((bouquet) => (
-        <CartBouquetItem key={bouquet.id} bouquet={bouquet} />
+        <CartBouquetItem
+          key={bouquet.id}
+          bouquet={bouquet}
+          handleDeletionDialogOpen={handleDeletionDialogOpen}
+        />
       )),
     [cartBouquets]
   );
@@ -130,25 +153,35 @@ export default function CartPage() {
       ) : (
         <CartEmpty />
       )}
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={snackbarOpen}
-        sx={{ top: { xxs: 64, sm: 80 } }}
-        autoHideDuration={2000}
-        onClose={() => setSnackbarOpen(false)}
-      >
-        <Alert
-          severity="info"
-          variant="outlined"
-          sx={{
-            width: "100%",
-            color: theme.palette.secondary.contrastText,
-            bgcolor: theme.palette.secondary.main,
-          }}
+      {cartTotalQuantity() !== 0 && (
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={snackbarOpen}
+          sx={{ top: { xxs: 64, sm: 80 } }}
+          autoHideDuration={2000}
+          onClose={() => setSnackbarOpen(false)}
         >
-          This is just a demo app!
-        </Alert>
-      </Snackbar>
+          <Alert
+            severity="info"
+            variant="outlined"
+            sx={{
+              width: "100%",
+              color: theme.palette.secondary.contrastText,
+              bgcolor: theme.palette.secondary.main,
+            }}
+          >
+            This is just a demo app!
+          </Alert>
+        </Snackbar>
+      )}
+      {cartTotalQuantity() !== 0 && activeBouquet && (
+        <CartBouquetDeletionDialog
+          open={deletionAlertOpen}
+          onDeletePressed={deleteAndCloseDialog}
+          onCancelPressed={closeDialog}
+          bouquetName={activeBouquet.name}
+        />
+      )}
     </Box>
   );
 }

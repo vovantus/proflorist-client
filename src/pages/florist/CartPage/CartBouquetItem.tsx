@@ -15,6 +15,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 interface CartBouquetProps {
   bouquet: CartBouquet;
+  handleDeletionDialogOpen: (bouquet: CartBouquet) => void;
 }
 
 function areBoquetsEqual(
@@ -29,12 +30,18 @@ function areBoquetsEqual(
 
 const CartBouquetItem = memo(function CartBouquetItem({
   bouquet,
+  handleDeletionDialogOpen,
 }: CartBouquetProps) {
   const addItem = useBoundStore((state) => state.addItem);
   const removeItem = useBoundStore((state) => state.removeItem);
 
   const { imageUrl } = useFetchBouquetImage(bouquet);
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  const onMinusPressed = () => {
+    if (bouquet.quantity > 1) removeItem(bouquet.id);
+    else handleDeletionDialogOpen(bouquet);
+  };
 
   return (
     <Card
@@ -128,7 +135,7 @@ const CartBouquetItem = memo(function CartBouquetItem({
               justifyContent: "end",
             }}
           >
-            <Button onClick={() => removeItem(bouquet.id)}>-</Button>
+            <Button onClick={onMinusPressed}>-</Button>
             {bouquet.quantity}
             <Button onClick={() => addItem(bouquet.id)}>+</Button>
           </Box>
@@ -136,7 +143,8 @@ const CartBouquetItem = memo(function CartBouquetItem({
       </Box>
       <IconButton
         sx={{ position: "absolute", top: 0, right: 0 }}
-        onClick={() => removeItem(bouquet.id, "all")}
+        // onClick={() => removeItem(bouquet.id, "all")}
+        onClick={() => handleDeletionDialogOpen(bouquet)}
       >
         <ClearIcon fontSize="small" sx={{ color: "primary.main" }} />
       </IconButton>

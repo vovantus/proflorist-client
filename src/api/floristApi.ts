@@ -10,6 +10,7 @@ import {
   orderBy,
   startAfter,
   limit,
+  QueryDocumentSnapshot,
 } from "firebase/firestore";
 import api from "./instance";
 import Bouquet from "../types/bouquet";
@@ -24,6 +25,7 @@ import {
 interface NewsData {
   newsList: News[];
   totalNewsCount: number;
+  lastDoc: QueryDocumentSnapshot<DocumentData, DocumentData> | "";
 }
 
 interface Api {
@@ -45,7 +47,10 @@ interface Api {
     categoryId: Category["id"]
   ) => Promise<Bouquet[]>;
 
-  fetchNews: (floristName: string, lastVisibleId?: string) => Promise<NewsData>;
+  fetchNews: (
+    floristName: string,
+    cursorDoc: QueryDocumentSnapshot<DocumentData, DocumentData> | ""
+  ) => Promise<NewsData>;
 
   fetchStaticInfo: (
     floristName: string,
@@ -110,37 +115,31 @@ const floristApi: Api = {
     return bouquetList;
   },
 
-  fetchNews: async (floristName, lastVisibleId) => {
+  fetchNews: async (floristName, cursorDoc) => {
     const floristDoc = await floristApi.fetchFlorist(floristName);
-    const lastVisibleIdDoc = lastVisibleId
-      ? doc(api.provider().db, `florists/${floristName}/news/`, lastVisibleId)
-      : undefined;
-    const lastVisibleIdDocRef = lastVisibleIdDoc
-      ? await getDoc(lastVisibleIdDoc)
-      : undefined;
 
-    const newsCol = lastVisibleIdDocRef
-      ? query(
-          collection(floristDoc, "news"),
-          orderBy("date", "desc"),
-          startAfter(lastVisibleIdDocRef),
-          limit(3)
-        )
-      : query(
-          collection(floristDoc, "news"),
-          orderBy("date", "desc"),
-          limit(3)
-        );
+    const newsCol = query(
+      collection(floristDoc, "news"),
+      orderBy("date", "desc"),
+      startAfter(cursorDoc),
+      limit(3)
+    );
+
     const newsSnapshot = await getDocs(newsCol);
     const newsList = newsSnapshot.docs.map((doc) =>
       createNewsFromDocument({ ...doc.data(), id: doc.id })
     );
 
+    const lastDoc =
+      newsSnapshot.docs.length > 0
+        ? newsSnapshot.docs[newsSnapshot.docs.length - 1]
+        : "";
+
     const newsCollectionRef = collection(floristDoc, "news");
     const totalNewsSnapshot = await getDocs(newsCollectionRef);
     const totalNewsCount = totalNewsSnapshot.docs.length;
 
-    return { newsList, totalNewsCount };
+    return { newsList, totalNewsCount, lastDoc };
   },
 
   fetchStaticInfo: async (floristName, pageName) => {

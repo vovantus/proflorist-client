@@ -4,30 +4,22 @@ import NewsCard from "./NewsCard";
 import Box from "@mui/material/Box";
 import NewsCardSkeleton from "./NewsCardSkeleton";
 import { useEffect, useRef } from "react";
-import useDebounce from "../../../hooks/useDebounce";
 import NewsPageSkeleton from "./NewsPageSkeleton";
 
 export default function NewsPage() {
   const { floristInfo } = useGetFloristInfo();
-  const { news, status, fetchUpdate } = useGetNews(floristInfo.name);
+  const { news, status, initiateNewsUpdate } = useGetNews(floristInfo.name);
 
   const targetRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = () => {
-    if (status !== "idle") {
-      return;
-    }
-    fetchUpdate();
-  };
-
-  const debouncedScroll = useDebounce(handleScroll, 500);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            debouncedScroll();
+            if (news.length > 0) {
+              initiateNewsUpdate();
+            }
           }
         });
       },
@@ -37,6 +29,7 @@ export default function NewsPage() {
         threshold: 0.0,
       }
     );
+
     const target = targetRef.current;
 
     if (target) {
@@ -50,9 +43,7 @@ export default function NewsPage() {
     };
   }, [status]);
 
-  return status === "loading" && news.length === 0 ? (
-    <NewsPageSkeleton />
-  ) : (
+  return (
     <Box
       sx={{
         display: "flex",
@@ -62,11 +53,15 @@ export default function NewsPage() {
         gap: 1,
       }}
     >
-      <>
-        {news.map((el) => (
-          <NewsCard key={el.id} news={el} />
-        ))}
-      </>
+      {status === "loading" && news.length === 0 ? (
+        <NewsPageSkeleton />
+      ) : (
+        <>
+          {news.map((el) => (
+            <NewsCard key={el.id} news={el} />
+          ))}
+        </>
+      )}
 
       {status !== "endReached" && <NewsCardSkeleton ref={targetRef} />}
     </Box>

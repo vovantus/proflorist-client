@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import floristApi from "../api/floristApi";
 import News from "../types/news";
+import { QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 
 export function useGetNews(florist: string = "") {
   const [status, setStatus] = useState<"idle" | "loading" | "endReached">(
@@ -8,24 +9,27 @@ export function useGetNews(florist: string = "") {
   );
   const [error, setError] = useState("");
   const [news, setNews] = useState<News[]>([]);
-  const [lastNewsId, setLastNewsId] = useState("");
+  const [newsCursor, setNewsCursor] = useState<
+    QueryDocumentSnapshot<DocumentData, DocumentData> | ""
+  >("");
 
-  const fetchUpdate = () => {
-    if (status === "idle") setLastNewsId(news[news.length - 1].id);
-  };
+  const [lastNewsRef, setLastNewsRef] = useState<
+    QueryDocumentSnapshot<DocumentData, DocumentData> | ""
+  >("");
 
   useEffect(() => {
     if (florist == "") return;
     setStatus("loading");
     floristApi
-      .fetchNews(florist, lastNewsId !== "" ? lastNewsId : undefined)
-      .then((newsUpdate) => {
-        lastNewsId === ""
-          ? setNews(newsUpdate.newsList)
-          : setNews((prevNews) => [...prevNews, ...newsUpdate.newsList]);
+      .fetchNews(florist, newsCursor)
+      .then(({ newsList, totalNewsCount, lastDoc }) => {
+        if (newsCursor) setNews((prevNews) => [...prevNews, ...newsList]);
+        else setNews(newsList);
 
-        newsUpdate.newsList.length + news.length >= newsUpdate.totalNewsCount
-          ? setStatus(() => "endReached")
+        setLastNewsRef(lastDoc);
+
+        newsList.length + news.length === totalNewsCount
+          ? setStatus("endReached")
           : setStatus("idle");
       })
       .catch((error) => {
@@ -33,12 +37,16 @@ export function useGetNews(florist: string = "") {
         setError(error.message);
         setStatus("idle");
       });
-  }, [florist, lastNewsId]);
+  }, [florist, newsCursor]);
+
+  const initiateNewsUpdate = () => {
+    if (status === "idle") setNewsCursor(lastNewsRef);
+  };
 
   return {
     news,
     status,
     error,
-    fetchUpdate,
+    initiateNewsUpdate,
   };
 }

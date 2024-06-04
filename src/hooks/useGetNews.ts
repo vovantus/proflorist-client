@@ -23,14 +23,20 @@ export function useGetNews(florist: string = "") {
     floristApi
       .fetchNews(florist, newsCursor)
       .then(({ newsList, totalNewsCount, lastDoc }) => {
-        if (newsCursor) setNews((prevNews) => [...prevNews, ...newsList]);
-        else setNews(newsList);
+        setNews(
+          newsCursor ? (prevNews) => [...prevNews, ...newsList] : newsList
+        );
+       
 
         setLastNewsRef(lastDoc);
 
-        newsList.length + news.length === totalNewsCount
-          ? setStatus("endReached")
-          : setStatus("idle");
+        setStatus(
+          newsList.length + news.length >= totalNewsCount
+            ? "endReached"
+            : "idle"
+        );
+        
+        
       })
       .catch((error) => {
         console.error(error);

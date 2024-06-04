@@ -6,14 +6,18 @@ import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo.ts";
 export default function CategoryBouquetsPage() {
   const params = useParams();
   const { floristInfo } = useGetFloristInfo();
-  const { bouquets, isLoading } = useGetCategoryBouquets(
+  const { bouquets, status, initiateUpdate } = useGetCategoryBouquets(
     floristInfo.name,
     params?.categoryId
   );
 
   return (
     <>
-      <BouquetList bouquets={bouquets} isLoading={isLoading} />
+      <BouquetList
+        bouquets={bouquets}
+        status={status}
+        initiateUpdate={initiateUpdate}
+      />
     </>
   );
 }

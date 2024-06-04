@@ -2,37 +2,62 @@ import { useEffect, useState } from "react";
 import floristApi from "../api/floristApi";
 import Bouquet from "../types/bouquet";
 import Category from "../types/category";
-
+import { QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 
 export function useGetCategoryBouquets(
   florist: string = "",
   categoryId: Category["id"] = ""
 ) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [status, setStatus] = useState<"idle" | "loading" | "endReached">(
+    "idle"
+  );
   const [error, setError] = useState("");
-  const [bouquets, setBouquet] = useState<Bouquet[]>([]);
+  const [bouquets, setBouquets] = useState<Bouquet[]>([]);
+  const [cursor, setCursor] = useState<
+    QueryDocumentSnapshot<DocumentData, DocumentData> | ""
+  >("");
+
+  const [lastBouquetRef, setLastBouquetRef] = useState<
+    QueryDocumentSnapshot<DocumentData, DocumentData> | ""
+  >("");
 
   useEffect(() => {
-    if (florist == "" || categoryId == "") return;
-    setIsLoading(true);
+    if (florist == "") return;
+    setStatus("loading");
 
     floristApi
-      .fetchCategoryBouquets(florist, categoryId)
-      .then((bouqs) => {
-        setBouquet(bouqs);
+      .fetchBouquetsByCategory(florist, cursor, categoryId)
+      .then(({ bouquetList, totalBouquetsCount, lastBouquet }) => {
+        setBouquets(
+          lastBouquetRef
+            ? (oldBouqs) => [...oldBouqs, ...bouquetList]
+            : bouquetList
+        );
+
+        setLastBouquetRef(lastBouquet);
+
+        setStatus(
+          bouquets.length + bouquetList.length >= totalBouquetsCount
+            ? "endReached"
+            : "idle"
+        );
       })
       .catch((error) => {
         console.error(error);
         setError(error.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
+        setStatus("idle");
       });
-  }, [florist, categoryId]);
+  }, [florist, categoryId, cursor]);
+
+  const initiateUpdate = () => {
+    if (status !== "idle") return;
+    setCursor(lastBouquetRef);
+  };
 
   return {
     bouquets,
-    isLoading,
+    status,
     error,
+    initiateUpdate,
   };
 }

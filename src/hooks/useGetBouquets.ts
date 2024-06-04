@@ -4,7 +4,7 @@ import Bouquet from "../types/bouquet";
 
 export function useGetBouquets(
   florist: string = "",
-  bouquetIds?: Bouquet["id"][]
+  bouquetIds: Bouquet["id"][]
 ) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -12,17 +12,10 @@ export function useGetBouquets(
 
   useEffect(() => {
     if (florist == "") return;
-    const shouldFetchBouquets = () => {
-      return (
-        bouquetIds === null ||
-        bouquetIds === undefined ||
-        (Array.isArray(bouquetIds) && bouquetIds.length > 0)
-      );
-    };
 
-    if (shouldFetchBouquets()) {
+    if (bouquetIds.length > 0) {
       floristApi
-        .fetchBouquets(florist, bouquetIds)
+        .fetchBouquetsById(florist, bouquetIds)
         .then((bouqs) => {
           setBouquets(bouqs);
         })

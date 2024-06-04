@@ -2,13 +2,14 @@ import BouquetCard from "./BouquetCard/BouquetCard";
 import BouquetCardSkeleton from "./BouquetCard/BouquetCardSkeleton";
 import Bouquet from "../types/bouquet";
 import { Alert, Box, Snackbar, SwipeableDrawer } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import BouquetDetailesCard from "./BouquetDetailesCard/BouquetDetailsCard";
 import theme from "../theme/theme";
 
 interface BouquetListProps {
   bouquets: Bouquet[];
-  isLoading: boolean;
+  status: "idle" | "loading" | "endReached";
+  initiateUpdate: () => void;
 }
 
 export interface SnackbarMessage {
@@ -18,7 +19,12 @@ export interface SnackbarMessage {
 
 const detailesCardTransitionTime = 500;
 
-export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
+export default function BouquetList({
+  bouquets,
+  status,
+  initiateUpdate,
+}: BouquetListProps) {
+  const targetRef = useRef<HTMLDivElement>(null);
   const [activeBouquet, setActiveBouquet] = useState<Bouquet | null>(null);
   const [showActiveBouquet, setShowActiveBouquet] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -26,6 +32,37 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
   const [messageInfo, setMessageInfo] = useState<SnackbarMessage | undefined>(
     undefined
   );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (bouquets.length > 0) {
+              initiateUpdate();
+            }
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.0,
+      }
+    );
+
+    const target = targetRef.current;
+
+    if (target) {
+      observer.observe(target);
+    }
+
+    return () => {
+      if (target) {
+        observer.unobserve(target);
+      }
+    };
+  }, [status]);
 
   useEffect(() => {
     if (snackPack.length && !messageInfo) {
@@ -69,7 +106,7 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
           alignContent: "start",
         }}
       >
-        {isLoading
+        {status === "loading" && bouquets.length === 0
           ? Array.from(new Array(12)).map((_, index) => (
               <BouquetCardSkeleton key={index} />
             ))
@@ -81,6 +118,8 @@ export default function BouquetList({ bouquets, isLoading }: BouquetListProps) {
                 onAddToCart={handelAddToCart}
               />
             ))}
+
+        {status !== "endReached" && <BouquetCardSkeleton ref={targetRef} />}
       </Box>
       <SwipeableDrawer
         anchor="bottom"

@@ -17,6 +17,10 @@ interface BouquetProps {
   onAddToCart: (bouquetName: string) => void;
 }
 
+const areBouquetsEqual = (oldProps: BouquetProps, newProps: BouquetProps) => {
+  return oldProps.bouquet.price === newProps.bouquet.price;
+};
+
 const BouquetCard = memo(function BouquetCard({
   bouquet,
   showBouquet,
@@ -111,6 +115,7 @@ const BouquetCard = memo(function BouquetCard({
       </CardContent>
     </Card>
   );
-});
+},
+areBouquetsEqual);
 
 export default BouquetCard;

@@ -38,7 +38,7 @@ export default function CartPage() {
     setDeletionAlertOpen(false);
   };
 
-  const deleteAndCloseDialog = () => {
+  const removeAndCloseDialog = () => {
     activeBouquet && removeItem(activeBouquet.id, "all");
     closeDialog();
   };
@@ -177,7 +177,7 @@ export default function CartPage() {
       {cartTotalQuantity() !== 0 && activeBouquet && (
         <CartBouquetDeletionDialog
           open={deletionAlertOpen}
-          onDeletePressed={deleteAndCloseDialog}
+          onRemovePressed={removeAndCloseDialog}
           onCancelPressed={closeDialog}
           bouquetName={activeBouquet.name}
         />

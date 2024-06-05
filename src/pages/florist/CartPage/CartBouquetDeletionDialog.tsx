@@ -3,14 +3,14 @@ import { Dialog, DialogTitle, Button, DialogActions } from "@mui/material";
 interface CartBouquetDeletionDialogProps {
   open: boolean;
   onCancelPressed: () => void;
-  onDeletePressed: () => void;
+  onRemovePressed: () => void;
   bouquetName: string;
 }
 
 const CartBouquetDeletionDialog = ({
   open,
   onCancelPressed,
-  onDeletePressed,
+  onRemovePressed,
   bouquetName,
 }: CartBouquetDeletionDialogProps) => {
   return (
@@ -21,11 +21,11 @@ const CartBouquetDeletionDialog = ({
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        Delete {bouquetName} from Cart?
+        Remove {bouquetName} from cart?
       </DialogTitle>
 
       <DialogActions>
-        <Button onClick={onDeletePressed}>Delete</Button>
+        <Button onClick={onRemovePressed}>Remove</Button>
         <Button onClick={onCancelPressed}>Cancel</Button>
       </DialogActions>
     </Dialog>

@@ -44,7 +44,6 @@ const HeroSection = ({ heroImageUrl, isSmallerThanLg }: HeroSectionProps) => {
             position: "absolute",
             width: { xxs: "90%", sm: 500 },
             bottom: { xxs: "5%", xs: "10%", md: 15 },
-            // left: { xxs: "50%", md: "auto" },
             right: { xxs: "50%", sm: 10 },
             transform: { xxs: "translateX(50%)", sm: "none" },
             bgcolor: "rgba(0, 0, 0, 0.6)",

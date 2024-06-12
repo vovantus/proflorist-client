@@ -3,8 +3,6 @@ import FloristInfoSlice from "../types/floristInfoSlice";
 import CartSlice from "../types/cartSlice";
 
 
-//todo посмотреть прослойку для computed state
-
 export const createCartSlice: StateCreator<
   FloristInfoSlice & CartSlice,
   [],

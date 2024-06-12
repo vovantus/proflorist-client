@@ -20,7 +20,6 @@ import WhatsApp from "@mui/icons-material/WhatsApp";
 export default function ContactsPage() {
   const { floristInfo } = useGetFloristInfo();
   const { isLoading, info } = useGetStaticInfo(floristInfo.name, "contacts");
-  console.log(isLoading, info);
   const contactItems = [
     {
       icon: <Phone />,

@@ -9,7 +9,6 @@ export function useGetCategories(florist: string = "") {
 
   useEffect(() => {
     if (florist == "") return;
-    setIsLoading(true);
     floristApi
       .fetchCategories(florist)
       .then((categories) => {

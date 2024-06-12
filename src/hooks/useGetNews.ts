@@ -18,7 +18,7 @@ export function useGetNews(florist: string = "") {
   >("");
 
   useEffect(() => {
-    if (florist == "") return;
+    if (!florist) return;
     setStatus("loading");
     floristApi
       .fetchNews(florist, newsCursor)
@@ -26,7 +26,6 @@ export function useGetNews(florist: string = "") {
         setNews(
           newsCursor ? (prevNews) => [...prevNews, ...newsList] : newsList
         );
-       
 
         setLastNewsRef(lastDoc);
 
@@ -35,15 +34,13 @@ export function useGetNews(florist: string = "") {
             ? "endReached"
             : "idle"
         );
-        
-        
       })
       .catch((error) => {
         console.error(error);
         setError(error.message);
         setStatus("idle");
       });
-  }, [florist, newsCursor]);
+  }, [florist, news.length, newsCursor]);
 
   const initiateNewsUpdate = () => {
     if (status === "idle") setNewsCursor(lastNewsRef);

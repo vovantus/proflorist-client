@@ -6,7 +6,6 @@ import theme from "./theme/theme.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./firebase";
 
-// Lazy load the App component
 const App = lazy(() => import("./App.tsx"));
 
 const router = createBrowserRouter([

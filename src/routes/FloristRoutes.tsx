@@ -108,7 +108,7 @@ const FloristRoutes = () => {
             }
           />
 
-          <Route path="*" element={<Page404 />} />
+          <Route path="*" element={<Page404 source="florist" />} />
         </Route>
       </Routes>
     </>

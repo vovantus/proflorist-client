@@ -18,6 +18,7 @@ import CartEmpty from "./CartEmpty";
 import CartItemSkeleton from "./CartItemSkeleton";
 import theme from "../../../theme/theme";
 import CartBouquetDeletionDialog from "./CartBouquetDeletionDialog";
+import Bouquet from "../../../types/bouquet";
 
 export default function CartPage() {
   const cartItems = useBoundStore((state) => state.cartItems);
@@ -49,7 +50,10 @@ export default function CartPage() {
 
   const { bouquets, isLoading } = useGetBouquets(floristInfo.name, bouquetIds);
 
-  const populateBouquetsWithQuantity = function () {
+  const populateBouquetsWithQuantity = (
+    bouquets: Bouquet[],
+    cartItems: { [key: string]: number }
+  ): CartBouquet[] => {
     return bouquets.reduce((acc, bouquet) => {
       const cartItem = Object.entries(cartItems).find(
         (item) => item[0] === bouquet.id
@@ -60,7 +64,7 @@ export default function CartPage() {
   };
 
   const cartBouquets = useMemo(() => {
-    return populateBouquetsWithQuantity();
+    return populateBouquetsWithQuantity(bouquets, cartItems);
   }, [cartItems, bouquets]);
 
   const cartBouquetsList = useMemo(

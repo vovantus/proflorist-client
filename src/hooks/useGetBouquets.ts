@@ -11,24 +11,23 @@ export function useGetBouquets(
   const [bouquets, setBouquets] = useState<Bouquet[]>([]);
 
   useEffect(() => {
-    if (florist == "") return;
-
-    if (bouquetIds.length > 0) {
-      floristApi
-        .fetchBouquetsById(florist, bouquetIds)
-        .then((bouqs) => {
-          setBouquets(bouqs);
-        })
-        .catch((error) => {
-          console.error(error);
-          setError(error.message);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
+    if (!florist || bouquetIds.length > 0) {
       setIsLoading(false);
+      return;
     }
+
+    floristApi
+      .fetchBouquetsById(florist, bouquetIds)
+      .then((bouqs) => {
+        setBouquets(bouqs);
+      })
+      .catch((error) => {
+        console.error(error);
+        setError(error.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [florist, bouquetIds]);
 
   return {

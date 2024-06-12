@@ -29,12 +29,12 @@ export default function BottomNav() {
 
   useEffect(() => {
     setCartCounter(cartTotalQuantity());
-  }, [cartItems]);
+  }, [cartItems, cartTotalQuantity]);
 
-  let currentTab: string | undefined = tabRoutes.find((el) =>
-    pathname.startsWith(el)
-  );
-  if (currentTab === "/") currentTab = pathname;
+  const getCurrentTab = () => {
+    const currentTab = tabRoutes.find((el) => pathname.startsWith(el));
+    return currentTab === "/" ? pathname : currentTab;
+  };
 
   return (
     <Paper
@@ -49,7 +49,7 @@ export default function BottomNav() {
     >
       <BottomNavigation
         showLabels
-        value={currentTab}
+        value={getCurrentTab()}
         sx={{
           minHeight: "64px",
           backgroundColor: "rgba(255, 255, 255, 0.5)",

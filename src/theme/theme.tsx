@@ -44,7 +44,7 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: `
         html {
-          overflow-y: scroll; // Always show vertical scrollbar
+          overflow-y: scroll;
         }
       `,
     },

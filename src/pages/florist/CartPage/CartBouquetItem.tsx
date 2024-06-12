@@ -143,7 +143,6 @@ const CartBouquetItem = memo(function CartBouquetItem({
       </Box>
       <IconButton
         sx={{ position: "absolute", top: 0, right: 0 }}
-        // onClick={() => removeItem(bouquet.id, "all")}
         onClick={() => handleDeletionDialogOpen(bouquet)}
       >
         <ClearIcon fontSize="small" sx={{ color: "primary.main" }} />

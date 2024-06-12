@@ -39,7 +39,6 @@ export default function DeliveryPage() {
   const { floristInfo } = useGetFloristInfo();
   const { info, isLoading } = useGetStaticInfo(floristInfo.name, "delivery");
 
-  console.log(info, isLoading);
   return (
     <Card sx={{ width: 345, margin: "auto", marginTop: 4, padding: 2 }}>
       <CardContent>

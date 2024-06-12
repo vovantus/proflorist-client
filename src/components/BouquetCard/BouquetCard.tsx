@@ -31,7 +31,8 @@ const BouquetCard = memo(function BouquetCard({
   const addItem = useBoundStore((state) => state.addItem);
 
   const addToCart = () => {
-    addItem(bouquet.id), onAddToCart(bouquet.name);
+    addItem(bouquet.id);
+    onAddToCart(bouquet.name);
   };
 
   return (

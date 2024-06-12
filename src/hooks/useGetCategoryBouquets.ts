@@ -22,7 +22,7 @@ export function useGetCategoryBouquets(
   >("");
 
   useEffect(() => {
-    if (florist == "") return;
+    if (!florist) return;
     setStatus("loading");
 
     floristApi
@@ -47,7 +47,7 @@ export function useGetCategoryBouquets(
         setError(error.message);
         setStatus("idle");
       });
-  }, [florist, categoryId, cursor]);
+  }, [florist, categoryId, cursor, lastBouquetRef, bouquets.length]);
 
   const initiateUpdate = () => {
     if (status !== "idle") return;

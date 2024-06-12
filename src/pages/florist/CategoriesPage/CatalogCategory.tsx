@@ -17,7 +17,6 @@ export default function CatalogCategory({ category }: CatalogCategoryProps) {
         "&:hover": {
           backgroundColor: "rgba(118, 202, 254, 0.5)",
           transition: "background-color 0.3s ease",
-          //   textDecoration: "underline",
         },
       }}
       component={Link}

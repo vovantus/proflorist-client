@@ -1,30 +1,48 @@
-# React + TypeScript + Vite
+# Proflorist
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proflorist is a small pet project aimed at demonstrating technical skills while providing tools to help florists build their own e-commerce websites.
 
-Currently, two official plugins are available:
+## Project Purpose
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Proflorist includes a landing page with a platform description for florists and an example of an e-commerce store.
 
-## Expanding the ESLint configuration
+- Visit [proflorist.app](https://proflorist.app) to view the landing page.
+- Check out [montefleur.proflorist.app](https://montefleur.proflorist.app) to see the example store.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies Used
 
-- Configure the top-level `parserOptions` property like this:
+- **Frontend**: React, Typescript
+- **Backend**: Google Firestore and Storage
+- **State Management**: Zustand
+- **User Interface**: Material-UI (MUI)
+- **Routing**: React Router
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Installation Instructions
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+To build and deploy the project, follow these steps:
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your-username/proflorist.git
+   cd proflorist
+   ```
+
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+
+3. Build the project using Vite:
+   ```sh
+   npm run build
+   ```
+
+4. Deploy the build to your preferred hosting service.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Contact Information
+
+For any questions or feedback, feel free to reach out via Telegram: [vshirokov](https://t.me/vshirokov).

@@ -102,11 +102,13 @@ const BouquetCard = memo(function BouquetCard({
             overflow: "clip",
             textOverflow: "ellipsis",
             pr: 1,
+            width: 200,
           }}
         >
           {bouquet.name}
         </Typography>
         <Button
+          component="div"
           sx={{ minWidth: "100px", textWrap: "nowrap" }}
           size="small"
           onClick={addToCart}

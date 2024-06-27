@@ -6,7 +6,6 @@ Proflorist is a small pet project aimed at demonstrating technical skills while 
 
 Proflorist includes a landing page with a platform description for florists and an example of an e-commerce store.
 
-- Visit [proflorist.app](https://proflorist.app) to view the landing page.
 - Check out [montefleur.proflorist.app](https://montefleur.proflorist.app) to see the example store.
 
 ## Technologies Used

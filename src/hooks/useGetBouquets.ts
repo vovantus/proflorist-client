@@ -10,8 +10,9 @@ export function useGetBouquets(
   const [error, setError] = useState("");
   const [bouquets, setBouquets] = useState<Bouquet[]>([]);
 
+
   useEffect(() => {
-    if (!florist || bouquetIds.length > 0) {
+    if (!florist || bouquetIds.length === 0) {
       setIsLoading(false);
       return;
     }

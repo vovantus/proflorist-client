@@ -8,11 +8,11 @@ export function useGetCategoryBouquets(
   florist: string = "",
   categoryId: Category["id"] = ""
 ) {
-  const [status, setStatus] = useState<"idle" | "loading" | "endReached">(
-    "idle"
-  );
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "endReached" | "error"
+  >("idle");
   const [error, setError] = useState("");
-  const [bouquets, setBouquets] = useState<Bouquet[]>([]);
+  const [newBouquets, setNewBouquets] = useState<Bouquet[]>([]);
   const [cursor, setCursor] = useState<
     QueryDocumentSnapshot<DocumentData, DocumentData> | ""
   >("");
@@ -24,38 +24,27 @@ export function useGetCategoryBouquets(
   useEffect(() => {
     if (!florist) return;
     setStatus("loading");
-
     floristApi
       .fetchBouquetsByCategory(florist, cursor, categoryId)
-      .then(({ bouquetList, totalBouquetsCount, lastBouquet }) => {
-        setBouquets(
-          lastBouquetRef
-            ? (oldBouqs) => [...oldBouqs, ...bouquetList]
-            : bouquetList
-        );
-
+      .then(({ bouquetList, lastBouquet }) => {
+        setNewBouquets(bouquetList);
         setLastBouquetRef(lastBouquet);
-
-        setStatus(
-          bouquets.length + bouquetList.length >= totalBouquetsCount
-            ? "endReached"
-            : "idle"
-        );
+        setStatus(lastBouquet ? "idle" : "endReached");
       })
       .catch((error) => {
         console.error(error);
         setError(error.message);
-        setStatus("idle");
+        setStatus("error");
       });
-  }, [florist, categoryId, cursor, lastBouquetRef, bouquets.length]);
+  }, [florist, categoryId, cursor]);
 
   const initiateUpdate = () => {
-    if (status !== "idle") return;
+    if (status !== "idle" || lastBouquetRef === "") return;
     setCursor(lastBouquetRef);
   };
 
   return {
-    bouquets,
+    newBouquets,
     status,
     error,
     initiateUpdate,

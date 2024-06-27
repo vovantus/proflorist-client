@@ -1,20 +1,12 @@
 import BouquetList from "../../../components/BouquetsList.tsx";
-import useBoundStore from "../../../store/boundStore.ts";
-import { useGetCategoryBouquets } from "../../../hooks/useGetCategoryBouquets.ts";
+import { useGetFloristInfo } from "../../../hooks/useGetFloristInfo.ts";
 
 function ShopMainPage() {
-  const floristInfo = useBoundStore((state) => state.floristInfo);
-  const { bouquets, status, initiateUpdate } = useGetCategoryBouquets(
-    floristInfo.name
-  );
+  const { floristInfo } = useGetFloristInfo();
 
   return (
     <>
-      <BouquetList
-        bouquets={bouquets}
-        status={status}
-        initiateUpdate={initiateUpdate}
-      />
+      <BouquetList floristName={floristInfo.name} />
     </>
   );
 }

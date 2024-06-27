@@ -5,11 +5,11 @@ import { Alert, Box, Snackbar, SwipeableDrawer } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import BouquetDetailesCard from "./BouquetDetailesCard/BouquetDetailsCard";
 import theme from "../theme/theme";
+import { useGetCategoryBouquets } from "../hooks/useGetCategoryBouquets";
 
 interface BouquetListProps {
-  bouquets: Bouquet[];
-  status: "idle" | "loading" | "endReached";
-  initiateUpdate: () => void;
+  floristName: string;
+  categoryId?: string;
 }
 
 export interface SnackbarMessage {
@@ -19,12 +19,13 @@ export interface SnackbarMessage {
 
 const detailesCardTransitionTime = 500;
 
-export default function BouquetList({
-  bouquets,
-  status,
-  initiateUpdate,
-}: BouquetListProps) {
+export default function BouquetList({ floristName, categoryId }: BouquetListProps) {
   const targetRef = useRef<HTMLDivElement>(null);
+  const { newBouquets, status, initiateUpdate } = useGetCategoryBouquets(
+    floristName,
+    categoryId
+  );
+  const [bouquetsList, setBouquetsList] = useState<Bouquet[]>([]);
   const [activeBouquet, setActiveBouquet] = useState<Bouquet | null>(null);
   const [showActiveBouquet, setShowActiveBouquet] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -34,11 +35,17 @@ export default function BouquetList({
   );
 
   useEffect(() => {
+    setBouquetsList((oldBouqs) => [...oldBouqs, ...newBouquets]);
+  }, [newBouquets]);
+
+  const canUpdate = status === "idle";
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            if (bouquets.length > 0) {
+            if (bouquetsList.length > 0 && canUpdate) {
               initiateUpdate();
             }
           }
@@ -62,7 +69,7 @@ export default function BouquetList({
         observer.unobserve(target);
       }
     };
-  }, [status]);
+  }, [bouquetsList.length, initiateUpdate, canUpdate]);
 
   useEffect(() => {
     if (snackPack.length && !messageInfo) {
@@ -77,6 +84,7 @@ export default function BouquetList({
   const handleCloseActiveBouquet = () => {
     setShowActiveBouquet(false);
   };
+
   const setActiveBouquetAndOpen = (bouquet: Bouquet) => {
     setActiveBouquet(bouquet);
     setShowActiveBouquet(true);
@@ -106,11 +114,11 @@ export default function BouquetList({
           alignContent: "start",
         }}
       >
-        {status === "loading" && bouquets.length === 0
+        {status === "loading" && bouquetsList.length === 0
           ? Array.from(new Array(12)).map((_, index) => (
               <BouquetCardSkeleton key={index} />
             ))
-          : bouquets.map((el) => (
+          : bouquetsList.map((el) => (
               <BouquetCard
                 key={el.id}
                 bouquet={el}
@@ -119,7 +127,7 @@ export default function BouquetList({
               />
             ))}
 
-        {status !== "endReached" && <BouquetCardSkeleton ref={targetRef} />}
+        {canUpdate && <BouquetCardSkeleton ref={targetRef} />}
       </Box>
       <SwipeableDrawer
         anchor="bottom"

@@ -31,7 +31,6 @@ interface NewsData {
 
 interface BouquetsData {
   bouquetList: Bouquet[];
-  totalBouquetsCount: number;
   lastBouquet: QueryDocumentSnapshot<DocumentData, DocumentData> | "";
 }
 
@@ -117,9 +116,6 @@ const floristApi: Api = {
       );
     }
 
-    const allBouquetsSnapshot = await getCountFromServer(bouquetsCol);
-    const totalBouquetsCount = allBouquetsSnapshot.data().count;
-
     bouquetsCol = query(bouquetsCol, orderBy("name", "desc"));
 
     if (cursorDoc) bouquetsCol = query(bouquetsCol, startAfter(cursorDoc));
@@ -136,7 +132,7 @@ const floristApi: Api = {
         ? bouquetsSnapshot.docs[bouquetsSnapshot.docs.length - 1]
         : "";
 
-    return { bouquetList, totalBouquetsCount, lastBouquet };
+    return { bouquetList, lastBouquet };
   },
 
   fetchNews: async (floristName, cursorDoc) => {
